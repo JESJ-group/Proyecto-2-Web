@@ -83,4 +83,14 @@ public abstract class Servicio {
     protected void setConexion(Connection conexion) {
         this.conexion = conexion;
     }
+    
+    public void redireccionar(String ruta) {
+        HttpServletRequest request;
+        try {
+            request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath() + ruta);
+        } catch (IOException e) {
+            
+        }
+    }
 }
