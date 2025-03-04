@@ -74,6 +74,33 @@ public class ServicioUsuario extends Servicio {
         return usuario;
     }
 
+    public void actualizarClave(String correo, String clave) {
+
+        PreparedStatement pstmt = null;
+
+        try {
+            super.conectarBD();
+            String sql = "UPDATE usuario SET clave = ? WHERE correo = ?";
+            pstmt = super.getConexion().prepareStatement(sql);
+
+            pstmt.setString(1, clave);
+            pstmt.setString(2, correo);
+            int cantidad = pstmt.executeUpdate();
+
+            if (cantidad == 0) {
+                throw new SQLException("No se logro realizar el insert del usuario");
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+
+            cerrarPreparedStatement(pstmt);
+            cerrarConexion();
+
+        }
+
+    }
+
 
  
 
