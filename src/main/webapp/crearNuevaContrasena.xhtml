@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+
+        <link type="text/css" rel="stylesheet" href="https://www.primefaces.org/showcase/javax.faces.resource/css/layout/layout.css.xhtml?ln=showcase" />
+
+
+    </h:head>
+    <h:body style="display: flex; justify-content: center; align-items: center; height: 80vh;">
+
+
+
+        <div>
+
+            <p:card style="width: 30rem; margin: auto; padding: 2em; text-align: center;">
+                <f:facet name="title">
+                   Crea una contraseña
+                </f:facet>
+                <p>Por favor, escriba su nueva contraseña para acceder a la cuenta.</p>
+                <h:form>
+
+                    <p:growl showDetail="true"/>
+
+                    <h:panelGrid columns="1" cellpadding="10" style="width: 100%;">
+                        <p:inputText style="width: 100%;" placeholder="Nueva Contraseña" value = "#{usuarioController.nuevaContrasena}" />
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="1" cellpadding="10" style="width: 100%;">
+                        <p:inputText style="width: 100%;" placeholder="Confirmar Contraseña" value = "#{usuarioController.confirmarContrasena}" />
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="1" cellpadding="10" style="width: 100%;">
+                        <p:commandButton value="Cambiar Contraseña" ajax="false" validateClient="true" style="width: 100%;" styleClass="mt-3" actionListener="#{usuarioController.cambiarContrasena()}"/>
+                    </h:panelGrid>
+
+
+
+                </h:form>
+            </p:card>
+
+        </div>
+    </h:body>
+</html>
