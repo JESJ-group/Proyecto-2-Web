@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author chuz
+ * @author JEsus
  */
 public class ServicioUsuario extends Servicio {
 
