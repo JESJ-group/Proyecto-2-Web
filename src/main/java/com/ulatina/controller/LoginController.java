@@ -42,19 +42,19 @@ public class LoginController implements Serializable {
     public void ingresar() throws ClassNotFoundException {
         usuario = servicioUsuario.validarOrganizacion(user, pass);
         if (usuario != null) {
-            redireccionar("/organizaciones.xhtml");
+            redireccionar("/landingPageOrganizacion.xhtml");
             return;
         }
         
         usuario = servicioUsuario.validarUsuario(user, pass);
         if (usuario != null) {
-            redireccionar("/usuarios.xhtml");
+            redireccionar("/landingPageUsuario.xhtml");
             return;
         }
         
         
         if (user.equals("admin")&&pass.equals("adminadmin")) {
-            redireccionar("/admin.xhtml");
+            redireccionar("/adminPage.xhtml");
             return;
         }
         

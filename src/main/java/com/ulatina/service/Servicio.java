@@ -23,9 +23,9 @@ public abstract class Servicio {
     
     private String host = "localhost";
     private String puerto = "3306";
-    private String sid = "cci_demo";
+    private String sid = "BDProyectoJESJ";
     private String usuario = "root";
-    private String clave = "adminadmin";
+    private String clave = "contrabasedatos";
 
 
     public void conectarBD() throws ClassNotFoundException, SQLException {
