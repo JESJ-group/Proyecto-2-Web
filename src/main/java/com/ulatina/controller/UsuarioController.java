@@ -4,9 +4,10 @@
  */
 package com.ulatina.controller;
 
+import com.ulatina.data.Usuario;
 import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioUsuario;
-import data.Usuario;
+
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -24,7 +25,7 @@ public class UsuarioController implements Serializable {
 
     private Usuario usuario = new Usuario();
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
-    private Servicio servicio = new Servicio();
+    private Servicio servicio = new Servicio() {};
     private String correoUsuario;
     private String nuevaContrasena;
     private String confirmarContrasena;

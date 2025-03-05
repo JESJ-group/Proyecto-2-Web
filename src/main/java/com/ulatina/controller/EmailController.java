@@ -4,11 +4,12 @@
  */
 package com.ulatina.controller;
 
+import com.ulatina.data.Usuario;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import com.ulatina.service.ServicioEmail;
-import data.Usuario;
+
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpServletRequest;

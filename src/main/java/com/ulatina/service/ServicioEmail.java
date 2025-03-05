@@ -4,8 +4,8 @@
  */
 package com.ulatina.service;
 
+import com.ulatina.data.Usuario;
 import data.DatosCorreoElectronico;
-import data.Usuario;
 import jakarta.mail.Authenticator;
 import jakarta.mail.BodyPart;
 import jakarta.mail.Message;

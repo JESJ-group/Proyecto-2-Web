@@ -9,7 +9,7 @@
     </session-config>
 
     <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>recuperarContrasenaCorreo.xhtml</welcome-file>
     </welcome-file-list>
 
 </web-app>
