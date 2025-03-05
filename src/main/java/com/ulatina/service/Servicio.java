@@ -4,6 +4,9 @@
  */
 package com.ulatina.service;
 
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,7 +28,7 @@ public abstract class Servicio {
     private String clave = "adminadmin";
 
 
-    public void conectar() throws ClassNotFoundException, SQLException {
+    public void conectarBD() throws ClassNotFoundException, SQLException {
         // Paso 1: Cargar el driver JDBC (MySQL en este caso)
         Class.forName("com.mysql.cj.jdbc.Driver");
         
@@ -35,7 +38,7 @@ public abstract class Servicio {
     }
 
 
-    public void cerrarPrepareStatement(PreparedStatement ps) {
+    public void cerrarPreparedStatement(PreparedStatement ps) {
         if (ps != null) {
             try {
                 if (!ps.isClosed()) {
@@ -61,7 +64,7 @@ public abstract class Servicio {
     }
 
   
-    public void cerrarconexion() {
+    public void cerrarConexion() {
         if (conexion != null) {
             try {
                 if (!conexion.isClosed()) {

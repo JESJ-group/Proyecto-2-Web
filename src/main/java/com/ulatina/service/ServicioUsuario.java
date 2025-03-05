@@ -22,7 +22,7 @@ public class ServicioUsuario extends Servicio {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            super.conectar();
+            super.conectarBD();
             String sql = "SELECT id, nombre, correo, clave FROM usuario WHERE correo = ? AND clave = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, user);
@@ -38,9 +38,9 @@ public class ServicioUsuario extends Servicio {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            super.cerrarPrepareStatement(pstmt);
+            super.cerrarPreparedStatement(pstmt);
             super.cerrarResultSet(rs);
-            super.cerrarconexion();
+            super.cerrarConexion();
         }
         return usuario;
     }
@@ -51,7 +51,7 @@ public class ServicioUsuario extends Servicio {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            super.conectar();
+            super.conectarBD();
             String sql = "SELECT id, nombre, correo, clave FROM organizacion WHERE correo = ? AND clave = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, user);
@@ -67,9 +67,9 @@ public class ServicioUsuario extends Servicio {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            super.cerrarPrepareStatement(pstmt);
+            super.cerrarPreparedStatement(pstmt);
             super.cerrarResultSet(rs);
-            super.cerrarconexion();
+            super.cerrarConexion();
         }
         return usuario;
     }
