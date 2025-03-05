@@ -91,7 +91,7 @@ public class UsuarioController implements Serializable {
 
             this.servicioUsuario.actualizarClave(correo.getCorreo(), nuevaContrasena);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contraseña actualizada correctamente"));
-            servicio.redireccionar("/index.html");
+            servicio.redireccionar("/Login.xhtml");
             
 
         }
