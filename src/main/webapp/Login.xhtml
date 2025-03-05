@@ -5,19 +5,80 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Login - Google Style con PrimeFaces</title>
-        <!-- Puedes incluir la hoja de estilos base de PrimeFaces si aún no la tienes -->
-        <link rel="stylesheet" type="text/css" href="#{resource['primefaces:primeicons/primeicons.css']}" />
-       
+
     </h:head>
     <h:body>
         <h:form>
             <p:panel styleClass="login-card" header="">
+                <style>
+
+                    body {
+                        background-color: #f2f2f2;
+                        font-family: 'Roboto', sans-serif;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                    }
+
+                    .login-card {
+                        background: white;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                        padding: 40px;
+                        width: 360px;
+                        text-align: center;
+                    }
+                    .login-card h1 {
+                        font-size: 24px;
+                        margin-bottom: 20px;
+                    }
+                    .login-card .ui-inputfield {
+                        width: 100% !important;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        font-size: 16px;
+                    }
+                    .login-button {
+                        background-color: #4285F4 !important;
+                        color: white !important;
+                        border: none !important;
+                        border-radius: 4px !important;
+                        padding: 10px !important;
+                        font-size: 16px !important;
+                        width: 100% !important;
+                        cursor: pointer;
+                        margin-top: 20px;
+                    }
+                    .login-button:hover {
+                        background-color: #357ae8 !important;
+                    }
+                    .login-logo {
+                        margin-bottom: 20px;
+                    }
+                    .login-logo img {
+                        width: 100px;
+                    }
+                </style>
+                <div class="login-logo">
+                    <img src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+
+                </div>
+
                 <h1>Iniciar sesión</h1>
                 <p:inputText placeholder="Usuario" value="#{loginController.user}" />
                 <br/><br/>
                 <p:password placeholder="Contraseña" value="#{loginController.pass}" feedback="false"/>
+
+                <p:link id="OlvidoContrasena" value="¿Olvidó su contraseña?" outcome="/recuperarContrasenaCorreo" />
                 <br/><br/>
+                
+                <h:outputText value="¿No estás registrado? " />
+                <p:link value="Registrarse" outcome="/register" />
+                <br/><br/>
+                
                 <p:commandButton value="Ingresar" actionListener="#{loginController.ingresar}" update="growl,messages" styleClass="login-button"/>
                 <p:growl id="growl" showDetail="true" />
                 <p:messages id="messages" showDetail="true" closable="true"/>
