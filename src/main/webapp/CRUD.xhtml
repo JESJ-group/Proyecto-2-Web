@@ -13,7 +13,7 @@
     </h:head>
 
     <h:body>
-        <h4>Welcome, #{loginController.usuario.nombre}</h4><br/>
+        <h4>Welcome Admin</h4><br/>
         <h:form id="form">
             <p:growl id="messages" showDetail="true" />
 
@@ -21,15 +21,15 @@
                 <p:toolbar>
                     <p:toolbarGroup>
                         <!-- Button to add a new user -->
-                        <p:commandButton value="New" icon="pi pi-plus" actionListener="#{CRUDController.openNew}"
+                        <p:commandButton value="New" icon="pi pi-plus" actionListener="#{crudController.openNew}"
                                          update=":dialogs:manage-user-content" oncomplete="PF('manageUserDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem">
                             <p:resetInput target=":dialogs:manage-user-content" />
                         </p:commandButton>
 
-                        <p:commandButton id="delete-user-button" value="#{CRUD.getDeleteButtonMessage()}"
-                                         icon="pi pi-trash" actionListener="#{CRUD.borrarUsuariosSeleccionados}"
-                                         styleClass="ui-button-danger" disabled="#{empty CRUD.usuariosSeleccionados}"
+                        <p:commandButton id="delete-user-button" value="#{crudController.getDeleteButtonMessage()}"
+                                         icon="pi pi-trash" actionListener="#{crudController.borrarUsuariosSeleccionados}"
+                                         styleClass="ui-button-danger" disabled="#{empty crudController.usuariosSeleccionados}"
                                          update="@form">
                         </p:commandButton>
                     </p:toolbarGroup>
@@ -38,8 +38,8 @@
 
             <!-- Users table -->
             <p:dataTable id="dt-users" widgetVar="dtUsers" var="usuario"
-                         value="#{CRUDController.listaUsuarios}"
-                         selection="#{CRUDController.usuariosSeleccionados}"
+                         value="#{crudController.listaUsuarios}"
+                         selection="#{crudController.usuariosSeleccionados}"
                          rowKey="#{usuario.correo}"
                          paginator="true" rows="10" paginatorPosition="bottom"
                          selectionMode="multiple">
@@ -57,14 +57,14 @@
                     <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-user-content"
                                      oncomplete="PF('manageUserDialog').show()"
                                      styleClass="ui-button-success" process="@this">
-                        <f:setPropertyActionListener value="#{usuario}" target="#{CRUDController.selectedUsuario}" />
+                        <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
                         <p:resetInput target=":dialogs:manage-user-content" />
                     </p:commandButton>
 
                     <!-- Button to delete a single user -->
                     <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
                                      process="@this" oncomplete="PF('deleteUserDialog').show()">
-                        <f:setPropertyActionListener value="#{usuario}" target="#{CRUDController.selectedUsuario}" />
+                        <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
                     </p:commandButton>
                 </p:column>
 
@@ -80,14 +80,14 @@
             <p:contextMenu for="dt-users">
                 <p:menuitem value="Edit" update=":dialogs:manage-user-content"
                             icon="pi pi-pencil" oncomplete="PF('manageUserDialog').show()"
-                            actionListener="#{CRUDController.saveUser}">
-                    <f:setPropertyActionListener value="#{usuario}" target="#{CRUDController.selectedUsuario}" />
+                            actionListener="#{crudController.saveUser}">
+                    <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
                 </p:menuitem>
 
                 <p:menuitem value="Delete" update=":form:dt-users"
                             icon="pi pi-trash"
-                            actionListener="#{CRUDController.eliminarUsuario}">
-                    <f:setPropertyActionListener value="#{usuario}" target="#{CRUDController.selectedUsuario}" />
+                            actionListener="#{crudController.eliminarUsuario}">
+                    <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
                 </p:menuitem>
             </p:contextMenu>
 
@@ -100,22 +100,22 @@
                 <p:outputPanel id="manage-user-content" class="ui-fluid">
                     <div class="field">
                         <p:outputLabel for="name">Name</p:outputLabel>
-                        <p:inputText id="name" value="#{CRUDController.selectedUsuario.nombre}" required="true" />
+                        <p:inputText id="name" value="#{crudController.selectedUsuario.nombre}" required="true" />
                     </div>
                     <div class="field">
                         <p:outputLabel for="email">Email</p:outputLabel>
-                        <p:inputText id="email" value="#{CRUDController.selectedUsuario.correo}" required="true" />
+                        <p:inputText id="email" value="#{crudController.selectedUsuario.correo}" required="true" />
                     </div>
                     <div class="field">
                         <p:outputLabel for="pass">Password</p:outputLabel>
-                        <p:password id="pass" value="#{CRUDController.selectedUsuario.clave}" required="true" />
+                        <p:password id="pass" value="#{crudController.selectedUsuario.clave}" required="true" />
                     </div>
                 </p:outputPanel>
                 <f:facet name="footer">
-                    <p:commandButton value="Save" icon="pi pi-check" actionListener="#{CRUDController.saveUser}"
+                    <p:commandButton value="Save" icon="pi pi-check" actionListener="#{crudController.saveUser}"
                                      update="manage-user-content" process="manage-user-content @this"/>
                     <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageUserDialog').hide()" 
-                                     actionListener="#{CRUDController.limpiar}" class="ui-button-secondary" type="button" />
+                                     actionListener="#{crudController.limpiar}" class="ui-button-secondary" type="button" />
                 </f:facet>
             </p:dialog>
 
@@ -123,7 +123,7 @@
             <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
                              message="Do you want to delete the user?" header="Confirmation" severity="warn">
                 <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
-                                 actionListener="#{CRUDController.eliminarUsuario}" process="@this" 
+                                 actionListener="#{crudController.eliminarUsuario}" process="@this" 
                                  update=":form:dt-users" oncomplete="PF('deleteUserDialog').hide()" />
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteUserDialog').hide()" />

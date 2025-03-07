@@ -25,7 +25,7 @@ public abstract class Servicio {
     private String puerto = "3306";
     private String sid = "BDProyectoJESJ";
     private String usuario = "root";
-    private String clave = "contrabasedatos";
+    private String clave = "adminadmin";
 
 
     public void conectarBD() throws ClassNotFoundException, SQLException {
