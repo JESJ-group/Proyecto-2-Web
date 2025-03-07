@@ -9,6 +9,7 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
+
 @Named
 @SessionScoped
 public class LoginController implements Serializable {
@@ -42,7 +43,7 @@ public class LoginController implements Serializable {
     public void ingresar() throws ClassNotFoundException {
         usuario = servicioUsuario.validarOrganizacion(user, pass);
         if (usuario != null) {
-            redireccionar("/landingPageOrganizacion.xhtml");
+            redireccionar("/landingPageOrganizacion");
             return;
         }
         
@@ -54,7 +55,7 @@ public class LoginController implements Serializable {
         
         
         if (user.equals("admin")&&pass.equals("adminadmin")) {
-            redireccionar("/adminPage.xhtml");
+            redireccionar("/CRUD.xhtml");
             return;
         }
         
