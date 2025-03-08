@@ -1,6 +1,8 @@
 package com.ulatina.controller;
 
+import com.ulatina.data.Organizaciones;
 import com.ulatina.data.Usuario;
+import com.ulatina.service.ServicioOrganizacion;
 import com.ulatina.service.ServicioUsuario;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
@@ -17,7 +19,10 @@ public class LoginController implements Serializable {
     private String user;
     private String pass;
     private Usuario usuario;
+    private Organizaciones organizacion;
+    
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
+    private ServicioOrganizacion servicioOrganinzacion = new ServicioOrganizacion();
 
     public String getUser() {
         return user;
@@ -41,8 +46,8 @@ public class LoginController implements Serializable {
     
    
     public void ingresar() throws ClassNotFoundException {
-        usuario = servicioUsuario.validarOrganizacion(user, pass);
-        if (usuario != null) {
+        organizacion = servicioOrganinzacion.validarOrganizacion(user, pass);
+        if (organizacion != null) {
             redireccionar("/landingPageOrganizacion");
             return;
         }

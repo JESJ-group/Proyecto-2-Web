@@ -20,13 +20,13 @@
             <div class="card">
                 <p:toolbar>
                     <p:toolbarGroup>
-                        <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{crudController.openNew}"
+                        <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{crudController.openNewUsuario}"
                                          update=":dialogs:manage-user-content" oncomplete="PF('manageUserDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem">
                             <p:resetInput target=":dialogs:manage-user-content" />
                         </p:commandButton>
 
-                        <p:commandButton id="delete-user-button" value="#{crudController.getDeleteButtonMessage()}"
+                        <p:commandButton id="delete-user-button" value="#{crudController.getDeleteButtonMessageUsuarios()}"
                                          icon="pi pi-trash" actionListener="#{crudController.borrarUsuariosSeleccionados}"
                                          styleClass="ui-button-danger" disabled="#{empty crudController.usuariosSeleccionados}"
                                          update="@form">
@@ -74,7 +74,7 @@
             <p:contextMenu for="dt-users">
                 <p:menuitem value="Editar" update=":dialogs:manage-user-content"
                             icon="pi pi-pencil" oncomplete="PF('manageUserDialog').show()"
-                            actionListener="#{crudController.saveUser}">
+                            actionListener="#{crudController.saveUsuario()}">
                     <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
                 </p:menuitem>
 
@@ -97,7 +97,7 @@
                     </div>
                     <div class="field">
                         <p:outputLabel for="mail">Correo Electronico</p:outputLabel>
-                        <p:inputText id="email" value="#{crudController.selectedUsuario.correo}" required="true" />
+                        <p:inputText id="mail" value="#{crudController.selectedUsuario.correo}" required="true" />
                     </div>
                     <div class="field">
                         <p:outputLabel for="pass">Clave</p:outputLabel>
@@ -105,10 +105,10 @@
                     </div>
                 </p:outputPanel>
                 <f:facet name="footer">
-                    <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{crudController.saveUser}"
+                    <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{crudController.saveUsuario}"
                                      update="manage-user-content" process="manage-user-content @this"/>
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialog').hide()" 
-                                     actionListener="#{crudController.limpiar}" class="ui-button-secondary" type="button" />
+                                     actionListener="#{crudController.limpiarUsuario}" class="ui-button-secondary" type="button" />
                 </f:facet>
             </p:dialog>
 

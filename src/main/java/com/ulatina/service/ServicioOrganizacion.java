@@ -5,7 +5,6 @@
 package com.ulatina.service;
 
 import com.ulatina.data.Organizaciones;
-import com.ulatina.data.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,25 +15,25 @@ import java.util.List;
  *
  * @author JEsus
  */
-public class ServicioUsuario extends Servicio {
+public class ServicioOrganizacion extends Servicio {
 
-    public Usuario validarUsuario(String user, String pass) throws ClassNotFoundException {
-        Usuario usuario = null;
+       public Organizaciones validarOrganizacion(String user, String pass) throws ClassNotFoundException {
+        Organizaciones organizaciones = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             super.conectarBD();
-            String sql = "SELECT id, nombre, correo, clave FROM usuario WHERE correo = ? AND clave = ?";
+            String sql = "SELECT id, nombre, correo, clave FROM organizacion WHERE correo = ? AND clave = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, user);
             pstmt.setString(2, pass);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario();
-                usuario.setId(rs.getInt("id"));
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setCorreo(rs.getString("correo"));
-                usuario.setClave(rs.getString("clave"));
+                organizaciones = new Organizaciones();
+                organizaciones.setId(rs.getInt("id"));
+                organizaciones.setNombre(rs.getString("nombre"));
+                organizaciones.setCorreo(rs.getString("correo"));
+                organizaciones.setClave(rs.getString("clave"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,60 +42,54 @@ public class ServicioUsuario extends Servicio {
             super.cerrarResultSet(rs);
             super.cerrarConexion();
         }
-        return usuario;
+        return organizaciones;
     }
-    
-    public Usuario validarUsuario(String correo) throws ClassNotFoundException {
-        Usuario usuario = null;
 
+    
+    public Organizaciones validarOrganizacion(String correo) throws ClassNotFoundException {
+        Organizaciones organizaciones = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             super.conectarBD();
-            String sql = "SELECT id, nombre, correo, clave FROM  usuario WHERE correo = ?";
+            String sql = "SELECT id, nombre, correo, clave FROM organizacion WHERE correo = ? AND clave = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, correo);
-
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                usuario = new Usuario();
-                usuario.setId(rs.getInt("id"));
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setCorreo(rs.getString("correo"));
-                usuario.setClave(rs.getString("clave"));
-
+                organizaciones = new Organizaciones();
+                organizaciones.setId(rs.getInt("id"));
+                organizaciones.setNombre(rs.getString("nombre"));
+                organizaciones.setCorreo(rs.getString("correo"));
+                organizaciones.setClave(rs.getString("clave"));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            //paso 4
             super.cerrarPreparedStatement(pstmt);
             super.cerrarResultSet(rs);
             super.cerrarConexion();
         }
-
-        return usuario;
-
+        return organizaciones;
     }
 
-    public List<Usuario> demeUsuarios() throws ClassNotFoundException {
-        List<Usuario> listaRetorno = new ArrayList<>();
+    public List<Organizaciones> demeOrganizaciones() throws ClassNotFoundException {
+        List<Organizaciones> listaRetorno = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             super.conectarBD();
-            String sql = "SELECT id, nombre, correo, clave FROM usuario";
+            String sql = "SELECT id, nombre, correo, clave FROM organizacion";
             pstmt = super.getConexion().prepareStatement(sql);
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                Usuario usuario = new Usuario();
-                usuario.setId(rs.getInt("id"));
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setCorreo(rs.getString("correo"));
-                usuario.setClave(rs.getString("clave"));
+                Organizaciones organizaciones = new Organizaciones();
+                organizaciones.setId(rs.getInt("id"));
+                organizaciones.setNombre(rs.getString("nombre"));
+                organizaciones.setCorreo(rs.getString("correo"));
+                organizaciones.setClave(rs.getString("clave"));
 
-                listaRetorno.add(usuario);
+                listaRetorno.add(organizaciones);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,7 +108,7 @@ public class ServicioUsuario extends Servicio {
 
         try {
             super.conectarBD();
-            String sql = "UPDATE usuario SET clave = ? WHERE correo = ?";
+            String sql = "UPDATE organizacion SET clave = ? WHERE correo = ?";
             pstmt = super.getConexion().prepareStatement(sql);
 
             pstmt.setString(1, clave);
@@ -136,16 +129,16 @@ public class ServicioUsuario extends Servicio {
 
     }
 
-    public void insertar(Usuario usuario) {
+    public void insertarOrganizacion(Organizaciones organizaciones) {
         PreparedStatement pstmt = null;
 
         try {
             super.conectarBD();
-            String sql = "INSERT INTO usuario(nombre, correo, clave) VALUES (?,?,?)";
+            String sql = "INSERT INTO organizacion(nombre, correo, clave) VALUES (?,?,?)";
             pstmt = super.getConexion().prepareStatement(sql);
-            pstmt.setString(1, usuario.getNombre());
-            pstmt.setString(2, usuario.getCorreo());
-            pstmt.setString(3, usuario.getClave());
+            pstmt.setString(1, organizaciones.getNombre());
+            pstmt.setString(2, organizaciones.getCorreo());
+            pstmt.setString(3, organizaciones.getClave());
 
             int cantidad = pstmt.executeUpdate();
             if (cantidad == 0) {
@@ -159,16 +152,16 @@ public class ServicioUsuario extends Servicio {
         }
     }
 
-    public void actualizar(Usuario usuario) {
+    public void actualizarOrganizacion(Organizaciones organizaciones) {
         PreparedStatement pstmt = null;
 
         try {
             super.conectarBD();
-            String sql = "UPDATE usuario SET nombre = ?,clave = ? WHERE correo = ?";
+            String sql = "UPDATE organizacion SET nombre = ?,clave = ? WHERE correo = ?";
             pstmt = super.getConexion().prepareStatement(sql);
-            pstmt.setString(1, usuario.getNombre());
-            pstmt.setString(2, usuario.getClave());
-            pstmt.setString(3, usuario.getCorreo());
+            pstmt.setString(1, organizaciones.getNombre());
+            pstmt.setString(2, organizaciones.getClave());
+            pstmt.setString(3, organizaciones.getCorreo());
 
             int cantidad = pstmt.executeUpdate();
             if (cantidad == 0) {
@@ -183,12 +176,12 @@ public class ServicioUsuario extends Servicio {
 
     }
 
-    public void eliminarUsuario(String correo) {
+    public void eliminarOrganizacion(String correo) {
         PreparedStatement pstmt = null;
 
         try {
             super.conectarBD();
-            String sql = "DELETE FROM usuario WHERE correo = ?";
+            String sql = "DELETE FROM organizacion WHERE correo = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, correo);
 
