@@ -4,10 +4,9 @@
  */
 package com.ulatina.controller;
 
-import com.ulatina.data.Usuario;
+import com.ulatina.data.Organizacion;
 import com.ulatina.service.Servicio;
-import com.ulatina.service.ServicioUsuario;
-
+import com.ulatina.service.ServicioOrganizacion;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -17,37 +16,37 @@ import java.io.Serializable;
 
 /**
  *
- * @author jaime
+ * @author Ryzon
  */
+
 @Named
 @SessionScoped
-public class UsuarioController implements Serializable {
-
-    private Usuario usuario = new Usuario();
-    private ServicioUsuario servicioUsuario = new ServicioUsuario();
+public class OrganizacionController implements Serializable{
+    
+    private Organizacion organizacion = new Organizacion();
+    private ServicioOrganizacion servicioOrganizacion = new ServicioOrganizacion();
     private Servicio servicio = new Servicio() {};
-    private String correoUsuario;
+    private String correoOrganizacion;
     private String nuevaContrasena;
     private String confirmarContrasena;
     
     @Inject
     private EmailController correo;
-    
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Organizacion getOrganizacion() {
+        return organizacion;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setOrganizacion(Organizacion organizacion) {
+        this.organizacion = organizacion;
     }
 
-    public ServicioUsuario getServicioUsuario() {
-        return servicioUsuario;
+    public ServicioOrganizacion getServicioOrganizacion() {
+        return servicioOrganizacion;
     }
 
-    public void setServicioUsuario(ServicioUsuario servicioUsuario) {
-        this.servicioUsuario = servicioUsuario;
+    public void setServicioOrganizacion(ServicioOrganizacion servicioOrganizacion) {
+        this.servicioOrganizacion = servicioOrganizacion;
     }
 
     public Servicio getServicio() {
@@ -58,12 +57,12 @@ public class UsuarioController implements Serializable {
         this.servicio = servicio;
     }
 
-    public String getCorreoUsuario() {
-        return correoUsuario;
+    public String getCorreoOrganizacion() {
+        return correoOrganizacion;
     }
 
-    public void setCorreoUsuario(String correoUsuario) {
-        this.correoUsuario = correoUsuario;
+    public void setCorreoOrganizacion(String correoOrganizacion) {
+        this.correoOrganizacion = correoOrganizacion;
     }
 
     public String getNuevaContrasena() {
@@ -81,20 +80,24 @@ public class UsuarioController implements Serializable {
     public void setConfirmarContrasena(String confirmarContrasena) {
         this.confirmarContrasena = confirmarContrasena;
     }
+
+    public EmailController getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(EmailController correo) {
+        this.correo = correo;
+    }
     
     public void cambiarContrasena() {
         
         if (nuevaContrasena != null && nuevaContrasena.equals(confirmarContrasena)) {
 
-            this.servicioUsuario.actualizarClaveUsuario(correo.getCorreo(), nuevaContrasena);
+            this.servicioOrganizacion.actualizarClaveOrganizacion(correo.getCorreo(), nuevaContrasena);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contraseña actualizada correctamente"));
             servicio.redireccionar("/Login.xhtml");
         }
 
     }
     
-    public String onFlowProcess(org.primefaces.event.FlowEvent event) {
-    return event.getNewStep();
-}
-
 }

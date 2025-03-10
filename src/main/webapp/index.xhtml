@@ -11,9 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
     <h:head>
 
-        <style>
-
-        </style>
+        <title>Pagina de inicio</title>
 
     </h:head>
 
@@ -27,14 +25,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
 
                 <p:menuitem value="Inicio" icon="pi pi-fw pi-home"/>
-                <p:menuitem value="Pasantías" icon="pi pi-fw pi-briefcase"/>
-                <p:menuitem value="Voluntariados" icon="pi pi-fw pi-heart"/>
+                <p:menuitem value="Pasantías" icon="pi pi-fw pi-briefcase" outcome="/pasantias.xhtml"/>
+                <p:menuitem value="Voluntariados" icon="pi pi-fw pi-heart" outcome="/voluntariados.xhtml"/>
                 <p:menuitem value="Contacto" icon="pi pi-fw pi-address-book"/>
 
             </p:menubar>
 
             <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
-                <p:menuitem value="Registrarme" icon="pi pi-fw pi-user-plus" outcome="/register.xhtml"/>
+                <p:menuitem value="Registrarme" icon="pi pi-fw pi-user-plus" outcome="/seleccionRegistro.xhtml"/>
                 <p:menuitem value="Iniciar sesión" icon="pi pi-fw pi-sign-in" outcome="/Login.xhtml"/>
             </p:menubar>
         </div>

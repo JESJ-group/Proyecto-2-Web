@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>CRUD Usuarios</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+      }
+      .navButton {
+        margin: 5px;
+        padding: 10px 20px;
+        background-color: #007ad9;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .navButton:disabled {
+        background-color: #005a9c;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        padding: 15px;
+      }
+      .field {
+        margin-bottom: 15px;
+      }
+      .field p\:outputLabel {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .ui-button-success {
+        background-color: #28a745 !important;
+        border: none !important;
+      }
+      .ui-button-danger {
+        background-color: #dc3545 !important;
+        border: none !important;
+      }
+      .ui-button-warning {
+        background-color: #ffc107 !important;
+        border: none !important;
+      }
+      .ui-datatable {
+        background-color: #fff;
+      }
+    </style>
+  </h:head>
+  <h:body>
+    <div class="container">
+      <h:form id="navForm">
+        <h:commandButton value="Usuarios" disabled="true" styleClass="navButton" />
+        <h:commandButton value="Organizaciones" action="crudOrganizacion?faces-redirect=true" styleClass="navButton" />
+      </h:form>
+      <h:form id="form">
+        <p:growl id="messages" showDetail="true" />
+        <div class="card">
+          <p:toolbar>
+            <p:toolbarGroup>
+              <p:commandButton value="Nuevo Usuario" icon="pi pi-plus" 
+                               actionListener="#{crudController.openNewUsuario}"
+                               update=":dialogs:manage-user-content" oncomplete="PF('manageUserDialog').show()"
+                               styleClass="ui-button-success" style="margin-right: .5rem">
+                <p:resetInput target=":dialogs:manage-user-content" />
+              </p:commandButton>
+              <p:commandButton id="delete-user-button" 
+                               value="#{crudController.getDeleteButtonMessageUsuarios()}"
+                               icon="pi pi-trash" 
+                               actionListener="#{crudController.borrarUsuariosSeleccionados}"
+                               styleClass="ui-button-danger" 
+                               disabled="#{empty crudController.usuariosSeleccionados}"
+                               update=":form:dt-users">
+              </p:commandButton>
+            </p:toolbarGroup>
+          </p:toolbar>
+        </div>
+        <p:dataTable id="dt-users" widgetVar="dtUsers" var="usuario"
+                     value="#{crudController.listaUsuarios}"
+                     selection="#{crudController.usuariosSeleccionados}"
+                     rowKey="#{usuario.correoElectronico}"
+                     paginator="true" rows="10" paginatorPosition="bottom"
+                     selectionMode="multiple">
+          <p:column headerText="Id">
+              <h:outputText value="#{usuario.id}" />
+          </p:column>
+          <p:column headerText="Nombre">
+            <h:outputText value="#{usuario.nombre}" />
+          </p:column>
+          <p:column headerText="Correo">
+            <h:outputText value="#{usuario.correoElectronico}" />
+          </p:column>
+          <p:column headerText="Acciones" exportable="false">
+            <p:commandButton icon="pi pi-pencil" 
+                             update=":dialogs:manage-user-content"
+                             oncomplete="PF('manageUserDialog').show()"
+                             styleClass="ui-button-success" process="@this">
+              <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
+              <p:resetInput target=":dialogs:manage-user-content" />
+            </p:commandButton>
+            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                             process="@this" oncomplete="PF('deleteUserDialog').show()">
+              <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
+            </p:commandButton>
+          </p:column>
+          <p:ajax event="rowSelect" update="@form" />
+          <p:ajax event="rowUnselect" update="@form" />
+          <p:ajax event="rowSelectCheckbox" update="@form" />
+          <p:ajax event="rowUnselectCheckbox" update="@form" />
+          <p:ajax event="toggleSelect" update="@form" />
+        </p:dataTable>
+        <p:contextMenu for="dt-users">
+          <p:menuitem value="Editar" update=":dialogs:manage-user-content"
+                      icon="pi pi-pencil" oncomplete="PF('manageUserDialog').show()"
+                      actionListener="#{crudController.prepareEditUsuario}">
+            <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
+          </p:menuitem>
+          <p:menuitem value="Eliminar" update=":form:dt-users"
+                      icon="pi pi-trash"
+                      actionListener="#{crudController.eliminarUsuario}">
+            <f:setPropertyActionListener value="#{usuario}" target="#{crudController.selectedUsuario}" />
+          </p:menuitem>
+        </p:contextMenu>
+      </h:form>
+      <h:form id="dialogs">
+        <p:dialog header="Detalles del usuario" showEffect="fade" modal="true" widgetVar="manageUserDialog"
+                  responsive="true" style="max-height:500px; overflow-y:auto;">
+          <p:panelGrid id="manage-user-content" columns="2" styleClass="ui-panelgrid ui-fluid" style="width:100%;">
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="id" value="ID (solo lectura)" />
+                  <p:inputText id="id" value="#{crudController.selectedUsuario.id}" disabled="true" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="name" value="Nombre" />
+                  <p:inputText id="name" value="#{crudController.selectedUsuario.nombre}" required="true" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="apellido" value="Apellido" />
+                  <p:inputText id="apellido" value="#{crudController.selectedUsuario.apellidos}" required="true" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="mail" value="Correo Electrónico" />
+                  <p:inputText id="mail" value="#{crudController.selectedUsuario.correoElectronico}" required="true" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="pass" value="Clave" />
+                  <p:inputText id="pass" value="#{crudController.selectedUsuario.clave}" required="true" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="fechaNac" value="Fecha Nacimiento" />
+                 <p:datePicker id="fechaNac"
+              value="#{crudController.selectedUsuario.fechaNacimiento}"
+              pattern="dd-MM-yyyy"
+              showIcon="true" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="genero" value="Género" />
+                  <p:inputText id="genero" value="#{crudController.selectedUsuario.genero}" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="estado" value="Estado" />
+                  <p:inputText id="estado" value="#{crudController.selectedUsuario.estatus}" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="provincia" value="Provincia" />
+                  <p:inputText id="provincia" value="#{crudController.selectedUsuario.provincia}" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="canton" value="Cantón" />
+                  <p:inputText id="canton" value="#{crudController.selectedUsuario.canton}" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="distrito" value="Distrito" />
+                  <p:inputText id="distrito" value="#{crudController.selectedUsuario.distrito}" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="numContacto" value="Número de Contacto" />
+                  <p:inputText id="numContacto" value="#{crudController.selectedUsuario.numeroContacto}" />
+                </div>
+              </p:column>
+            </p:row>
+          </p:panelGrid>
+          <f:facet name="footer">
+            <p:commandButton value="Guardar" icon="pi pi-check" 
+                             actionListener="#{crudController.saveUsuario}"
+                             update="manage-user-content" process="manage-user-content @this"/>
+            <p:commandButton value="Cancelar" icon="pi pi-times" 
+                             onclick="PF('manageUserDialog').hide()"
+                             actionListener="#{crudController.limpiarUsuario}" 
+                             class="ui-button-secondary" type="button" />
+          </f:facet>
+        </p:dialog>
+        <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
+                         message="¿Desea borrar el usuario?" header="Confirmation" severity="warn">
+          <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                           actionListener="#{crudController.eliminarUsuario}" process="@this"
+                           update=":form:dt-users" oncomplete="PF('deleteUserDialog').hide()" />
+          <p:commandButton value="No" type="button" 
+                           styleClass="ui-button-secondary" icon="pi pi-times"
+                           onclick="PF('deleteUserDialog').hide()" />
+        </p:confirmDialog>
+      </h:form>
+    </div>
+  </h:body>
+</html>
+

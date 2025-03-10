@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+
+    <h:head>
+        <title>JoinUp - Selección de Registro</title>
+    </h:head>
+
+    <h:body style="display: flex; justify-content: center; align-items: center; height: 80vh; padding-top: 9em;">
+
+        <h:form>
+
+
+
+            <p:card style="width: 80rem; height: 70vh; margin: auto; padding-top: 4em; text-align: center; border-radius: 20px;color: black; border: 1px solid black ">
+
+                <hr style="border: 1px solid black; width: 80%;  margin: auto; margin-top: -20px;"/>
+
+
+                <div class="login-logo">
+                    <img style="width: 200px; padding-top: 40px;" src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+
+                </div>
+
+
+                <p style="font-size: 20px ;color: black;">Selecciona tu tipo de cuenta</p>
+
+                <div style="display: flex; justify-content: center; gap: 140px; padding-top: 40px;">
+
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+
+                        <p:commandButton value="Soy Usuario"
+                                         action="registroUsuario.xhtml?faces-redirect=true"
+                                         styleClass="rounded-button ui-button-outlined"
+                                         style="width: 200px; height: 170px; font-size: 20px;
+                                         color: black; border: 2px solid black; font-weight: 500; padding-top: 60px;">
+
+                            <p:graphicImage name="seleccionRegistro/usuario.jpg" library="images" 
+                                            style="width: 80px; height: 80px; margin-bottom: -100px;"/>
+                        </p:commandButton>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+
+                        <p:commandButton value="Soy Empresa"
+                                     action="registroEmpresa.xhtml?faces-redirect=true"
+                                     styleClass="rounded-button ui-button-outlined"
+                                     style="width: 200px; height: 170px; font-size: 20px;
+                                     color: black; border: 2px solid black; font-weight: 500;padding-top: 60px;">
+
+                            <p:graphicImage name="seleccionRegistro/empresa.jpg" library="images" 
+                                            style="width: 80px; height: 80px; margin-bottom: -100px;"/>
+                        
+                        </p:commandButton>
+                    </div>
+
+                    
+                </div>
+
+                <hr style="border: 1px solid black; width: 80%; margin-top: 150px"/>
+
+            </p:card>
+
+
+
+
+
+        </h:form>
+
+    </h:body>
+
+</html>
+
+

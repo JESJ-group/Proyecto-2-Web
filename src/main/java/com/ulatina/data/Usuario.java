@@ -1,10 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ulatina.data;
 
+
 import java.io.Serializable;
+import java.util.Date;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+
 
 /**
  *
@@ -12,22 +14,30 @@ import java.io.Serializable;
  */
 public class Usuario implements Serializable {
 
-    public Usuario(int id, String nombre, String correo, String clave) {
-        this.id = id;
-        this.nombre = nombre;
-        this.correo = correo;
-        this.clave = clave;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
+    private int id;
+    private String nombre;
+    private String apellidos;
+    private String correoElectronico;
+    private String clave;
+    private String genero;
+    private String estatus; 
+    private String provincia;
+    private String canton;
+    private String distrito;
+    private String numeroContacto;
+    
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
+    
 
     public Usuario() {
+    }
+
+    public Usuario(int id, String nombre, String correoElectronico, String clave) {
+        this.id = id;
+        this.nombre = nombre;
+        this.correoElectronico = correoElectronico;
+        this.clave = clave;
     }
 
     public int getId() {
@@ -46,17 +56,93 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    private int id;
-    private String nombre;
-    private String correo;
-    private String clave;
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
 
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        if (fechaNacimiento!= null) {
+        this.fechaNacimiento = new java.sql.Date(fechaNacimiento.getTime());
+    } else {
+        this.fechaNacimiento = null;
+    }
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getCanton() {
+        return canton;
+    }
+
+    public void setCanton(String canton) {
+        this.canton = canton;
+    }
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+
+    public String getNumeroContacto() {
+        return numeroContacto;
+    }
+
+    public void setNumeroContacto(String numeroContacto) {
+        this.numeroContacto = numeroContacto;
+    }
+
+    public void setCorreo(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
 }

@@ -10,9 +10,103 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
     xmlns:p="http://primefaces.org/ui">
 
     <h:head>
+        <title>Pagina principal</title>
     </h:head>
 
     <h:body>
-        
+        <div class="barraMenu" 
+             style="display: flex; justify-content: space-between; align-items: center;
+             width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+             background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+            
+            
+            <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+                <p:menuitem value="Inicio" icon="pi pi-fw pi-home"/>
+                <p:menuitem value="Pasantías" icon="pi pi-fw pi-briefcase" outcome="/pasantias.xhtml"/>
+                <p:menuitem value="Voluntariados" icon="pi pi-fw pi-heart" outcome="/voluntariados.xhtml"/>
+                <p:menuitem value="Contacto" icon="pi pi-fw pi-address-book"/>
+                <p:submenu label="Publicar" icon="pi pi-fw pi-upload">
+                    <p:menuitem value="Oportunidades" icon="pi pi-fw pi-plus-circle" outcome="publicarOportunidades.xhtml"/>
+                    <p:menuitem value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                </p:submenu>
+
+            </p:menubar>
+
+            <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+
+                <p:submenu label="Mi perfil" icon="pi pi-fw pi-user">
+                    
+                    <p:menuitem value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilOrganizacion.xhtml"/>
+                    <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out" outcome="/index.xhtml"/>
+                </p:submenu>
+
+            </p:menubar>
+
+        </div>
+
+        <!-- Ajuste para evitar que el contenido quede debajo del menú -->
+        <div style="margin-top: 76px;">
+        </div>
+
+
+
+
+        <div class="QuienesSomos" style="height: 60vh">
+            <h:panelGrid columns="1" cellpadding="10" style="width: 100%;">
+                <p:card style="height: 50vh; border-radius: 20px; background-color: #FFF5E4">
+                    <f:facet name="title">  
+                        JOIN UP
+                    </f:facet>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                        <div style="flex: 1; padding-right: 20px;">
+                            <p style="font-size: 20px">Somos una gran empresa enfocada en buscar las mayores facilidades a los aspirantes</p>
+                            <p style="font-size: 20px">que buscan pasantías y/o voluntariados</p>
+                        </div>
+
+                        <p:graphicImage name="LandingPage/imagenIcono.jpg" library="images" styleClass="product-image" style="max-width: 450px; height: 300px; border-radius: 20px"/>
+                    </div>
+                </p:card>
+            </h:panelGrid>
+        </div>
+
+        <div class="Carrucel">
+            <p:carousel value="#{carouselView.images}" var="image" circular="true" autoplayInterval="4000"
+                        numVisible="5" numScroll="1" styleClass="custom-carousel">
+                <f:facet name="header">
+                    <p style="text-align: center; font-weight: 400; font-size: 30px">Conoce quiénes ya están en Join Up</p>
+                </f:facet>
+
+                <div class="product-item" style="display: flex; justify-content: center; align-items: center;">
+                    <p:graphicImage name="LandingPage/Carrucel/#{image}" library="images" 
+                                    styleClass="carousel-image" style="width: 80%; max-height: 150px; object-fit: contain;"/>
+                </div>
+            </p:carousel>
+        </div>
+
+        <div class="Contacto" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+            <h:panelGrid columns="1" cellpadding="10" style="width: 50% ;">
+                <p:card style="height: 80vh; border-radius: 20px; background-color: #C1D8C3">
+
+                    <p style="text-align: center; font-weight: 400; font-size: 50px">¿Tienes preguntas?</p>
+                    <p style="text-align: left; font-weight: 400; font-size: 25px">Dinos qué necesitas. ¡Estaremos encantados de aconsejarte la mejor solución para tu oferta o proceso de selección!</p>
+
+                    <h:form>
+                        <h:panelGrid columns="1" cellpadding="5" style="width: 100%; text-align: center; height: 40vh">
+
+                            <p:inputText placeholder="Tu Nombre" style="width: 90%; padding: 10px; font-size: 18px; border-radius: 10px;"/>
+                            <p:inputText placeholder="Tu Correo" style="width: 90%; padding: 10px; font-size: 18px; border-radius: 10px;"/>
+                            <p:inputTextarea placeholder="Tu Mensaje" style="width: 90%; height: 100px; padding: 10px; font-size: 18px; border-radius: 10px;"/>
+
+                            <p:commandButton value="Enviar" icon="pi pi-send" style="margin-top: 10px; width: 50%; font-size: 18px; border-radius: 10px; background-color: #5A9E6F; color: white;"/>
+
+                        </h:panelGrid>
+                    </h:form>
+
+                </p:card>
+            </h:panelGrid>
+
+        </div>
     </h:body>
 </html>
