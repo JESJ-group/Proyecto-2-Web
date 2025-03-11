@@ -6,8 +6,12 @@ package com.ulatina.service;
 
 import com.ulatina.controller.LoginController;
 import com.ulatina.data.Oportunidades;
+import com.ulatina.data.Organizacion;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
