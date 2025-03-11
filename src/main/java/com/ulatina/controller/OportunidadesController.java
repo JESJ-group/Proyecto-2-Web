@@ -7,11 +7,14 @@ package com.ulatina.controller;
 import com.ulatina.data.Oportunidades;
 import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioOportunidad;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -26,8 +29,8 @@ public class OportunidadesController implements Serializable{
     
     private Oportunidades oportunidades = new Oportunidades();
     private ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
-    private List<Oportunidades> oportunidades = new ArrayList<>();
-    private ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
+    private List<Oportunidades> listaOportunidades = new ArrayList<>();
+    
 
     @PostConstruct
     public void init() {
@@ -48,29 +51,20 @@ public class OportunidadesController implements Serializable{
         this.servicioOportunidad = servicioOportunidad;
     }
 
-    public List<Oportunidades> getOportunidades() {
-        return oportunidades;
+    public List<Oportunidades> getlistaOportunidades() {
+        return listaOportunidades;
     }
 
-    public void setOportunidades(List<Oportunidades> oportunidades) {
-        this.oportunidades = oportunidades;
+    public void setlistaOportunidades(List<Oportunidades> listaOportunidades) {
+        this.listaOportunidades = listaOportunidades;
     }
 
-    public Oportunidades getOportunidades() {
-        return oportunidades;
-    }
-
+    
     public void setOportunidades(Oportunidades oportunidades) {
         this.oportunidades = oportunidades;
     }
 
-    public ServicioOportunidad getServicioOportunidad() {
-        return servicioOportunidad;
-    }
-
-    public void setServicioOportunidad(ServicioOportunidad servicioOportunidad) {
-        this.servicioOportunidad = servicioOportunidad;
-    }
+    
     
     
     public void registrarOportunidad() {
@@ -89,7 +83,7 @@ public class OportunidadesController implements Serializable{
 
     public void cargarOportunidades() {
 
-        this.oportunidades = servicioOportunidad.cargarOportunidades();
+        this.listaOportunidades = servicioOportunidad.cargarOportunidades();
 
     }
     
