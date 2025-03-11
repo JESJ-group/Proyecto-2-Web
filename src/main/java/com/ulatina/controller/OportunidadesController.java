@@ -51,20 +51,37 @@ public class OportunidadesController implements Serializable{
         this.servicioOportunidad = servicioOportunidad;
     }
 
-    public List<Oportunidades> getlistaOportunidades() {
-        return listaOportunidades;
+   
+
+    public Oportunidades getOportunidades() {
+        return oportunidades;
     }
 
-    public void setlistaOportunidades(List<Oportunidades> listaOportunidades) {
-        this.listaOportunidades = listaOportunidades;
-    }
-
-    
     public void setOportunidades(Oportunidades oportunidades) {
         this.oportunidades = oportunidades;
     }
 
+    public List<Oportunidades> getListaOportunidades() {
+        return listaOportunidades;
+    }
+
+    public void setListaOportunidades(List<Oportunidades> listaOportunidades) {
+        this.listaOportunidades = listaOportunidades;
+    }
+
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
+
     
+
+    
+
+   
     
     
     public void registrarOportunidad() {
@@ -93,3 +110,4 @@ public class OportunidadesController implements Serializable{
     }
 }
                                                                                                                                                                                                 
+                                                                                                                                                                                               
