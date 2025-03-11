@@ -109,7 +109,7 @@ public class EmailController implements Serializable {
                 
                codigoGenerado = generarCodigoVerificacion();
 
-                // Enviar correo
+                
                 this.servicioEmail.crearCorreo(correo, asunto, contenido + "\nCódigo: " + codigoGenerado);
                 this.servicioEmail.enviarCorreo();
 
