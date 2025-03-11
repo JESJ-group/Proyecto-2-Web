@@ -16,7 +16,46 @@ import java.sql.SQLException;
 
 
 public class ServicioOportunidad extends Servicio{
-    
+    public List<Oportunidades> cargarOportunidades() {
+        List<Oportunidades> listaOportunidades = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            super.conectarBD();
+            String sql = "SELECT id, idOrganizacion, titulo, descripcion, tipo, duracion, jornada,modalidad, pago,ubicacion,provincia FROM Oportunidades";
+            pstmt = super.getConexion().prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Oportunidades oportunidades = new Oportunidades();
+                Organizacion organizacion = new Organizacion();
+                oportunidades.setId(rs.getInt("id"));
+                organizacion.setId(rs.getInt("idOrganizacion"));
+                oportunidades.setIdOrganizacion(organizacion);
+                oportunidades.setTitulo(rs.getString("titulo"));
+                oportunidades.setDescripcion(rs.getString("descripcion"));
+                oportunidades.setTipo(rs.getString("tipo"));
+                oportunidades.setDuracion(rs.getString("duracion"));
+                oportunidades.setJornada(rs.getString("jornada"));
+                oportunidades.setModalidad(rs.getString("modalidad"));
+                oportunidades.setPago(rs.getString("pago"));
+                oportunidades.setUbicacion(rs.getString("ubicacion"));
+                oportunidades.setProvincia(rs.getString("provincia"));
+                
+                listaOportunidades.add(oportunidades);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+        }
+
+        return listaOportunidades;
+    }
     
     public void insertarOportunidad(Oportunidades oportunidades) {
         PreparedStatement pstmt = null;
