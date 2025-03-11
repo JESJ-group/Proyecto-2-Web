@@ -5,14 +5,125 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
 
     <h:head>
+        <title>Pasantias</title>
     </h:head>
+    <style>
 
-    <h:body>
 
-    </h:body>
+
+
+        .ui-card-header{
+
+            height: 200px;
+        }
+
+
+        .card .ui-card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .contenedor-imagen {
+            width: 150px;
+            height: 140px;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            margin-right: 15px;
+            margin-top: 40px;
+        }
+
+        .contenedor-imagen img {
+            width: 50px;
+            height: 50px;
+        }
+
+
+
+
+
+
+        .etiquetas {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+
+
+
+
+
+
+
+    </style>
+    <body style="background-color: white; color: black;
+          display: flex; flex-direction: column;
+          align-items: center;
+          
+          ">
+        <h:form >
+            <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto; ">
+
+                <ui:repeat value="#{oportunidadesController.oportunidades}"  var="oportunidad" >
+
+                    <p:panelGrid >
+                        <p:card  style="
+                                 padding-right: 20px;
+                                 padding-left: 30px;
+                                 padding-bottom: 20px;
+                                 border-radius: 20px
+                                 ;border: 1px solid aliceblue;
+
+                                 display: flex;
+                                 width: 60rem;
+                                 height: 40vh;"
+                                 >
+
+                            <f:facet name="header">
+
+                                <div class="contenedor-imagen">
+                                    <p:graphicImage name="placeholder.png" alt="Imagen"/>
+
+                                </div>
+
+                                <p style="font-size: 17px; color: black; margin-top: 120px;margin-left:5px;">#{oportunidad.ubicacion}</p>
+                                <p style="font-size: 17px; color: black; margin-left:5px;">#{oportunidad.provincia}</p>
+
+                            </f:facet>
+
+                            <p style="
+                               margin-bottom: 5px; margin-top: 0px; font-weight: bolder;font-size: 20px ;color: #007bff; ">#{oportunidad.titulo}</p>
+                            <p:inputText  value="#{oportunidad.descripcion}"  disabled="true"
+                                          style="width: 125%; height: 70px; border-radius: 20px; background-color: white;
+                                          margin-bottom: 100px;
+                                          border-radius: 20px;
+                                          margin: 10px 0;"/>
+
+                            <div class="etiquetas" style="margin-left:180px; gap: 10px; ">
+                                <p:chip style="font-size: 16px; color: black; background-color: cornflowerblue;" label="#{oportunidad.tipo}"/>
+                                <p:chip style="font-size: 16px; color: black; background-color: cornflowerblue;" label="#{oportunidad.duracion}"/>
+                                <p:chip style="font-size: 16px; color: black; background-color: cornflowerblue;" label="#{oportunidad.jornada}"/>
+                                <p:chip style="font-size: 16px; color: black; background-color: cornflowerblue;" label="#{oportunidad.pago}"/>
+
+                            </div>
+                        </p:card>
+                    </p:panelGrid>
+
+
+
+                </ui:repeat>
+            </div>
+        </h:form>
+    </body>
 </html>
