@@ -26,10 +26,35 @@ public class OportunidadesController implements Serializable{
     
     private Oportunidades oportunidades = new Oportunidades();
     private ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
+    private List<Oportunidades> oportunidades = new ArrayList<>();
+    private ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
+
+    @PostConstruct
+    public void init() {
+        
+        cargarOportunidades();
+        
+    }
     
     Servicio servicio = new Servicio(){
         
     };
+
+    public ServicioOportunidad getServicioOportunidad() {
+        return servicioOportunidad;
+    }
+
+    public void setServicioOportunidad(ServicioOportunidad servicioOportunidad) {
+        this.servicioOportunidad = servicioOportunidad;
+    }
+
+    public List<Oportunidades> getOportunidades() {
+        return oportunidades;
+    }
+
+    public void setOportunidades(List<Oportunidades> oportunidades) {
+        this.oportunidades = oportunidades;
+    }
 
     public Oportunidades getOportunidades() {
         return oportunidades;
@@ -60,6 +85,12 @@ public class OportunidadesController implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error inesperado", "No se pudo completar la oportunidad:  " + e.getMessage()));
         }
+    }
+
+    public void cargarOportunidades() {
+
+        this.oportunidades = servicioOportunidad.cargarOportunidades();
+
     }
     
     
