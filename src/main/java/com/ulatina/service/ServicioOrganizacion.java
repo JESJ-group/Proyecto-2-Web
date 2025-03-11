@@ -4,6 +4,7 @@
  */
 package com.ulatina.service;
 
+import com.ulatina.data.Oportunidades;
 import com.ulatina.data.Organizacion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,10 +54,13 @@ public class ServicioOrganizacion extends Servicio {
         return organizacion;
     }
 
+    private int idPrueba;
+    
     public Organizacion validarOrganizacion(int id) throws ClassNotFoundException {
         Organizacion organizacion = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        
         try {
             super.conectarBD();
             String sql = "SELECT id, nombre, nombreRepresentante, cedulaRepresentante, "
@@ -69,6 +73,8 @@ public class ServicioOrganizacion extends Servicio {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 organizacion = new Organizacion();
+                Oportunidades oportunidades = new Oportunidades();
+                
                 organizacion.setId(rs.getInt("id"));
                 organizacion.setNombre(rs.getString("nombre"));
                 organizacion.setNombreRepresentante(rs.getString("nombreRepresentante"));
@@ -80,6 +86,7 @@ public class ServicioOrganizacion extends Servicio {
                 organizacion.setProvincia(rs.getString("provincia"));
                 organizacion.setCanton(rs.getString("canton"));
                 organizacion.setDistrito(rs.getString("distrito"));
+                oportunidades.setIdOrganizacion(organizacion);
             }
         } catch (SQLException e) {
             e.printStackTrace();
