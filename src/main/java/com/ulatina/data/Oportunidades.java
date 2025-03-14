@@ -1,19 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.ulatina.data;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.io.Serializable;
 
-/**
- *
- * @author Ryzon
- */
-public class Oportunidades {
-    
+@Entity
+@Table(name = "oportunidades")
+public class Oportunidades implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "idOrganizacion", referencedColumnName = "id")
     private Organizacion idOrganizacion;
-    private String tipo,titulo,descripcion,jornada,modalidad,pago, duracion, ubicacion, provincia;
+
+    private String tipo;
+    private String titulo;
+    private String descripcion;
+    private String jornada;
+    private String modalidad;
+    private String pago;
+    private String duracion;
+    private String ubicacion;
+    private String provincia;
 
     public Oportunidades() {
     }
@@ -30,35 +46,6 @@ public class Oportunidades {
         this.duracion = duracion;
         this.ubicacion = ubicacion;
         this.provincia = provincia;
-    }
-
-    
-    
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    
-    
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
     }
 
     public int getId() {
@@ -125,7 +112,26 @@ public class Oportunidades {
         this.pago = pago;
     }
 
-    
-    
-    
-}
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }}

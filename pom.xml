@@ -77,6 +77,24 @@
             <artifactId>jersey-media-moxy</artifactId>
             <version>2.35</version>
         </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>2.0.9-05</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>annotations-api</artifactId>
+            <version>6.0.53</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-annotations-api</artifactId>
+            <version>7.0.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     
     <build>

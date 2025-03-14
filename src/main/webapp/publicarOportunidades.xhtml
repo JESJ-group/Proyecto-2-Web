@@ -132,8 +132,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                                 <f:selectItem itemLabel="11 meses" itemValue="11 meses"/>
                                 <f:selectItem itemLabel="12 meses" itemValue="12 meses"/>
                             </p:selectOneMenu>
-                            
-                            
+
+
                             <h:outputLabel value="Provincia de la oportunidad" style="font-size: 20px; color: black" />
                             <p:selectOneMenu value="#{oportunidadesController.oportunidades.provincia}" required="true" requiredMessage="La provincia de la oportunidad es obligatoria" style="width: 15rem">
                                 <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true"/>
@@ -153,8 +153,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                                              requiredMessage="La ubicación exacta es obligatoria"  
                                              style="width: 100%; height: 45px"/>
 
-                            
-                            
+
+
                         </p:panelGrid>
 
                     </p:card>
@@ -185,7 +185,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                                 <f:selectItem itemLabel="Nocturna" itemValue="Nocturna"/>
                                 <f:selectItem itemLabel="Mixta" itemValue="Mixta"/>
                             </p:selectOneButton>
-                            
+
                             <p:outputLabel for="remuneracion" value="Remuneración" style="font-size: 20px"/>
                             <p:selectOneButton id="remuneracion" value="#{oportunidadesController.oportunidades.pago}">
                                 <f:selectItem itemLabel="Pagado" itemValue="Pagado"/>

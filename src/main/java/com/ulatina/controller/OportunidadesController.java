@@ -33,7 +33,7 @@ public class OportunidadesController implements Serializable{
     
 
     @PostConstruct
-    public void init() {
+    public void init() throws ClassNotFoundException {
         
         cargarOportunidades();
         
@@ -98,7 +98,7 @@ public class OportunidadesController implements Serializable{
         }
     }
 
-    public void cargarOportunidades() {
+    public void cargarOportunidades() throws ClassNotFoundException {
 
         this.listaOportunidades = servicioOportunidad.cargarOportunidades();
 

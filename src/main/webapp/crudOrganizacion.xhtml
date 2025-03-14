@@ -6,69 +6,37 @@
       xmlns:p="http://primefaces.org/ui">
   <h:head>
     <title>CRUD Organizaciones</title>
-    <style>
-      body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background-color: #f2f2f2;
-        margin: 0;
-        padding: 20px;
-      }
-      .navButton {
-        margin: 5px;
-        padding: 10px 20px;
-        background-color: #007ad9;
-        color: #ffffff;
-        border: none;
-        border-radius: 4px;
-        font-size: 16px;
-        cursor: pointer;
-        text-decoration: none;
-      }
-      .navButton:disabled {
-        background-color: #005a9c;
-      }
-      .card {
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-        padding: 15px;
-      }
-      .field {
-        margin-bottom: 15px;
-      }
-      .field p\:outputLabel {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-      .ui-button-success {
-        background-color: #28a745 !important;
-        border: none !important;
-      }
-      .ui-button-danger {
-        background-color: #dc3545 !important;
-        border: none !important;
-      }
-      .ui-button-warning {
-        background-color: #ffc107 !important;
-        border: none !important;
-      }
-      .ui-datatable {
-        background-color: #fff;
-      }
-      .container {
-        max-width: 1200px;
-        margin: auto;
-      }
-    </style>
+   
   </h:head>
   <h:body>
-    <div class="container">
-      <h:form id="navForm">
-        <h:commandButton value="Usuarios" action="crudUsuario?faces-redirect=true" styleClass="navButton" />
-        <h:commandButton value="Organizaciones" disabled="true" styleClass="navButton" />
-      </h:form>
+     <div class="barraMenu" 
+             style="display: flex; justify-content: space-between; align-items: center;
+             width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+             background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+            
+            
+            <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+
+                <p:menuitem value="Usuarios" outcome="/crudUsuario.xhtml" icon="pi pi-fw pi-user"/>
+                 <p:menuitem value="Organizaciones" disabled="true" icon="pi pi-building"/>
+                  <p:menuitem value="Oportunidades"  outcome="/crudOportunidades.xhtml" icon="pi pi-pi pi-briefcase"/>
+            
+            
+
+            </p:menubar>
+
+            <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+
+                
+                    
+                    <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out" outcome="/index.xhtml"/>
+                
+
+            </p:menubar>
+
+        </div><div style="margin-top: 76px;">
+        </div>
 
       <h:form id="formOrg">
         <p:growl id="messages" showDetail="true" />
@@ -224,7 +192,6 @@
                 </div>
               </p:column>
               <p:column>
-                <!-- Dejar vacío si no tienes más campos -->
               </p:column>
             </p:row>
           </p:panelGrid>
@@ -249,6 +216,7 @@
                            onclick="PF('deleteOrgDialog').hide()" />
         </p:confirmDialog>
       </h:form>
-    </div>
-  </h:body>
+    
+   </h:body>
 </html>
+
