@@ -294,13 +294,7 @@ public String getDeleteButtonMessageOrganizaciones() {
         this.selectedOportunidades = selectedOportunidades;
     }
 
-    public boolean isEsInsertarOportunidades() {
-        return esInsertarOportunidades;
-    }
-
-    public void setEsInsertarOportunidades(boolean esInsertarOportunidades) {
-        this.esInsertarOportunidades = esInsertarOportunidades;
-    }
+   
 
     public List<Oportunidades> getListaOportunidades() {
         return listaOportunidades;
@@ -328,7 +322,6 @@ public String getDeleteButtonMessageOrganizaciones() {
 
     private Oportunidades oportunidades = new Oportunidades();
     private Oportunidades selectedOportunidades;
-    private boolean esInsertarOportunidades;
     private List<Oportunidades> listaOportunidades = new ArrayList<>();
     private ServicioOportunidad servicioOportunidades = new ServicioOportunidad();
     private List<Oportunidades> oportunidadesSeleccionadas = new ArrayList<>();
@@ -336,25 +329,14 @@ public String getDeleteButtonMessageOrganizaciones() {
    
     
 
-    public void openNew() {
-        this.selectedOportunidades  = new Oportunidades();
-        this.esInsertarOportunidades = true;
-    }
-
-    public void limpiar() {
-        this.esInsertarOportunidades = false;
-    }
-
+  
 
     public void saveOportunidades() {
         try {
-           if (selectedOportunidades != null && servicioOportunidades.validarOportunidades(selectedOportunidades.getId()) == null) {
-                servicioOportunidades.insertarOportunidad(selectedOportunidades);
-                FacesContext.getCurrentInstance().addMessage("form:messages", new FacesMessage("Oportunidad agregada correctamente"));
-            } else {
+          
                 servicioOportunidades.actualizarOportunidad(selectedOportunidades);
                 FacesContext.getCurrentInstance().addMessage("form:messages", new FacesMessage("Oportunidad actualizada correctamente"));
-            }
+            
             listaOportunidades = servicioOportunidades.cargarOportunidades();
             PrimeFaces.current().executeScript("PF('manageOrgDialog').hide()");
         } catch (Exception e) {

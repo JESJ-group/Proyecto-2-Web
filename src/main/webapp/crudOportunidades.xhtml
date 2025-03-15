@@ -44,12 +44,7 @@
                 <div class="card">
                     <p:toolbar>
                         <p:toolbarGroup>
-                            <p:commandButton value="Nueva Oportunidad" icon="pi pi-plus" 
-                                             actionListener="#{crudController.openNew}"
-                                             update=":dialogsOpor:manage-opor-content" oncomplete="PF('manageOporDialog').show()"
-                                             styleClass="ui-button-success" style="margin-right: .5rem">
-                                <p:resetInput target=":dialogsOpor:manage-opor-content" />
-                            </p:commandButton>
+                            
                             <p:commandButton id="delete-opor-button" 
                                              value="#{crudController.getDeleteButtonMessage()}"
                                              icon="pi pi-trash" 
