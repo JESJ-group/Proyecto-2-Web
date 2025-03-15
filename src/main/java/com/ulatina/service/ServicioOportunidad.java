@@ -9,43 +9,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioOportunidad extends Servicio {
-
-    public List<Oportunidades> cargarOportunidades() throws ClassNotFoundException {
+public List<Oportunidades> cargarOportunidades() {
         List<Oportunidades> listaOportunidades = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+
         try {
             super.conectarBD();
-            String sql = "SELECT id, idOrganizacion, titulo, descripcion, tipo, duracion, provincia, jornada, modalidad, pago, ubicacion FROM oportunidades";
+            String sql = "SELECT o.id, o.idOrganizacion, o.titulo, o.descripcion, o.tipo, "
+                    + "o.duracion, o.jornada, o.modalidad, o.pago, o.ubicacion, o.provincia, "
+                    + "org.nombre AS nombreOrganizacion "
+                    + "FROM Oportunidades o, Organizacion org WHERE o.idOrganizacion = org.id";
+                   
+
             pstmt = super.getConexion().prepareStatement(sql);
             rs = pstmt.executeQuery();
+
             while (rs.next()) {
-                Oportunidades op = new Oportunidades();
-                Organizacion org = new Organizacion();
-                op.setId(rs.getInt("id"));
-                org.setId(rs.getInt("idOrganizacion"));
-                op.setIdOrganizacion(org);
-                op.setTitulo(rs.getString("titulo"));
-                op.setDescripcion(rs.getString("descripcion"));
-                op.setTipo(rs.getString("tipo"));
-                op.setDuracion(rs.getString("duracion"));
-                op.setProvincia(rs.getString("provincia"));
-                op.setJornada(rs.getString("jornada"));
-                op.setModalidad(rs.getString("modalidad"));
-                op.setPago(rs.getString("pago"));
-                op.setUbicacion(rs.getString("ubicacion"));
-                listaOportunidades.add(op);
+                Oportunidades oportunidades = new Oportunidades();
+                Organizacion organizacion = new Organizacion();
+
+                oportunidades.setId(rs.getInt("id"));
+                organizacion.setId(rs.getInt("idOrganizacion"));
+                organizacion.setNombre(rs.getString("nombreOrganizacion")); 
+
+                oportunidades.setIdOrganizacion(organizacion);
+                oportunidades.setTitulo(rs.getString("titulo"));
+                oportunidades.setDescripcion(rs.getString("descripcion"));
+                oportunidades.setTipo(rs.getString("tipo"));
+                oportunidades.setDuracion(rs.getString("duracion"));
+                oportunidades.setJornada(rs.getString("jornada"));
+                oportunidades.setModalidad(rs.getString("modalidad"));
+                oportunidades.setPago(rs.getString("pago"));
+                oportunidades.setUbicacion(rs.getString("ubicacion"));
+                oportunidades.setProvincia(rs.getString("provincia"));
+
+                listaOportunidades.add(oportunidades);
             }
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
+
             super.cerrarPreparedStatement(pstmt);
             super.cerrarResultSet(rs);
             super.cerrarConexion();
         }
+
         return listaOportunidades;
     }
-
     public void insertarOportunidad(Oportunidades op) {
         PreparedStatement pstmt = null;
         try {

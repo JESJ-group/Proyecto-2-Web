@@ -102,8 +102,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                             </f:facet>
 
-                            <p style="
-                               margin-bottom: 5px; margin-top: 0px; font-weight: bolder;font-size: 20px ;color: #007bff; ">#{oportunidad.titulo}</p>
+                             <h:commandLink style="font-size: 20px; color: #007bff; text-decoration: none;"
+                           action="#{oportunidadesController.irADetalles(oportunidad)}">
+                #{oportunidad.titulo}
+            </h:commandLink>
                             <p:inputText  value="#{oportunidad.descripcion}"  disabled="true"
                                           style="width: 125%; height: 70px; border-radius: 20px; background-color: white;
                                           margin-bottom: 100px;
