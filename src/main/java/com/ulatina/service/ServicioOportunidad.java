@@ -75,33 +75,7 @@ public class ServicioOportunidad extends Servicio {
         }
     }
     
-     public void insertarOportunidadAdmin(Oportunidades op) {
-        PreparedStatement pstmt = null;
-        try {
-            super.conectarBD();
-            String sql = "INSERT INTO oportunidades (idOrganizacion, titulo, descripcion, tipo, duracion, provincia, jornada, modalidad, pago, ubicacion) VALUES (?,?,?,?,?,?,?,?,?,?)";
-            pstmt = super.getConexion().prepareStatement(sql);
-            pstmt.setInt(1, op.getIdOrganizacion().getId());
-            pstmt.setString(2, op.getTitulo());
-            pstmt.setString(3, op.getDescripcion());
-            pstmt.setString(4, op.getTipo());
-            pstmt.setString(5, op.getDuracion());
-            pstmt.setString(6, op.getProvincia());
-            pstmt.setString(7, op.getJornada());
-            pstmt.setString(8, op.getModalidad());
-            pstmt.setString(9, op.getPago());
-            pstmt.setString(10, op.getUbicacion());
-            int cantidad = pstmt.executeUpdate();
-            if (cantidad == 0) {
-                throw new SQLException("No se logró insertar la oportunidad");
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            cerrarPreparedStatement(pstmt);
-            cerrarConexion();
-        }
-    }
+     
     
 
     public Oportunidades validarOportunidades(int id) throws ClassNotFoundException {
