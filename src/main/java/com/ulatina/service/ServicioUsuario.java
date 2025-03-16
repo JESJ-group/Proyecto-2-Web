@@ -1,5 +1,6 @@
 package com.ulatina.service;
 
+import com.ulatina.data.Postulaciones;
 import com.ulatina.data.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,15 @@ import java.util.Date;
 import java.util.List;
 
 public class ServicioUsuario extends Servicio {
+Postulaciones postulaciones = new Postulaciones();
 
+    public Postulaciones getPostulaciones() {
+        return postulaciones;
+    }
+
+    public void setPostulaciones(Postulaciones postulaciones) {
+        this.postulaciones = postulaciones;
+    }
     public Usuario validarUsuario(String user, String pass) throws ClassNotFoundException {
         Usuario usuario = null;
         PreparedStatement pstmt = null;
@@ -47,7 +56,37 @@ public class ServicioUsuario extends Servicio {
         }
         return usuario;
     }
+public Usuario obtenerIdUsuario(int id) throws ClassNotFoundException {
 
+        
+        Usuario usuario = null;
+Postulaciones postulaciones= null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            super.conectarBD();
+            String sql = "SELECT * FROM usuario WHERE id= ?";
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                postulaciones = new Postulaciones();
+                usuario = new Usuario();
+                postulaciones.setId(rs.getInt("id"));
+                postulaciones.setIdUsuario(postulaciones.getIdUsuario());
+
+            }
+        } catch (SQLException e) {
+        } finally {
+            
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+
+        }
+        return usuario;
+    }
     
     
     public Usuario validarUsuario(int id) throws ClassNotFoundException {

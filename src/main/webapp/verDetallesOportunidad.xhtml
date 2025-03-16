@@ -101,7 +101,7 @@
       </div>
       <p:commandButton value="Aplica ahora"
                        styleClass="apply-button"
-                       actionListener="#{oportunidadesController.aplicar}"
+                       action="#{oportunidadesController.aplicar(postulaciones, idOportunidad, idUsuario)}" 
                        update="@form" />
     </div>
   </h:form>
@@ -116,6 +116,7 @@
         </p>
         <p>
           ¿Estás interesado? Aplica ahora!!!
+        </p>
 
         <div class="footer-buttons">
           <p:commandButton value="Regresar"

@@ -1,21 +1,33 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.ulatina.data;
 
 import java.time.LocalDate;
 import java.util.Date;
 
 /**
- * Clase que representa una Postulación a una Oportunidad.
+ *
+ * @author Ryzon
  */
 public class Postulaciones {
 
+    @Override
+    public String toString() {
+        return "Postulaciones{" + "id=" + id + ", idOportunidades=" + idOportunidades + ", idUsuario=" + idUsuario + ", estado=" + "Enviada" + ", fechaPostulacion=" + fechaPostulacion + '}';
+    }
+ 
     private int id;
-    private int idOportunidades;
-    private int idUsuario;
+    private Oportunidades idOportunidades;
+    private Usuario idUsuario;
     private String estado;
     private LocalDate fechaPostulacion;
 
-    // 🔹 Constructor público para poder instanciar objetos desde otras clases
-    public Postulaciones(int id, int idOportunidades, int idUsuario, String estado, LocalDate fechaPostulacion) {
+    public Postulaciones() {
+    }
+
+    public Postulaciones(int id, Oportunidades idOportunidades, Usuario idUsuario, String estado, LocalDate fechaPostulacion) {
         this.id = id;
         this.idOportunidades = idOportunidades;
         this.idUsuario = idUsuario;
@@ -23,11 +35,6 @@ public class Postulaciones {
         this.fechaPostulacion = fechaPostulacion;
     }
 
-    // 🔹 Constructor vacío (necesario para algunas implementaciones de frameworks)
-    public Postulaciones() {
-    }
-
-    // 🔹 Getters y Setters
     public int getId() {
         return id;
     }
@@ -36,19 +43,19 @@ public class Postulaciones {
         this.id = id;
     }
 
-    public int getIdOportunidades() {
+    public Oportunidades getIdOportunidades() {
         return idOportunidades;
     }
 
-    public void setIdOportunidades(int idOportunidades) {
+    public void setIdOportunidades(Oportunidades idOportunidades) {
         this.idOportunidades = idOportunidades;
     }
 
-    public int getIdUsuario() {
+    public Usuario getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Usuario idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -67,15 +74,6 @@ public class Postulaciones {
     public void setFechaPostulacion(LocalDate fechaPostulacion) {
         this.fechaPostulacion = fechaPostulacion;
     }
-
-    @Override
-    public String toString() {
-        return "Postulaciones{" +
-                "id=" + id +
-                ", idOportunidades=" + idOportunidades +
-                ", idUsuario=" + idUsuario +
-                ", estado='" + estado + '\'' +
-                ", fechaPostulacion=" + fechaPostulacion +
-                '}';
-    }
+    
+    
 }

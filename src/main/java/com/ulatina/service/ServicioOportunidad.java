@@ -2,6 +2,7 @@ package com.ulatina.service;
 
 import com.ulatina.data.Oportunidades;
 import com.ulatina.data.Organizacion;
+import com.ulatina.data.Postulaciones;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -88,7 +89,37 @@ public List<Oportunidades> cargarOportunidades() {
     }
     
      
-    
+    public Oportunidades obtenerIdOportunidad(int id) throws ClassNotFoundException {
+
+        Oportunidades oportunidades = null;
+        Postulaciones postulacion = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            super.conectarBD();
+            String sql = "SELECT * FROM oportunidades WHERE id= ?";
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                postulacion = new Postulaciones();
+                oportunidades = new Oportunidades();
+                postulacion.setId(rs.getInt("id"));
+                postulacion.setIdOportunidades(postulacion.getIdOportunidades());
+
+            }
+        } catch (SQLException e) {
+        } finally {
+
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+
+        }
+        return oportunidades;
+    }
+
 
     public Oportunidades validarOportunidades(int id) throws ClassNotFoundException {
         Oportunidades op = null;

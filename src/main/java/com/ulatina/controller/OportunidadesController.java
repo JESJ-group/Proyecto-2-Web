@@ -5,14 +5,17 @@
 package com.ulatina.controller;
 
 import com.ulatina.data.Oportunidades;
+import com.ulatina.data.Postulaciones;
 import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioOportunidad;
+import com.ulatina.service.ServicioPostulaciones;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,17 @@ public class OportunidadesController implements Serializable{
     private Oportunidades oportunidades = new Oportunidades();
     private ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
     private List<Oportunidades> listaOportunidades = new ArrayList<>();
-    
+        private ServicioPostulaciones servicioPostulaciones = new ServicioPostulaciones();
+        private Postulaciones postulaciones = new Postulaciones();
+
+    public Postulaciones getPostulaciones() {
+        return postulaciones;
+    }
+
+    public void setPostulaciones(Postulaciones postulaciones) {
+        this.postulaciones = postulaciones;
+    }
+
 
     @PostConstruct
     public void init() throws ClassNotFoundException {
@@ -38,7 +51,11 @@ public class OportunidadesController implements Serializable{
         cargarOportunidades();
         
     }
-    
+       public String irADetalles(Oportunidades op) {
+        this.oportunidades = op;
+       
+        return "verDetallesOportunidad?faces-redirect=true";
+    }
     Servicio servicio = new Servicio(){
         
     };
@@ -81,6 +98,20 @@ public class OportunidadesController implements Serializable{
 
     
 
+ public void aplicar(Postulaciones postulaciones, int idOportunidad, int idUsuario) throws SQLException {
+        try {
+            servicioPostulaciones.insertarPostulacion(postulaciones, idOportunidad, idUsuario);
+            
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Oportunidad creada", "Oportuinidad creada con exito"));
+            
+            servicio.redireccionar("/pasantias.xhtml");
+            
+        } catch (ClassNotFoundException e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error inesperado", "No se pudo completar la oportunidad:  " + e.getMessage()));
+        }
+    }
    
     
     
