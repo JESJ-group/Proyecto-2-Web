@@ -10,15 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ServicioUsuario extends Servicio {
-Postulaciones postulaciones = new Postulaciones();
 
-    public Postulaciones getPostulaciones() {
-        return postulaciones;
-    }
-
-    public void setPostulaciones(Postulaciones postulaciones) {
-        this.postulaciones = postulaciones;
-    }
     public Usuario validarUsuario(String user, String pass) throws ClassNotFoundException {
         Usuario usuario = null;
         PreparedStatement pstmt = null;
@@ -26,7 +18,7 @@ Postulaciones postulaciones = new Postulaciones();
         try {
             super.conectarBD();
             String sql = "SELECT id, nombre, apellido, correoElectronico, clave, fechaNacimiento, genero, estatus, provincia, canton, distrito, numeroContacto "
-                       + "FROM usuario WHERE correoElectronico = ? AND clave = ?";
+                    + "FROM usuario WHERE correoElectronico = ? AND clave = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, user);
             pstmt.setString(2, pass);
@@ -56,39 +48,7 @@ Postulaciones postulaciones = new Postulaciones();
         }
         return usuario;
     }
-public Usuario obtenerIdUsuario(int id) throws ClassNotFoundException {
 
-        
-        Usuario usuario = null;
-Postulaciones postulaciones= null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            super.conectarBD();
-            String sql = "SELECT * FROM usuario WHERE id= ?";
-            pstmt = super.getConexion().prepareStatement(sql);
-            pstmt.setInt(1, id);
-
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                postulaciones = new Postulaciones();
-                usuario = new Usuario();
-                postulaciones.setId(rs.getInt("id"));
-                postulaciones.setIdUsuario(postulaciones.getIdUsuario());
-
-            }
-        } catch (SQLException e) {
-        } finally {
-            
-            super.cerrarPreparedStatement(pstmt);
-            super.cerrarResultSet(rs);
-            super.cerrarConexion();
-
-        }
-        return usuario;
-    }
-    
-    
     public Usuario validarUsuario(int id) throws ClassNotFoundException {
         Usuario usuario = null;
         PreparedStatement pstmt = null;
@@ -96,9 +56,9 @@ Postulaciones postulaciones= null;
         try {
             super.conectarBD();
             String sql = "SELECT id, nombre, apellido, correoElectronico, clave, fechaNacimiento, "
-                       + "genero, estatus, provincia, canton, distrito, numeroContacto "
-                       + "FROM usuario "
-                       + "WHERE id = ?";
+                    + "genero, estatus, provincia, canton, distrito, numeroContacto "
+                    + "FROM usuario "
+                    + "WHERE id = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
@@ -135,7 +95,7 @@ Postulaciones postulaciones= null;
             super.conectarBD();
             String sql = "INSERT INTO usuario (nombre, apellido, correoElectronico, clave, fechaNacimiento, genero, estatus, provincia, canton, distrito, numeroContacto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pstmt = super.getConexion().prepareStatement(sql);
-                                                                                                                                            
+
             pstmt.setString(1, usuario.getNombre());
             pstmt.setString(2, usuario.getApellidos());
             pstmt.setString(3, usuario.getCorreoElectronico());
@@ -161,7 +121,7 @@ Postulaciones postulaciones= null;
             cerrarConexion();
         }
     }
-    
+
     public void actualizarClaveUsuario(String correoElectronico, String clave) {
         PreparedStatement pstmt = null;
         try {
@@ -183,7 +143,7 @@ Postulaciones postulaciones= null;
             cerrarConexion();
         }
     }
-    
+
     public List<Usuario> demeUsuarios() throws ClassNotFoundException {
         List<Usuario> listaRetorno = new ArrayList<>();
         PreparedStatement pstmt = null;
@@ -191,8 +151,8 @@ Postulaciones postulaciones= null;
         try {
             super.conectarBD();
             String sql = "SELECT id, nombre, apellido, correoElectronico, clave, fechaNacimiento, "
-                       + "genero, estatus, provincia, canton, distrito, numeroContacto "
-                       + "FROM usuario";
+                    + "genero, estatus, provincia, canton, distrito, numeroContacto "
+                    + "FROM usuario";
             pstmt = super.getConexion().prepareStatement(sql);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -221,17 +181,15 @@ Postulaciones postulaciones= null;
         }
         return listaRetorno;
     }
-    
-    
-    
+
     public void actualizar(Usuario usuario) {
         PreparedStatement pstmt = null;
         try {
             super.conectarBD();
             String sql = "UPDATE usuario SET "
-                       + "nombre = ?, apellido = ?, correoElectronico = ?, clave = ?, fechaNacimiento = ?, "
-                       + "genero = ?, estatus = ?, provincia = ?, canton = ?, distrito = ?, numeroContacto = ? "
-                       + "WHERE id = ?";
+                    + "nombre = ?, apellido = ?, correoElectronico = ?, clave = ?, fechaNacimiento = ?, "
+                    + "genero = ?, estatus = ?, provincia = ?, canton = ?, distrito = ?, numeroContacto = ? "
+                    + "WHERE id = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, usuario.getNombre());
             pstmt.setString(2, usuario.getApellidos());
@@ -279,5 +237,36 @@ Postulaciones postulaciones= null;
             super.cerrarConexion();
         }
     }
-    
+
+    public Usuario obtenerIdUsuario(int id) throws ClassNotFoundException {
+
+        Usuario usuario = null;
+        Postulaciones postulacion = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            super.conectarBD();
+            String sql = "SELECT * FROM usuario WHERE id= ?";
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                postulacion = new Postulaciones();
+                usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                postulacion.setIdUsuario(usuario);
+
+            }
+        } catch (SQLException e) {
+        } finally {
+
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+
+        }
+        return usuario;
+    }
+
 }
