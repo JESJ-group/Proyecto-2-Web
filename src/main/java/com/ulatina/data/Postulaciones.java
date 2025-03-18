@@ -13,11 +13,6 @@ import java.util.Date;
  */
 public class Postulaciones {
 
-    @Override
-    public String toString() {
-        return "Postulaciones{" + "id=" + id + ", idOportunidades=" + idOportunidades + ", idUsuario=" + idUsuario + ", estado=" + "Enviada" + ", fechaPostulacion=" + fechaPostulacion + '}';
-    }
- 
     private int id;
     private Oportunidades idOportunidades;
     private Usuario idUsuario;
@@ -72,8 +67,8 @@ public class Postulaciones {
     }
 
     public void setFechaPostulacion(LocalDate fechaPostulacion) {
+        
         this.fechaPostulacion = fechaPostulacion;
     }
-    
-    
+
 }
