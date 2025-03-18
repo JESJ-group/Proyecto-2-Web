@@ -128,7 +128,7 @@ public class OportunidadesController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Oportunidad creada", "Oportuinidad creada con exito"));
 
-            servicio.redireccionar("/oportunidades.xhtml");
+            servicio.redireccionar("/pasantias.xhtml");
 
         } catch (ClassNotFoundException e) {
             FacesContext.getCurrentInstance().addMessage(null,
