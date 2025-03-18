@@ -93,6 +93,11 @@ public class UsuarioController implements Serializable {
 
     }
     
+    public void actualizarUsuario(Usuario usr, int id) {
+        servicioUsuario.actualizarUsuarioEditar(usr , id);
+        servicio.redireccionar("/landingPageUsuario.xhtml");
+    }
+    
     public String onFlowProcess(org.primefaces.event.FlowEvent event) {
     return event.getNewStep();
 }

@@ -3,16 +3,86 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
 -->
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
+        <title>Editar Perfil Organizacion</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
     </h:head>
 
-    <h:body>
+    <h:body class="container mt-5">
+        <h2>Editar Perfil</h2>
 
+        <h:form enctype="multipart/form-data" id="profileForm">
+            <input type="hidden" h:field="*{id}" />
+
+            <div class="mb-3">
+                <label>Nombre</label>
+                <p:inputText id="nombre" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().nombre}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Nombre de Representante</label>
+                <p:inputText id="nombreRepresentante" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().nombreRepresentante}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Correo Electronico</label>
+                <p:inputText id="correoElectronico" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().correoElectronico}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Numero Telefonico</label>
+                <p:inputText id="numeroTelefonico" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().numeroTelefonico}"/>
+            </div>
+            
+            <div class="mb-3">
+                <label>Descripcion</label>
+                <p:inputText id="descripcion" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().descripcion}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Provincia</label>
+                <p:inputText id="provincia" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().provincia}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Canton</label>
+                <p:inputText id="canton" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().canton}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Distrito</label>
+                <p:inputText id="distrito" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().distrito}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Cedula Representante</label>
+                <p:inputText id="cedulaRepresentante" type="text" class="form-control" value = "#{editarOrganizacionController.getOrganizacion().cedulaRepresentante}"/>
+            </div>
+
+            
+
+            <!-- Logo -->
+            <div class="mb-3">
+                <h:outputLabel for="logo" value="Foto de perfil:" />
+                <p:inputText id="logo" value="#{editarOrganizacionController.getOrganizacion().logo}" />
+                <p:commandButton value="Seleccionar Foto" onclick="document.getElementById('photoInput').click(); return false;" />
+                <p:graphicImage value="#{editarOrganizacionController.getOrganizacion().logo}" style="width:100px; height:100px;" rendered="#{editarOrganizacionController.getOrganizacion().logo}" />
+                <!-- Selector de archivo oculto para la foto -->
+                <h:inputHidden id="rutaFoto" value="#{editarOrganizacionController.getOrganizacion().logo}" />
+                <input type="file" id="photoInput" style="display:none;" onchange="updateFilePath(this, 'rutaLogo')" />
+            </div>
+
+            <p:commandButton value="Guardar Cambios" ajax="false" validateClient="true" style="width: 100%;" styleClass="mt-3" actionListener="#{editarOrganizacionController.actualizarOrganizacion()}" update="@form"/>
+        </h:form>
+        <!-- Script para obtener la ruta local -->
+        <h:outputScript>
+            function updateFilePath(input, targetId) {
+            document.getElementById(targetId).value = input.value;
+            }
+        </h:outputScript>
     </h:body>
 </html>

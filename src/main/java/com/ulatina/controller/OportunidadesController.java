@@ -144,6 +144,7 @@ public class OportunidadesController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Oportunidad creada", "Oportuinidad creada con exito"));
 
+            cargarOportunidades();
             servicio.redireccionar("/landingPageOrganizacion.xhtml");
 
         } catch (ClassNotFoundException e) {
@@ -166,4 +167,16 @@ public class OportunidadesController implements Serializable {
     public String onFlowProcess(org.primefaces.event.FlowEvent event) {
         return event.getNewStep();
     }
+    
+    public void nuevaOportunidad() {
+         this.oportunidades = new Oportunidades();
+     }
+ 
+     public void irAPublicar() { 
+         nuevaOportunidad();
+         servicio.redireccionar("/publicarOportunidades.xhtml");
+     }
+    
 }
+
+

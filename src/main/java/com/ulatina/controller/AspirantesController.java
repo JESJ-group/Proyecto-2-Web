@@ -6,6 +6,7 @@ package com.ulatina.controller;
 
 import com.ulatina.data.Oportunidades;
 import com.ulatina.data.Usuario;
+import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioAspirantes;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -25,6 +26,9 @@ public class AspirantesController implements Serializable{
     private ServicioAspirantes servicioAspirantes = new ServicioAspirantes();
     private List<Oportunidades> listaOportunidadesOrganizacion = new ArrayList<>();
     private List<Usuario> listaAspirantesUsuarios = new ArrayList<>();
+    Servicio servicio = new Servicio() {
+
+    };
 
     public List<Oportunidades> getListaOportunidadesOrganizacion() {
         return listaOportunidadesOrganizacion;
@@ -47,6 +51,7 @@ public class AspirantesController implements Serializable{
     public void cargarOportunidadesOrganizacion(int id) {
 
         this.listaOportunidadesOrganizacion = servicioAspirantes.cargarOportunidadesOrganizacion(id);
+        servicio.redireccionar("/misOportunidadesOrganizacion.xhtml");
 
     }
     

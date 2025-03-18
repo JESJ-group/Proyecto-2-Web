@@ -218,6 +218,42 @@ public class ServicioUsuario extends Servicio {
             super.cerrarConexion();
         }
     }
+    
+    
+    public void actualizarUsuarioEditar(Usuario usuario, int id) {
+        PreparedStatement pstmt = null;
+        try {
+            super.conectarBD();
+            String sql = "UPDATE usuario SET "
+                    + "nombre = ?, apellido = ?, correoElectronico = ?, clave = ?, fechaNacimiento = ?, "
+                    + "genero = ?, estatus = ?, provincia = ?, canton = ?, distrito = ?, numeroContacto = ? "
+                    + "WHERE id = ?";
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setString(1, usuario.getNombre());
+            pstmt.setString(2, usuario.getApellidos());
+            pstmt.setString(3, usuario.getCorreoElectronico());
+            pstmt.setString(4, usuario.getClave());
+            if (usuario.getFechaNacimiento() != null) {
+                pstmt.setDate(5, new java.sql.Date(usuario.getFechaNacimiento().getTime()));
+            } else {
+                pstmt.setNull(5, java.sql.Types.DATE);
+            }
+            pstmt.setString(6, usuario.getGenero());
+            pstmt.setString(7, usuario.getEstatus());
+            pstmt.setString(8, usuario.getProvincia());
+            pstmt.setString(9, usuario.getCanton());
+            pstmt.setString(10, usuario.getDistrito());
+            pstmt.setString(11, usuario.getNumeroContacto());
+            pstmt.setInt(12, id);
+            pstmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarConexion();
+        }
+    }
 
     public void eliminarUsuario(String correoElectronico) {
         PreparedStatement pstmt = null;

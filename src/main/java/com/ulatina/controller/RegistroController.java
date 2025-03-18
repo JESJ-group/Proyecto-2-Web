@@ -94,8 +94,6 @@ public class RegistroController implements Serializable{
         }
     }
     
-    
-    
     public String onFlowProcess(org.primefaces.event.FlowEvent event) {
         return event.getNewStep();
     }

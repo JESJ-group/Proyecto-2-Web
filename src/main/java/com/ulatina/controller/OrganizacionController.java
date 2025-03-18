@@ -100,4 +100,8 @@ public class OrganizacionController implements Serializable{
 
     }
     
+    public void actualizarOrganizacion() {
+        servicioOrganizacion.actualizarOrganizacion(organizacion);
+    }
+    
 }
