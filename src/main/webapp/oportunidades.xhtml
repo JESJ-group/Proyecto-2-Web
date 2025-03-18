@@ -130,7 +130,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                             <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
                         </p:submenu>
                         <p:submenu style="font-size: 18px" label="Mis publicaciones" icon="pi pi-fw pi-inbox">
-                            <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/misOportunidadesOrganizacion.xhtml"/>
+                            <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" action="#{aspirantesController.cargarOportunidadesOrganizacion(loginController.organizacion.id)}"/>
                             <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
                         </p:submenu>
                     </p:menubar>

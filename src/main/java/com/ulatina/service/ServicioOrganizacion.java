@@ -204,6 +204,36 @@ public class ServicioOrganizacion extends Servicio {
             super.cerrarConexion();
         }
     }
+    
+    
+    public void actualizarOrganizacionEditar(Organizacion organizacion, int id) {
+        PreparedStatement pstmt = null;
+        try {
+            super.conectarBD();
+            String sql = "UPDATE organizacion SET "
+                    + "nombre = ?, nombreRepresentante = ?, cedulaRepresentante = ?, correoElectronico = ?, "
+                    + "clave = ?, numeroTelefonico = ?, descripcion = ?, provincia = ?, canton = ?, distrito = ? "
+                    + "WHERE id = ?";
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setString(1, organizacion.getNombre());
+            pstmt.setString(2, organizacion.getNombreRepresentante());
+            pstmt.setString(3, organizacion.getCedulaRepresentante());
+            pstmt.setString(4, organizacion.getCorreoElectronico());
+            pstmt.setString(5, organizacion.getClave());
+            pstmt.setString(6, organizacion.getNumeroTelefonico());
+            pstmt.setString(7, organizacion.getDescripcion());
+            pstmt.setString(8, organizacion.getProvincia());
+            pstmt.setString(9, organizacion.getCanton());
+            pstmt.setString(10, organizacion.getDistrito());
+            pstmt.setInt(11, id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarConexion();
+        }
+    }
 
     public List<Organizacion> demeOrganizaciones() throws ClassNotFoundException {
         List<Organizacion> lista = new ArrayList<>();

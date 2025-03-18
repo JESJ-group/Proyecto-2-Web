@@ -100,8 +100,9 @@ public class OrganizacionController implements Serializable{
 
     }
     
-    public void actualizarOrganizacion() {
-        servicioOrganizacion.actualizarOrganizacion(organizacion);
+    public void actualizarOrganizacion(Organizacion org,  int id) {
+        servicioOrganizacion.actualizarOrganizacionEditar(org, id);
+        servicio.redireccionar("/landingPageOrganizacion.xhtml");
     }
     
 }
