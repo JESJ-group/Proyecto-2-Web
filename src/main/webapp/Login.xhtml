@@ -79,9 +79,8 @@
                 <p:link value="Registrarse" outcome="/seleccionRegistro.xhtml" />
                 <br/><br/>
                 
-                <p:commandButton value="Ingresar" actionListener="#{loginController.ingresar}" update="growl,messages" styleClass="login-button"/>
+                <p:commandButton value="Ingresar" actionListener="#{loginController.ingresar}" update="growl" styleClass="login-button"/>
                 <p:growl id="growl" showDetail="true" />
-                <p:messages id="messages" showDetail="true" closable="true"/>
             </p:panel>
         </h:form>
     </h:body>
