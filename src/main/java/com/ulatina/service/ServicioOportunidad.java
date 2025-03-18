@@ -22,32 +22,87 @@ public class ServicioOportunidad extends Servicio {
     }
         
 public List<Oportunidades> cargarOportunidades() {
-        
+
         List<Oportunidades> listaOportunidades = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             super.conectarBD();
-            String sql = "SELECT o.id, o.idOrganizacion, o.titulo, o.descripcion, o.tipo, "
+            StringBuilder sql = new StringBuilder("SELECT o.id, o.idOrganizacion, o.titulo, o.descripcion,o.detalles, o.tipo, "
                     + "o.duracion, o.jornada, o.modalidad, o.pago, o.ubicacion, o.provincia, "
                     + "org.nombre AS nombreOrganizacion "
-                    + "FROM Oportunidades o, Organizacion org WHERE o.idOrganizacion = org.id";
+                    + "FROM Oportunidades o, Organizacion org WHERE o.idOrganizacion = org.id");
 
+            List<String> condiciones = new ArrayList<>();
+
+            if (filtroTipo != null && !filtroTipo.isEmpty()) {
+                condiciones.add("o.tipo = ?");
+            }
+
+            if (filtroProvincia != null && !filtroProvincia.isEmpty()) {
+                condiciones.add("o.provincia = ?");
+            }
+
+            if (filtroModalidad != null && !filtroModalidad.isEmpty()) {
+                condiciones.add("o.modalidad = ?");
+            }
+
+            if (filtroJornada != null && !filtroJornada.isEmpty()) {
+                condiciones.add("o.jornada = ?");
+            }
+
+            if (filtroPago != null && !filtroPago.isEmpty()) {
+                condiciones.add("o.pago = ?");
+            }
+
+            if (filtroDuracion != null && !filtroDuracion.isEmpty()) {
+                condiciones.add("o.duracion = ?");
+            }
+
+            if (!condiciones.isEmpty()) {
+                sql.append(" AND ").append(String.join(" AND ", condiciones));
+            }
+
+            pstmt = super.getConexion().prepareStatement(sql.toString());
             
-        if (filtro != null && !filtro.isEmpty()) {
-            sql += " AND (o.titulo LIKE ? OR org.nombre LIKE ?)";
-        }
+            int index = 1;
 
-        pstmt = super.getConexion().prepareStatement(sql);
+            if (filtroTipo != null && !filtroTipo.isEmpty()) {
+                pstmt.setString(index++, filtroTipo);
+            }
 
-        if (filtro != null && !filtro.isEmpty()) {
-            String filtro1 = "%" + filtro + "%";
-            pstmt.setString(1, filtro1);
-            pstmt.setString(2, filtro1);
-        }
+            if (filtroProvincia != null && !filtroProvincia.isEmpty()) {
+                pstmt.setString(index++, filtroProvincia);
+            }
 
-        rs = pstmt.executeQuery();
+            if (filtroModalidad != null && !filtroModalidad.isEmpty()) {
+                pstmt.setString(index++, filtroModalidad);
+            }
+
+            if (filtroJornada != null && !filtroJornada.isEmpty()) {
+                pstmt.setString(index++, filtroJornada);
+            }
+
+            if (filtroPago != null && !filtroPago.isEmpty()) {
+                pstmt.setString(index++, filtroPago);
+            }
+
+            if (filtroDuracion != null && !filtroDuracion.isEmpty()) {
+                pstmt.setString(index++, filtroDuracion);
+            }
+
+            if (filtro != null && !filtro.isEmpty()) {
+                sql.append(" AND (o.titulo LIKE ? OR org.nombre LIKE ?)");
+            }
+
+            if (filtro != null && !filtro.isEmpty()) {
+                String filtro1 = "%" + filtro + "%";
+                pstmt.setString(1, filtro1);
+                pstmt.setString(2, filtro1);
+            }
+
+            rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 Oportunidades oportunidades = new Oportunidades();
@@ -60,6 +115,7 @@ public List<Oportunidades> cargarOportunidades() {
                 oportunidades.setIdOrganizacion(organizacion);
                 oportunidades.setTitulo(rs.getString("titulo"));
                 oportunidades.setDescripcion(rs.getString("descripcion"));
+                oportunidades.setDetalles(rs.getString("detalles"));
                 oportunidades.setTipo(rs.getString("tipo"));
                 oportunidades.setDuracion(rs.getString("duracion"));
                 oportunidades.setJornada(rs.getString("jornada"));
@@ -91,18 +147,19 @@ public List<Oportunidades> cargarOportunidades() {
 
         try {
             super.conectarBD();
-            String sql = "INSERT INTO oportunidades (idOrganizacion, titulo, descripcion, tipo, duracion, jornada, modalidad, pago, ubicacion, provincia) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO oportunidades (idOrganizacion, titulo, descripcion, detalles, tipo, duracion, jornada, modalidad, pago, ubicacion, provincia) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setInt(1, oportunidades.getIdOrganizacion().getId());
             pstmt.setString(2, oportunidades.getTitulo());
             pstmt.setString(3, oportunidades.getDescripcion());
-            pstmt.setString(4, oportunidades.getTipo());
-            pstmt.setString(5, oportunidades.getDuracion());
-            pstmt.setString(6, oportunidades.getJornada());
-            pstmt.setString(7, oportunidades.getModalidad());
-            pstmt.setString(8, oportunidades.getPago());
-            pstmt.setString(9, oportunidades.getUbicacion());
-            pstmt.setString(10, oportunidades.getProvincia());
+            pstmt.setString(4, oportunidades.getDetalles());
+            pstmt.setString(5, oportunidades.getTipo());
+            pstmt.setString(6, oportunidades.getDuracion());
+            pstmt.setString(7, oportunidades.getJornada());
+            pstmt.setString(8, oportunidades.getModalidad());
+            pstmt.setString(9, oportunidades.getPago());
+            pstmt.setString(10, oportunidades.getUbicacion());
+            pstmt.setString(11, oportunidades.getProvincia());
             int cantidad = pstmt.executeUpdate();
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -115,8 +172,7 @@ public List<Oportunidades> cargarOportunidades() {
         }
 
     }
-    
-     
+
     public Oportunidades obtenerIdOportunidad(int id) throws ClassNotFoundException {
 
         Oportunidades oportunidades = null;
