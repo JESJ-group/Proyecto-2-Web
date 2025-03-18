@@ -93,7 +93,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
             <!-- MENUUUUUSSSSSSS -->
 
-            
+
 
             <p:outputPanel rendered="#{loginController.tipoUsuario eq 'organizacion'}">
                 <div class="barraOrganizacion" 
@@ -133,16 +133,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                 </div>
             </p:outputPanel>
-            
+
             <!-- Ajuste para evitar que el contenido quede debajo del menú -->
             <div style="margin-top: 60px;">
             </div>
 
 
-            <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto;gap: 15px;">
-
+            <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto;gap: 15px; ">
                 <ui:repeat value="#{aspirantesController.listaOportunidadesOrganizacion}"  var="oportunidadesOrganizacion" >
-                    <div>
+                    <div >
 
 
                         <p:card  style="
@@ -153,7 +152,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                                  box-shadow: none;
                                  display: flex;
                                  width: 55rem;
-                                 height: 25vh;"
+                                 height: 25vh; "
+
                                  >
 
                             <f:facet name="header">
@@ -164,7 +164,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                                 </div>
 
 
-                               
+
 
                                 <div class="sidebar-item" style="margin-top: 50px;">
                                     <i class="pi pi-map-marker sidebar-icon"></i>
@@ -178,34 +178,42 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
 
                             </f:facet>
-                            <h:commandLink style="margin-bottom: 5px; margin-top: 5px; font-weight: bolder;font-size: 22px ;color: #007bff; text-decoration: none; "
-                                           action="#{oportunidadesController.irADetalles(oportunidades)}">
-                                #{oportunidadesOrganizacion.titulo}
-                            </h:commandLink>
+                            <div style="flex-grow: 1; display: flex; flex-direction: column;">
+                                <p:outputLabel style="margin-bottom: 5px; font-weight: bolder; font-size: 22px; color: #007bff;">
+                                    #{oportunidadesOrganizacion.titulo}
+                                </p:outputLabel>
 
-                            <p:outputLabel style="width: 600px;
-                                           max-height: 100px;
-                                           margin-bottom: 15px;
-                                           margin-top: 10px;
-                                           margin-right: 0;
-                                           white-space: normal;
-                                           overflow: hidden;
-                                           text-overflow: ellipsis;
-                                           font-size: 17px;
-                                           display: -webkit-box;
-                                           -webkit-line-clamp: 3;
-                                           -webkit-box-orient: vertical;">
-                                #{oportunidadesOrganizacion.descripcion}
-                            </p:outputLabel>
+                                <p:outputLabel style="
+                                               width: 600px;
+                                               max-height: 100px;
+                                               white-space: normal;
+                                               overflow: hidden;
+                                               text-overflow: ellipsis;
+                                               font-size: 17px;
+                                               display: -webkit-box;
+                                               -webkit-line-clamp: 3;
+                                               -webkit-box-orient: vertical;">
+                                    #{oportunidadesOrganizacion.descripcion}
+                                </p:outputLabel>
+                            </div>
 
-                            <div class="etiquetas" style=" gap: 10px; margin-right: 10px">
-                                <p:chip icon="pi pi-users" style="font-size: 16px; background-color: #007bff; color: white;" label="#{oportunidadesOrganizacion.tipo}"/>
-                                <p:chip icon="pi pi-clock" style="font-size: 16px; background-color: #28a745; color: white;" label="#{oportunidadesOrganizacion.duracion}"/>
-                                <p:chip icon="pi pi-calendar" style="font-size: 16px; background-color: #fd7e14; color: white;" label="#{oportunidadesOrganizacion.jornada}"/>
-                                <p:chip icon="pi pi-globe" style="font-size: 16px; background-color: #6f42c1; color: white;" label="#{oportunidadesOrganizacion.modalidad}"/>
-                                <p:chip icon="pi pi-dollar" style="font-size: 16px; background-color: #ffc107; color: black;" label="#{oportunidadesOrganizacion.pago}"/>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                                <div class="etiquetas" style="gap: 10px; flex-wrap: wrap;">
+                                    <p:chip icon="pi pi-users" style="font-size: 16px; background-color: #007bff; color: white;" label="#{oportunidadesOrganizacion.tipo}"/>
+                                    <p:chip icon="pi pi-clock" style="font-size: 16px; background-color: #28a745; color: white;" label="#{oportunidadesOrganizacion.duracion}"/>
+                                    <p:chip icon="pi pi-calendar" style="font-size: 16px; background-color: #fd7e14; color: white;" label="#{oportunidadesOrganizacion.jornada}"/>
+                                    <p:chip icon="pi pi-globe" style="font-size: 16px; background-color: #6f42c1; color: white;" label="#{oportunidadesOrganizacion.modalidad}"/>
+                                    <p:chip icon="pi pi-dollar" style="font-size: 16px; background-color: #ffc107; color: black;" label="#{oportunidadesOrganizacion.pago}"/>
+                                </div>
+
 
                             </div>
+                            <div style="display: flex; flex-direction: column;justify-content: flex-end; margin-top: 20px">
+                                <p:commandButton value="Ver aspirantes" actionListener="#{oportunidadesController.verAspirantes(oportunidadesOrganizacion)}" action="#{aspirantesController.cargarAspirantes(oportunidadesOrganizacion.id)}"/>
+                            </div>
+
+
 
 
                         </p:card>

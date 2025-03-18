@@ -105,6 +105,11 @@ public class OportunidadesController implements Serializable {
 
         return "verDetallesOportunidad?faces-redirect=true";
     }
+    public String verAspirantes(Oportunidades op) {
+        this.oportunidades = op;
+
+        return "verAspirantes?faces-redirect=true";
+    }
 
     public void aplicar(int idOportunidad, int idUsuario, int idOrganizacion) throws SQLException {
         try {

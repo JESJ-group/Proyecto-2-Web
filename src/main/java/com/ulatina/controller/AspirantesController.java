@@ -8,6 +8,7 @@ import com.ulatina.data.Oportunidades;
 import com.ulatina.data.Usuario;
 import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioAspirantes;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
@@ -18,11 +19,10 @@ import java.util.List;
  *
  * @author Ryzon
  */
-
 @Named
 @SessionScoped
-public class AspirantesController implements Serializable{
-    
+public class AspirantesController implements Serializable {
+
     private ServicioAspirantes servicioAspirantes = new ServicioAspirantes();
     private List<Oportunidades> listaOportunidadesOrganizacion = new ArrayList<>();
     private List<Usuario> listaAspirantesUsuarios = new ArrayList<>();
@@ -45,21 +45,20 @@ public class AspirantesController implements Serializable{
     public void setListaAspirantesUsuarios(List<Usuario> listaAspirantesUsuarios) {
         this.listaAspirantesUsuarios = listaAspirantesUsuarios;
     }
-    
-    
-    
+
     public void cargarOportunidadesOrganizacion(int id) {
 
         this.listaOportunidadesOrganizacion = servicioAspirantes.cargarOportunidadesOrganizacion(id);
         servicio.redireccionar("/misOportunidadesOrganizacion.xhtml");
 
     }
-    
+
     public void cargarAspirantes(int idOportunidad) {
 
         this.listaAspirantesUsuarios = servicioAspirantes.visualizarAspirantesOportunidad(idOportunidad);
+        servicio.redireccionar("/verAspirantes.xhtml");
+        
 
     }
-    
-    
+
 }
