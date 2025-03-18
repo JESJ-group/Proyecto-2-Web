@@ -113,6 +113,10 @@ public List<Oportunidades> cargarOportunidades() {
             if (!condiciones.isEmpty()) {
                 sql.append(" AND ").append(String.join(" AND ", condiciones));
             }
+            
+            if (filtro != null && !filtro.isEmpty()) {
+                sql.append(" AND (o.titulo LIKE ? OR org.nombre LIKE ?)");
+            }
 
             pstmt = super.getConexion().prepareStatement(sql.toString());
             
