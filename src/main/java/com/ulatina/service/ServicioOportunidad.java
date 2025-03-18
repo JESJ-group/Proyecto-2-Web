@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ServicioOportunidad extends Servicio {
 
-    private String filtro;
+   private String filtro;
 
     public String getFiltro() {
         return filtro;
@@ -19,6 +19,56 @@ public class ServicioOportunidad extends Servicio {
 
     public void setFiltro(String filtro) {
         this.filtro = filtro;
+    }
+
+    private String filtroProvincia, filtroModalidad, filtroJornada, filtroPago, filtroTipo, filtroDuracion;
+
+    public String getFiltroProvincia() {
+        return filtroProvincia;
+    }
+
+    public String getFiltroTipo() {
+        return filtroTipo;
+    }
+
+    public void setFiltroTipo(String filtroTipo) {
+        this.filtroTipo = filtroTipo;
+    }
+
+    public String getFiltroDuracion() {
+        return filtroDuracion;
+    }
+
+    public void setFiltroDuracion(String filtroDuracion) {
+        this.filtroDuracion = filtroDuracion;
+    }
+
+    public void setFiltroProvincia(String filtroProvincia) {
+        this.filtroProvincia = filtroProvincia;
+    }
+
+    public String getFiltroModalidad() {
+        return filtroModalidad;
+    }
+
+    public void setFiltroModalidad(String filtroModalidad) {
+        this.filtroModalidad = filtroModalidad;
+    }
+
+    public String getFiltroJornada() {
+        return filtroJornada;
+    }
+
+    public void setFiltroJornada(String filtroJornada) {
+        this.filtroJornada = filtroJornada;
+    }
+
+    public String getFiltroPago() {
+        return filtroPago;
+    }
+
+    public void setFiltroPago(String filtroPago) {
+        this.filtroPago = filtroPago;
     }
         
 public List<Oportunidades> cargarOportunidades() {
