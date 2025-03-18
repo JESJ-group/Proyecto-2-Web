@@ -9,6 +9,7 @@ import com.ulatina.data.Postulaciones;
 import com.ulatina.data.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.time.LocalDate;
 
 /**
