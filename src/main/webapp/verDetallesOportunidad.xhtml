@@ -97,13 +97,15 @@
             <div class="header-container">
                 <div class="header-title">
 
-                    #{oportunidadesController.oportunidades.idOrganizacion.nombre}-#{oportunidadesController.oportunidades.titulo}
+                    #{oportunidadesController.oportunidades.titulo}-#{oportunidadesController.oportunidades.idOrganizacion.nombre}
                 </div>
                 <p:commandButton value="Aplica ahora"
                                  styleClass="apply-button"
-                                 action="#{oportunidadesController.aplicar(oportunidadesController.oportunidades.id, loginController.usuario.id)}" 
+                                 action="#{oportunidadesController.aplicar(oportunidadesController.oportunidades.id, loginController.usuario.id, loginController.organizacion.id)}" 
                                  update="@form" />
+                
             </div>
+            <p:messages id="messages" showDetail="true" closable="true"/>
         </h:form>
 
         <h:form id="detallesForm">
@@ -111,12 +113,10 @@
 
                 <div class="description-section">
                     <h2>DESCRIPCIÓN</h2>
-                    <p>
-                        #{oportunidadesController.oportunidades.descripcion}
-                    </p>
-                    <p>
-                        ¿Estás interesado? Aplica ahora!!!
-                    </p>
+                    <h:outputText value="#{oportunidadesController.oportunidades.descripcion}" escape="false"/>
+                    
+                    <h2 style="margin-top:25px; margin-bottom: 5px">DETALLES DE LA OFERTA</h2>
+                    <h:outputText value="#{oportunidadesController.oportunidades.detalles}" escape="false"/>
 
                     <div class="footer-buttons">
                         <p:commandButton value="Regresar"
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="sidebar">
-                    <h3>Job details</h3>
+                    <h3>Detalles del trabajo</h3>
 
                     <div class="sidebar-item">
                         <i class="pi pi-map-marker sidebar-icon"></i>
