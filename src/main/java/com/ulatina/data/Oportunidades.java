@@ -41,8 +41,6 @@ public class Oportunidades {
         this.detalles = detalles;
     }
 
-    
-    
     public String getUbicacion() {
         return ubicacion;
     }
