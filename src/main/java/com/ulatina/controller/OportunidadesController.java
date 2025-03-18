@@ -7,9 +7,12 @@ package com.ulatina.controller;
 import com.ulatina.data.Oportunidades;
 import com.ulatina.data.Organizacion;
 import com.ulatina.data.Postulaciones;
+import com.ulatina.data.Usuario;
 import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioOportunidad;
+import com.ulatina.service.ServicioOrganizacion;
 import com.ulatina.service.ServicioPostulaciones;
+import com.ulatina.service.ServicioUsuario;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
@@ -20,10 +23,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Ryzon
- */
 @Named
 @SessionScoped
 
