@@ -16,41 +16,17 @@ import java.time.LocalDate;
  * @author SC
  */
 public class ServicioPostulaciones extends Servicio {
-    
-    int id;
-    int idUsuario;
-    
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-    
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-    Postulaciones postulaciones = new Postulaciones();
-    
-    public Postulaciones getPostulaciones() {
-        return postulaciones;
-    }
-    
-    public void setPostulaciones(Postulaciones postulaciones) {
-        this.postulaciones = postulaciones;
-    }
-    
-    public int getId() {
-        return id;
-    }
-    
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    public void insertarPostulacion(Postulaciones postulaciones, int idOportunidades, int idUsuario) throws SQLException, ClassNotFoundException {
+  public void insertarPostulacion(Postulaciones postulaciones, int idOportunidades, int idUsuario) throws SQLException, ClassNotFoundException {
         PreparedStatement pstmt = null;
         ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
         ServicioUsuario servicioUsuario = new ServicioUsuario();
+
         Usuario usu = servicioUsuario.obtenerIdUsuario(idUsuario);
         postulaciones.setIdUsuario(usu);
+        LocalDate fechaPostulacion = LocalDate.now();
+        postulaciones.setFechaPostulacion(fechaPostulacion);
+        postulaciones.setEstado("En Revision");
+        
         Oportunidades oportunidad = servicioOportunidad.obtenerIdOportunidad(idOportunidades);
         postulaciones.setIdOportunidades(oportunidad);
         try {
@@ -60,20 +36,24 @@ public class ServicioPostulaciones extends Servicio {
             pstmt.setInt(1, postulaciones.getIdOportunidades().getId());
             pstmt.setInt(2, postulaciones.getIdUsuario().getId());
             pstmt.setString(3, postulaciones.getEstado());
-            LocalDate fechaPostulacion = postulaciones.getFechaPostulacion();
-            pstmt.setDate(4, java.sql.Date.valueOf(fechaPostulacion));
-            
+
+            Date sqlDate = Date.valueOf(postulaciones.getFechaPostulacion());
+            pstmt.setDate(4, sqlDate);
+
             int cantidad = pstmt.executeUpdate();
-            
+
             if (cantidad == 0) {
                 throw new SQLException("No se logró registrar la postulacion");
             }
-            
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
+            System.out.println("asdfasdf" + postulaciones.getIdUsuario().getId());
+            System.out.println("Fecha de postulación: " + fechaPostulacion);
             cerrarPreparedStatement(pstmt);
             cerrarConexion();
+
         }
     }
     
