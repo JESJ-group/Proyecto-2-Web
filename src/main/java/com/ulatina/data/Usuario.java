@@ -33,11 +33,22 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(String nombre) {
-        
+    public Usuario(int id, String nombre, String apellidos, String correoElectronico, String clave, String genero, String estatus, String provincia, String canton, String distrito, String numeroContacto, Date fechaNacimiento) {
+        this.id = id;
         this.nombre = nombre;
-        
+        this.apellidos = apellidos;
+        this.correoElectronico = correoElectronico;
+        this.clave = clave;
+        this.genero = genero;
+        this.estatus = estatus;
+        this.provincia = provincia;
+        this.canton = canton;
+        this.distrito = distrito;
+        this.numeroContacto = numeroContacto;
+        this.fechaNacimiento = fechaNacimiento;
     }
+
+    
 
     public int getId() {
         return id;
