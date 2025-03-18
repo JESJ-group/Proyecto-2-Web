@@ -22,6 +22,17 @@ public class LoginController implements Serializable {
     private ServicioOrganizacion servicioOrganizacion = new ServicioOrganizacion();
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
 
+    private String tipoUsuario = "invitado";
+
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     public String getUser() {
         return user;
     }
@@ -55,16 +66,18 @@ public class LoginController implements Serializable {
     public void ingresar() throws ClassNotFoundException {
         organizacion = servicioOrganizacion.validarOrganizacion(user, pass);
         if (organizacion != null) {
+            tipoUsuario = "organizacion";
             servicio.redireccionar("/landingPageOrganizacion.xhtml");
             return;
         }
         
         usuario = servicioUsuario.validarUsuario(user, pass);
         if (usuario != null) {
+            tipoUsuario = "usuario";
             servicio.redireccionar("/landingPageUsuario.xhtml");
             return;
         }
-        
+       
         
         if (user.equals("admin") && pass.equals("adminadmin")) {
             servicio.redireccionar("/crudUsuario.xhtml");
@@ -74,5 +87,19 @@ public class LoginController implements Serializable {
         FacesContext.getCurrentInstance().addMessage("form:messages",
                 new FacesMessage(FacesMessage.SEVERITY_WARN, "Campos inválidos", "El correo o contraseña no son correctos"));
     }
+    
+    public void salirConexion() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath() + "/faces/index.xhtml?faces-redirect=true");
+            tipoUsuario = "invitado";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+
+
 
 }
