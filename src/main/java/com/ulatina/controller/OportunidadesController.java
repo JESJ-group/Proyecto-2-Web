@@ -30,6 +30,10 @@ import java.util.List;
 public class OportunidadesController implements Serializable {
 
     private Oportunidades oportunidades = new Oportunidades();
+    private Organizacion organizacion = new Organizacion();
+    private Usuario usuario = new Usuario();
+    private ServicioOrganizacion servicioOrganizacion = new ServicioOrganizacion();
+    private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
     private List<Oportunidades> listaOportunidades = new ArrayList<>();
     private ServicioPostulaciones servicioPostulaciones = new ServicioPostulaciones();
