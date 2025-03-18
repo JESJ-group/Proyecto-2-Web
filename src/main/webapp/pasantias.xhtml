@@ -11,9 +11,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:ui="jakarta.faces.facelets">
 
     <h:head>
-        <title>Pasantias</title>
+        <title>Oportunidades</title>
     </h:head>
-   <style>
+    <style>
 
 
 
@@ -86,12 +86,188 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
 
     </style>
-    <body style="background-color: white; color: black;
+    <body style="background-color: #f2f2f2; color: black;
           display: flex; flex-direction: column;
-          align-items: center;
-          
-          ">
-        <h:form >
+          align-items: center;">
+        <h:form id="form">
+
+            <!-- MENUUUUUSSSSSSS -->
+
+            <p:outputPanel rendered="#{loginController.tipoUsuario eq 'invitado'}">
+                <div class="barraInvitado" 
+                     style="display: flex; justify-content: space-between; align-items: center;
+                     width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+                     background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+
+                    <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+                        <p:menuitem style="font-size: 18px" value="Inicio" icon="pi pi-fw pi-home"/>
+                        <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
+                        <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
+
+                    </p:menubar>
+
+                    <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+                        <p:menuitem style="font-size: 18px" value="Registrarme" icon="pi pi-fw pi-user-plus" outcome="/seleccionRegistro.xhtml"/>
+                        <p:menuitem style="font-size: 18px" value="Iniciar sesión" icon="pi pi-fw pi-sign-in" outcome="/Login.xhtml"/>
+                    </p:menubar>
+                </div>
+            </p:outputPanel>
+
+            <p:outputPanel rendered="#{loginController.tipoUsuario eq 'organizacion'}">
+                <div class="barraOrganizacion" 
+                     style="display: flex; justify-content: space-between; align-items: center;
+                     width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+                     background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" rendered="#{loginController.tipoUsuario eq 'organizacion'}">
+
+
+                    <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+                        <p:menuitem value="Inicio" icon="pi pi-fw pi-home"/>
+                        <p:menuitem value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
+                        <p:menuitem value="Contacto" icon="pi pi-fw pi-address-book"/>
+                        <p:submenu label="Publicar" icon="pi pi-fw pi-upload">
+                            <p:menuitem value="Oportunidades" icon="pi pi-fw pi-plus-circle" outcome="publicarOportunidades.xhtml"/>
+                            <p:menuitem value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                        </p:submenu>
+
+                    </p:menubar>
+
+                    <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+
+                        <p:submenu label="Mi perfil" icon="pi pi-fw pi-user">
+
+                            <p:menuitem value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilOrganizacion.xhtml"/>
+                            <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
+                        </p:submenu>
+
+                    </p:menubar>
+
+                </div>
+            </p:outputPanel>
+
+            <p:outputPanel rendered="#{loginController.tipoUsuario eq 'usuario'}">
+                <div class="barraUsuario" 
+                     style="display: flex; justify-content: space-between; align-items: center;
+                     width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+                     background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" rendered="#{loginController.tipoUsuario eq 'usuario'}">
+
+
+                    <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+                        <p:menuitem value="Inicio" icon="pi pi-fw pi-home"/>
+                        <p:menuitem value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
+                        <p:menuitem value="Contacto" icon="pi pi-fw pi-address-book"/>
+                        <p:submenu label="Aplicaciones" icon="pi pi-fw pi-send">
+                            <p:menuitem value="Historial" icon="pi pi-fw pi-history"/>
+                            <p:menuitem value="Favoritos" icon="pi pi-fw pi-star"/>
+                        </p:submenu>
+                        <p:menuitem value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+
+                    </p:menubar>
+
+                    <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+
+                        <p:submenu label="Mi perfil" icon="pi pi-fw pi-user">
+
+                            <p:menuitem value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilUsuario.xhtml"/>
+                            <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
+                        </p:submenu>
+
+                    </p:menubar>
+
+                </div>
+            </p:outputPanel>
+
+            n
+            <!-- Ajuste para evitar que el contenido quede debajo del menú -->
+            <div style="margin-top: 60px;">
+            </div>
+
+
+
+
+
+
+
+
+            <span style="margin: 10px; width:98%; padding-top: 20px; padding-bottom: 20px; margin-right: 0px" class="ui-input-icon-left">
+                <i style="" class="pi pi-search" />
+                <p:inputText style="width: 100%; padding: 15px; padding-left: 30px; font-size: 20px; border-radius: 20px;" 
+                             placeholder="Titulo del empleo, palabras claves"
+                             value="#{oportunidadesController.filtroBusqueda}"
+                             onkeypress="if (event.keyCode === 13) {
+                                         PF('buscarBtn').click();
+                                         return false;
+                                     }">  
+
+                    <p:commandButton id="buscarBtn" value="Buscar" action="#{oportunidadesController.filtrarOportunidades}" 
+                                     style="display: none;" update="@form" />
+
+
+                </p:inputText>
+            </span>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+
+                <p:selectOneMenu value="#{oportunidadesController.servicioOportunidad.filtroTipo}" style="width: 15rem; border-radius: 10px">
+                    <f:selectItem itemLabel="Seleccione el tipo" itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="Pasantía" itemValue="Pasantia"/>
+                    <f:selectItem itemLabel="Voluntariado" itemValue="Voluntariado"/>
+                </p:selectOneMenu>
+
+                <p:selectOneMenu value="#{oportunidadesController.servicioOportunidad.filtroProvincia}" style="width: 15rem; border-radius: 10px">
+                    <f:selectItem itemLabel="Seleccione una provincia" itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="San José" itemValue="San José"/>
+                    <f:selectItem itemLabel="Alajuela" itemValue="Alajuela"/>
+                    <f:selectItem itemLabel="Cartago" itemValue="Cartago"/>
+                    <f:selectItem itemLabel="Heredia" itemValue="Heredia"/>
+                    <f:selectItem itemLabel="Guanacaste" itemValue="Guanacaste"/>
+                    <f:selectItem itemLabel="Puntarenas" itemValue="Puntarenas"/>
+                    <f:selectItem itemLabel="Limón" itemValue="Limón"/>
+                </p:selectOneMenu>
+
+                <p:selectOneMenu value="#{oportunidadesController.servicioOportunidad.filtroModalidad}" style="width: 15rem; border-radius: 10px">
+                    <f:selectItem itemLabel="Seleccione una modalidad" itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="Presencial" itemValue="Presencial"/>
+                    <f:selectItem itemLabel="Virtual" itemValue="Virtual"/>
+                    <f:selectItem itemLabel="Mixta" itemValue="Mixta"/>
+                </p:selectOneMenu>
+
+                <p:selectOneMenu value="#{oportunidadesController.servicioOportunidad.filtroJornada}" style="width: 15rem; border-radius: 10px">
+                    <f:selectItem itemLabel="Seleccione una jornada" itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="Diurna" itemValue="Diurna"/>
+                    <f:selectItem itemLabel="Nocturna" itemValue="Nocturna"/>
+                    <f:selectItem itemLabel="Mixta" itemValue="Mixta"/>
+                </p:selectOneMenu>
+
+                <p:selectOneMenu value="#{oportunidadesController.servicioOportunidad.filtroPago}" style="width: 15rem; border-radius: 10px">
+                    <f:selectItem itemLabel="Seleccione la remuneración" itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="Pagado" itemValue="Pagado"/>
+                    <f:selectItem itemLabel="No pagado" itemValue="No pagado"/>
+                </p:selectOneMenu>
+
+                <p:selectOneMenu value="#{oportunidadesController.servicioOportunidad.filtroDuracion}" style="width: 15rem; border-radius: 10px">
+                    <f:selectItem itemLabel="Seleccione la duración" itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="1 mes" itemValue="1 mes"/>                                                                                                                                                                                                                                                                                                                                                                                 
+                    <f:selectItem itemLabel="2 meses" itemValue="2 meses"/>
+                    <f:selectItem itemLabel="3 meses" itemValue="3 meses"/>
+                    <f:selectItem itemLabel="4 meses" itemValue="4 meses"/>
+                    <f:selectItem itemLabel="5 meses" itemValue="5 meses"/>
+                    <f:selectItem itemLabel="6 meses" itemValue="6 meses"/>
+                    <f:selectItem itemLabel="7 meses" itemValue="7 meses"/>
+                    <f:selectItem itemLabel="8 meses" itemValue="8 meses"/>
+                    <f:selectItem itemLabel="9 meses" itemValue="9 meses"/>
+                    <f:selectItem itemLabel="10 meses" itemValue="10 meses"/>
+                    <f:selectItem itemLabel="11 meses" itemValue="11 meses"/>
+                    <f:selectItem itemLabel="12 meses" itemValue="12 meses"/>
+                </p:selectOneMenu>
+
+                <p:commandButton value="Filtrar" actionListener="#{oportunidadesController.cargarOportunidades()}" update="form" style="border-radius: 8px"/>
+            </div>
+
+
+
             <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto;gap: 15px;">
 
                 <ui:repeat value="#{oportunidadesController.listaOportunidades}"  var="oportunidades" >
