@@ -4,20 +4,21 @@
  */
 package com.ulatina.data;
 
+
 /**
  *
  * @author Ryzon
  */
 public class Oportunidades {
-
+    
     private int id;
     private Organizacion idOrganizacion;
-    private String tipo, titulo, descripcion, jornada, modalidad, pago, duracion, ubicacion, provincia;
+    private String tipo,titulo,descripcion,detalles,jornada,modalidad,pago, duracion, ubicacion, provincia;
 
     public Oportunidades() {
     }
 
-    public Oportunidades(int id, Organizacion idOrganizacion, String tipo, String titulo, String descripcion, String jornada, String modalidad, String pago, String duracion, String ubicacion, String provincia) {
+    public Oportunidades(int id, Organizacion idOrganizacion, String tipo, String titulo, String descripcion,String detalles, String jornada, String modalidad, String pago, String duracion, String ubicacion, String provincia) {
         this.id = id;
         this.idOrganizacion = idOrganizacion;
         this.tipo = tipo;
@@ -29,8 +30,19 @@ public class Oportunidades {
         this.duracion = duracion;
         this.ubicacion = ubicacion;
         this.provincia = provincia;
+        this.detalles = detalles;
     }
 
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
+    }
+
+    
+    
     public String getUbicacion() {
         return ubicacion;
     }
@@ -46,6 +58,9 @@ public class Oportunidades {
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
+
+    
+    
 
     public String getDuracion() {
         return duracion;
@@ -119,4 +134,7 @@ public class Oportunidades {
         this.pago = pago;
     }
 
+    
+    
+    
 }
