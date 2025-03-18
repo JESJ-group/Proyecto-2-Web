@@ -7,7 +7,7 @@
 
     <style>
 
-        
+
         .custom-wizard .ui-wizard-nav {
             position: relative;
             margin-right: 20px;
@@ -97,8 +97,8 @@
 
                             <h:outputLabel value="Contraseña" style="font-size: 20px; color: black;"/>
                             <p:password value="#{registroController.usuario.clave}" required="true" 
-                                         requiredMessage="La contraseña es obligatoria" 
-                                         style="width: 100%; height: 45px"/>
+                                        requiredMessage="La contraseña es obligatoria" 
+                                        style="width: 100%; height: 45px"/>
 
                         </p:panelGrid>
 
@@ -130,7 +130,7 @@
                         <p:panelGrid columns="2" columnClasses="labelColumn,valueColumn" style="width:100%; text-align:left;">
 
                             <p:outputLabel for="fechaN" value="Fecha de Nacimiento" style="font-size: 20px; color: black"/>
-                            
+
                             <p:datePicker id="fechaN" value="#{registroController.usuario.fechaNacimiento}" 
                                           monthNavigator="true" 
                                           yearNavigator="true"                                 
@@ -179,11 +179,16 @@
                         <p:panelGrid columns="4"  columnClasses="labelColumn,valueColumn"  
                                      style="width: 100%; ">
 
-                            <h:outputLabel value="Estatus:" style=" font-size: 20px;color: black; "/>
 
-                            <p:inputText value="#{registroController.usuario.estatus}" required="true" 
-                                         requiredMessage="El nombre es obligatorio" 
-                                         style="width: 100%; height: 45px"/>
+                            <h:outputLabel value="Estatus:" style="font-size: 20px; color: black" />
+                            <p:selectOneMenu value="#{registroController.usuario.estatus}" required="true" requiredMessage="El estatus es obligatorio">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Estudiante" itemValue="Estudiante"/>
+                                <f:selectItem itemLabel="Empleado" itemValue="Empleado"/>
+                                <f:selectItem itemLabel="Desempleado" itemValue="Desempleado"/>
+                                <f:selectItem itemLabel="Empleado en formación" itemValue="Empleado en formación"/>
+                            </p:selectOneMenu>
+
 
                             <h:outputLabel value="Provincia:" style="font-size: 20px; color: black; "/>
                             <p:inputText value="#{registroController.usuario.provincia}" required="true" 

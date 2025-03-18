@@ -22,23 +22,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
             <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
 
-                <p:menuitem value="Inicio" icon="pi pi-fw pi-home"/>
-                <p:menuitem value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
-                <p:menuitem value="Contacto" icon="pi pi-fw pi-address-book"/>
-                <p:submenu label="Aplicaciones" icon="pi pi-fw pi-send">
-                    <p:menuitem value="Historial" icon="pi pi-fw pi-history"/>
-                    <p:menuitem value="Favoritos" icon="pi pi-fw pi-star"/>
+                <p:menuitem style="font-size: 18px" value="Inicio" icon="pi pi-fw pi-home" outcome="/landingPageUsuario.xhtml"/>
+                <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
+                <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
+                <p:submenu style="font-size: 18px" label="Aplicaciones" icon="pi pi-fw pi-send">
+                    <p:menuitem style="font-size: 18px" value="Historial" icon="pi pi-fw pi-history"/>
+                    <p:menuitem style="font-size: 18px" value="Favoritos" icon="pi pi-fw pi-star"/>
                 </p:submenu>
-                <p:menuitem value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
 
             </p:menubar>
 
             <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
 
-                <p:submenu label="Mi perfil" icon="pi pi-fw pi-user">
+                <p:submenu style="font-size: 18px" label="Mi perfil" icon="pi pi-fw pi-user">
 
-                    <p:menuitem value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilUsuario.xhtml"/>
-                    <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
+                    <p:menuitem style="font-size: 18px" value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilUsuario.xhtml"/>
+                    <p:menuitem style="font-size: 18px" value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
                 </p:submenu>
 
             </p:menubar>
@@ -46,7 +46,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         </div>
 
         <!-- Ajuste para evitar que el contenido quede debajo del menú -->
-        <div style="margin-top: 76px;">
+        <div style="margin-top: 60px;">
         </div>
 
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ServicioOportunidad extends Servicio {
 
-   private String filtro;
+    private String filtro;
 
     public String getFiltro() {
         return filtro;
@@ -70,8 +70,8 @@ public class ServicioOportunidad extends Servicio {
     public void setFiltroPago(String filtroPago) {
         this.filtroPago = filtroPago;
     }
-        
-public List<Oportunidades> cargarOportunidades() {
+
+    public List<Oportunidades> cargarOportunidades() {
 
         List<Oportunidades> listaOportunidades = new ArrayList<>();
         PreparedStatement pstmt = null;
@@ -113,13 +113,13 @@ public List<Oportunidades> cargarOportunidades() {
             if (!condiciones.isEmpty()) {
                 sql.append(" AND ").append(String.join(" AND ", condiciones));
             }
-            
+
             if (filtro != null && !filtro.isEmpty()) {
                 sql.append(" AND (o.titulo LIKE ? OR org.nombre LIKE ?)");
             }
 
             pstmt = super.getConexion().prepareStatement(sql.toString());
-            
+
             int index = 1;
 
             if (filtroTipo != null && !filtroTipo.isEmpty()) {
@@ -192,7 +192,8 @@ public List<Oportunidades> cargarOportunidades() {
 
         return listaOportunidades;
     }
-   public void insertarOportunidad(Oportunidades oportunidades, String correo) throws ClassNotFoundException {
+
+    public void insertarOportunidad(Oportunidades oportunidades, String correo) throws ClassNotFoundException {
         PreparedStatement pstmt = null;
 
         ServicioOrganizacion servicioOrganizacion = new ServicioOrganizacion();
@@ -257,7 +258,6 @@ public List<Oportunidades> cargarOportunidades() {
         }
         return oportunidades;
     }
-
 
     public Oportunidades validarOportunidades(int id) throws ClassNotFoundException {
         Oportunidades op = null;
