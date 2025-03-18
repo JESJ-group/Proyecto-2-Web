@@ -10,21 +10,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioOportunidad extends Servicio {
+
+    private String filtro;
+
+    public String getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(String filtro) {
+        this.filtro = filtro;
+    }
+        
 public List<Oportunidades> cargarOportunidades() {
+        
         List<Oportunidades> listaOportunidades = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
+        
         try {
             super.conectarBD();
             String sql = "SELECT o.id, o.idOrganizacion, o.titulo, o.descripcion, o.tipo, "
                     + "o.duracion, o.jornada, o.modalidad, o.pago, o.ubicacion, o.provincia, "
                     + "org.nombre AS nombreOrganizacion "
                     + "FROM Oportunidades o, Organizacion org WHERE o.idOrganizacion = org.id";
-                   
 
-            pstmt = super.getConexion().prepareStatement(sql);
-            rs = pstmt.executeQuery();
+            
+        if (filtro != null && !filtro.isEmpty()) {
+            sql += " AND (o.titulo LIKE ? OR org.nombre LIKE ?)";
+        }
+
+        pstmt = super.getConexion().prepareStatement(sql);
+
+        if (filtro != null && !filtro.isEmpty()) {
+            String filtro1 = "%" + filtro + "%";
+            pstmt.setString(1, filtro1);
+            pstmt.setString(2, filtro1);
+        }
+
+        rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 Oportunidades oportunidades = new Oportunidades();
@@ -32,7 +55,7 @@ public List<Oportunidades> cargarOportunidades() {
 
                 oportunidades.setId(rs.getInt("id"));
                 organizacion.setId(rs.getInt("idOrganizacion"));
-                organizacion.setNombre(rs.getString("nombreOrganizacion")); 
+                organizacion.setNombre(rs.getString("nombreOrganizacion"));
 
                 oportunidades.setIdOrganizacion(organizacion);
                 oportunidades.setTitulo(rs.getString("titulo"));
@@ -59,33 +82,38 @@ public List<Oportunidades> cargarOportunidades() {
 
         return listaOportunidades;
     }
-    public void insertarOportunidad(Oportunidades op) {
+   public void insertarOportunidad(Oportunidades oportunidades, String correo) throws ClassNotFoundException {
         PreparedStatement pstmt = null;
+
+        ServicioOrganizacion servicioOrganizacion = new ServicioOrganizacion();
+        Organizacion organizacion = servicioOrganizacion.obtenerIdOrganizacion(correo);
+        oportunidades.setIdOrganizacion(organizacion);
+
         try {
             super.conectarBD();
-            String sql = "INSERT INTO oportunidades (idOrganizacion, titulo, descripcion, tipo, duracion, provincia,"
-                    + " jornada, modalidad, pago, ubicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO oportunidades (idOrganizacion, titulo, descripcion, tipo, duracion, jornada, modalidad, pago, ubicacion, provincia) VALUES (?,?,?,?,?,?,?,?,?,?)";
             pstmt = super.getConexion().prepareStatement(sql);
-            pstmt.setInt(1, 1);
-            pstmt.setString(2, op.getTitulo());
-            pstmt.setString(3, op.getDescripcion());
-            pstmt.setString(4, op.getTipo());
-            pstmt.setString(5, op.getDuracion());
-            pstmt.setString(6, op.getProvincia());
-            pstmt.setString(7, op.getJornada());
-            pstmt.setString(8, op.getModalidad());
-            pstmt.setString(9, op.getPago());
-            pstmt.setString(10, op.getUbicacion());
+            pstmt.setInt(1, oportunidades.getIdOrganizacion().getId());
+            pstmt.setString(2, oportunidades.getTitulo());
+            pstmt.setString(3, oportunidades.getDescripcion());
+            pstmt.setString(4, oportunidades.getTipo());
+            pstmt.setString(5, oportunidades.getDuracion());
+            pstmt.setString(6, oportunidades.getJornada());
+            pstmt.setString(7, oportunidades.getModalidad());
+            pstmt.setString(8, oportunidades.getPago());
+            pstmt.setString(9, oportunidades.getUbicacion());
+            pstmt.setString(10, oportunidades.getProvincia());
             int cantidad = pstmt.executeUpdate();
-            if (cantidad == 0) {
-                throw new SQLException("No se logró insertar la oportunidad");
-            }
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+
         } finally {
             cerrarPreparedStatement(pstmt);
             cerrarConexion();
+
         }
+
     }
     
      
@@ -105,8 +133,8 @@ public List<Oportunidades> cargarOportunidades() {
             if (rs.next()) {
                 postulacion = new Postulaciones();
                 oportunidades = new Oportunidades();
-                postulacion.setId(rs.getInt("id"));
-                postulacion.setIdOportunidades(postulacion.getIdOportunidades());
+                oportunidades.setId(rs.getInt("id"));
+                postulacion.setIdOportunidades(oportunidades);
 
             }
         } catch (SQLException e) {
