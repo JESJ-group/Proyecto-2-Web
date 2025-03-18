@@ -101,8 +101,25 @@ public class OportunidadesController implements Serializable {
         return "verDetallesOportunidad?faces-redirect=true";
     }
 
-    public void aplicar(int idOportunidad, int idUsuario) throws SQLException {
+    public void aplicar(int idOportunidad, int idUsuario, int idOrganizacion) throws SQLException {
         try {
+            
+            organizacion = servicioOrganizacion.validarOrganizacion(idOrganizacion);
+            
+            
+            if(organizacion != null){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ocurrio un error","Las organizaciones no pueden aplicar"));
+                return;
+            }
+            
+            usuario = servicioUsuario.validarUsuario(idUsuario);
+            if(usuario == null){
+                
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ocurrio un error","Para poder aplicar debes iniciar sesion primero"));
+                return;
+                
+            }
+            
             servicioPostulaciones.insertarPostulacion(postulaciones, idOportunidad, idUsuario);
 
             FacesContext.getCurrentInstance().addMessage(null,
