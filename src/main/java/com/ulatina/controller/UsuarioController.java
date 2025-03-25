@@ -4,6 +4,7 @@
  */
 package com.ulatina.controller;
 
+import com.ulatina.data.Oportunidades;
 import com.ulatina.data.Usuario;
 import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioUsuario;
@@ -14,6 +15,8 @@ import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,6 +28,7 @@ public class UsuarioController implements Serializable {
 
     private Usuario usuario = new Usuario();
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
+    private List<Oportunidades> listaHistorialOportunidades = new ArrayList<>();
     private Servicio servicio = new Servicio() {};
     private String correoUsuario;
     private String nuevaContrasena;
@@ -32,7 +36,14 @@ public class UsuarioController implements Serializable {
     
     @Inject
     private EmailController correo;
-    
+
+    public List<Oportunidades> getListaHistorialOportunidades() {
+        return listaHistorialOportunidades;
+    }
+
+    public void setListaHistorialOportunidades(List<Oportunidades> listaHistorialOportunidades) {
+        this.listaHistorialOportunidades = listaHistorialOportunidades;
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -96,6 +107,13 @@ public class UsuarioController implements Serializable {
     public void actualizarUsuario(Usuario usr, int id) {
         servicioUsuario.actualizarUsuarioEditar(usr , id);
         servicio.redireccionar("/landingPageUsuario.xhtml");
+    }
+    
+    public void cargarHistorialOportunidades(int id) {
+
+        this.listaHistorialOportunidades = servicioUsuario.cargarHistorialOportunidades(id);
+        servicio.redireccionar("/verHistorialOportunidades.xhtml");
+
     }
     
     public String onFlowProcess(org.primefaces.event.FlowEvent event) {

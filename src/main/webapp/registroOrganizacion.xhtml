@@ -4,113 +4,227 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="jakarta.faces.core">
 
+    <style>
+
+
+        .custom-wizard .ui-wizard-nav {
+            position: relative;
+            margin-right: 20px;
+        }
+        .custom-wizard .ui-wizard-nav-next,
+        .custom-wizard .ui-wizard-nav-back {
+            border-radius: 15px;
+            font-size: 16px;
+
+        }
+
+
+        .custom-wizard .ui-wizard-nav-next {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .custom-wizard .ui-wizard-nav-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+
+
+    </style>
+
     <h:head>
         <title>Registro de Organizacion - JoinUp</title>
     </h:head>
 
-    <h:body style="text-align:center; margin-top:30px;">
+    <h:body style=" height: 80vh; padding-top: 12em;">
 
-        <h:form>
-            <p:growl id="growl" sticky="true" showDetail="false"/>
+        <h:form enctype="multipart/form-data">
+
             <p:messages id="mensajes" showDetail="true" closable="true" />
 
 
-
-
-            <p:card style="width: 85rem; height: 85vh; margin: auto; text-align: center; border-radius: 20px; margin-bottom:10px; margin-top: 4em;">
-
-
-
-
-                <div class="login-logo" style="padding-bottom: 20px; margin-top: 10px">
-                    <img style="width: 200px; " src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
-                    <p style="font-size: 20px ;color: black; margin-left: 20px"> Crea una Cuenta de Join Up</p>
-                </div>
+            <p:wizard id="registroWizard"
+                      flowListener="#{registroController.onFlowProcess}"
+                      showStepStatus="false"
+                      showNavBar="true"
+                      backLabel="Atrás"
+                      nextLabel="Siguiente"
+                      style="width:60%; margin: auto;"
+                      styleClass="custom-wizard">
 
 
 
-                <p:panelGrid columns="4"
-                             columnClasses="labelColumn,valueColumn"
-                             style="width:100%; text-align:center;" >
 
-                    <h:outputLabel value="Nombre de la Organización:"  style="font-size: 20px; color: black;"/>
-                    <p:inputText value="#{registroController.organizacion.nombre}" 
-                                 required="true" 
-                                 requiredMessage="El nombre de la organización es obligatorio" 
-                                 style="width: 100%; height: 45px"/>
 
-                    <h:outputLabel value="Nombre del representante" style="font-size: 20px; color: black;" />
-                    <p:inputText value="#{registroController.organizacion.nombreRepresentante}" 
-                                 required="true" 
-
-                                 requiredMessage="El nombre del representante es obligatorio"  
-                                 style="width: 100%; height: 45px"/>
-
-                    <h:outputLabel value="Cedula del representante"  style="font-size: 20px; color: black;"/>
-                    <p:inputText value="#{registroController.organizacion.cedulaRepresentante}" 
-                                 required="true" 
-                                 requiredMessage="La cedula del representante es obligatoria"  
-
-                                 converterMessage="Por favor, la cedula del representante debe contener numeros"
-                                 style="width: 100%; height: 45px"/>
-
-                    <h:outputLabel value="Número de Teléfono:"  style="font-size: 20px; color: black;"/>
-                    <p:inputText value="#{registroController.organizacion.numeroTelefonico}" 
-                                 required="true" 
-                                 requiredMessage="El numero de telefono es obligatorio"  
-                                 style="width: 100%; height: 45px"/>
-
-                    <h:outputLabel value="Correo Electrónico:"  style="font-size: 20px; color: black;"/>
-                    <p:inputText value="#{registroController.organizacion.correoElectronico}" 
-                                 required="true" 
-                                 requiredMessage="El correo electronico es obligatorio" 
-                                 style="width: 100%; height: 45px"/>
+                <p:tab id="datosPrincipales" title="datosPrincipales" >
 
 
 
-                    <h:outputLabel value="Descripción breve:" style="font-size: 20px; color: black;" />
-                    <p:inputTextarea value="#{registroController.organizacion.descripcion}" 
-                                     rows="4" 
-                                     required="true" 
-                                     requiredMessage="La descripción es obligatoria"  
-                                     style="width: 100%; height: 45px"/>
+                    <p:card style="width: 80rem; height: 60vh; text-align: center; border-radius: 20px; margin-bottom:10px; margin-left: -4rem; margin-top: -40px">
 
-                    <h:outputLabel value="Clave:"  style="font-size: 20px; color: black;"/>
-                    <p:password value="#{registroController.organizacion.clave}" 
-                                required="true"  
-                                requiredMessage="La clave es obligatoria"
-                                style="width: 100%; height: 45px"/>
+                        <div class="login-logo" style="padding-bottom: 20px; margin-top: 10px">
+                            <img style="width: 200px; " src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+                            <p style="font-size: 20px ;color: black; margin-left: 20px"> Crea una Cuenta de Join Up</p>
 
-                    <h:outputLabel value="Provincia: "  style="font-size: 20px; color: black;"/>
-                    <p:inputText value="#{registroController.organizacion.provincia}" 
-                                 required="true" 
-                                 requiredMessage="La provincia de la organizacion es obligatoria"  
+                        </div>
 
-                                 style="width: 100%; height: 45px"/>
+                        <p:panelGrid columns="4"
+                                     columnClasses="labelColumn,valueColumn"
+                                     style="width:100%; text-align:center; margin-top: 30px; " >
 
-                    <h:outputLabel value="Cantón: "  style="font-size: 20px; color: black;"/>
-                    <p:inputText value="#{registroController.organizacion.canton}" 
-                                 required="true" 
-                                 requiredMessage="El canton es obligatorio"  
-                                 style="width: 100%; height: 45px"/>
+                            <h:outputLabel value="Nombre de la Organización *"  style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.organizacion.nombre}" 
+                                         required="true" 
+                                         requiredMessage="El nombre de la organización es obligatorio" 
+                                         style="width: 100%; height: 45px"/>
 
-                    <h:outputLabel value="Distrito: "  style="font-size: 20px; color: black;"/>
-                    <p:inputText value="#{registroController.organizacion.distrito}" 
-                                 required="true" 
-                                 requiredMessage="El distrito es obligatorio" 
-                                 style="width: 100%; height: 45px"/>
-                </p:panelGrid>
+                            <h:outputLabel value="Nombre del representante *" style="font-size: 20px; color: black;" />
+                            <p:inputText value="#{registroController.organizacion.nombreRepresentante}" 
+                                         required="true" 
+
+                                         requiredMessage="El nombre del representante es obligatorio"  
+                                         style="width: 100%; height: 45px"/>
 
 
+                            <h:outputLabel value="Cedula del representante *"  style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.organizacion.cedulaRepresentante}" 
+                                         required="true" 
+                                         requiredMessage="La cedula del representante es obligatoria"  
 
-                <p:commandButton value="Registrarse"
-                                 action="#{registroController.registrarOrganizacion()}" 
-                                 update="growl" styleClass="mr-2" 
-                                 style="margin-top:80px; margin-left: 40px;background-color: #007bff;
-                                 border: none; border-radius: 15px;
-                                 font-size: 16px;border-radius: 15px;
-                                 font-size: 18px; "/>
-            </p:card>
+                                         converterMessage="Por favor, la cedula del representante debe contener numeros"
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Descripción breve *" style="font-size: 20px; color: black;" />
+                            <p:inputTextarea value="#{registroController.organizacion.descripcion}" 
+                                             rows="4" 
+                                             required="true" 
+                                             requiredMessage="La descripción es obligatoria"  
+                                             style="width: 100%; height: 45px"/>
+
+
+
+                        </p:panelGrid>
+
+                    </p:card>
+
+                </p:tab>
+
+
+
+
+
+                <p:tab id="datosSecundarios" title="datosSecundarios" >
+
+
+                    <p:card style="width: 80rem; height: 60vh; text-align: center; border-radius: 20px; margin-bottom:10px; margin-left: -4rem; margin-top: -40px">
+
+
+                        <div class="login-logo" style="padding-bottom: 20px; margin-top: 10px">
+                            <img style="width: 200px; " src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+                            <p style="font-size: 20px ;color: black; margin-left: 20px">Completa datos adicionales de registro</p>
+
+                        </div>
+
+                        <p:panelGrid columns="4"
+                                     columnClasses="labelColumn,valueColumn"
+                                     style="width:100%; text-align:center;" >
+
+                            <h:outputLabel value="Correo Electrónico *"  style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.organizacion.correoElectronico}" 
+                                         required="true" 
+                                         requiredMessage="El correo electronico es obligatorio" 
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Provincia *"  style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.organizacion.provincia}" 
+                                         required="true" 
+                                         requiredMessage="La provincia de la organizacion es obligatoria"  
+
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Clave *"  style="font-size: 20px; color: black;"/>
+                            <p:password value="#{registroController.organizacion.clave}" 
+                                        required="true"  
+                                        requiredMessage="La clave es obligatoria"
+                                        style="width: 100%; height: 45px"/>
+
+
+
+                            <h:outputLabel value="Cantón *"  style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.organizacion.canton}" 
+                                         required="true" 
+                                         requiredMessage="El canton es obligatorio"  
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Número de Teléfono *"  style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.organizacion.numeroTelefonico}" 
+                                         required="true" 
+                                         requiredMessage="El numero de telefono es obligatorio"  
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Distrito *"  style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.organizacion.distrito}" 
+                                         required="true" 
+                                         requiredMessage="El distrito es obligatorio" 
+                                         style="width: 100%; height: 45px"/>
+
+                        </p:panelGrid>
+
+                    </p:card>
+
+
+
+                </p:tab>
+
+
+
+
+                <p:tab id="imagen" title="imagen" >
+
+
+                    <p:card style="width: 70rem; height: 40vh; margin: auto; text-align: center; border-radius: 20px; margin-bottom:10px; ">
+
+                        <div class="login-logo" style="padding-bottom: 20px; margin-top: 10px">
+                            <img style="width: 200px;" src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+                            <p style="font-size: 20px; color: black; margin-left: 20px">Agrega el logo de tu organización</p>
+                        </div>
+
+                        <p:panelGrid columns="2"
+                                     columnClasses="labelColumn,valueColumn"
+                                     style="width:100%; text-align:center;" >
+
+                            <p:fileUpload value="#{registroController.file}"
+                                          mode="simple"
+                                          skinSimple="true"
+                                          required="true"
+                                          accept="image/png, image/jpeg, image/jpg, image/webp"
+                                          label="Seleccionar imagen"
+                                          />
+
+                            <p:commandButton value="Subir imagen *"
+                                             ajax="true"
+                                             action="#{registroController.handleFileUpload}"
+                                             update="growl"
+                                             />
+                        </p:panelGrid>
+
+                        <p:commandButton value="Registrarse"
+                                         action="#{registroController.registrarOrganizacion()}"
+                                         update="growl"
+                                         styleClass="mr-2"
+                                         style="margin-top:7.5rem; margin-left: 60rem; background-color: #007bff;
+                                         border: none; border-radius: 15px;
+                                         font-size: 18px;" />
+
+                    </p:card>
+
+                    <p:growl id="growl" showDetail="true" life="4000" />
+
+                </p:tab>
+
+
+            </p:wizard>
 
 
 

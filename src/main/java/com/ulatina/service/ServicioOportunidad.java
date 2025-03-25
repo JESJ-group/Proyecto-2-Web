@@ -81,7 +81,7 @@ public class ServicioOportunidad extends Servicio {
             super.conectarBD();
             StringBuilder sql = new StringBuilder("SELECT o.id, o.idOrganizacion, o.titulo, o.descripcion,o.detalles, o.tipo, "
                     + "o.duracion, o.jornada, o.modalidad, o.pago, o.ubicacion, o.provincia, "
-                    + "org.nombre AS nombreOrganizacion "
+                    + "org.nombre AS nombreOrganizacion, org.rutaImagen "
                     + "FROM Oportunidades o, Organizacion org WHERE o.idOrganizacion = org.id");
 
             List<String> condiciones = new ArrayList<>();
@@ -165,6 +165,7 @@ public class ServicioOportunidad extends Servicio {
                 oportunidades.setId(rs.getInt("id"));
                 organizacion.setId(rs.getInt("idOrganizacion"));
                 organizacion.setNombre(rs.getString("nombreOrganizacion"));
+                organizacion.setRutaImagen("rutaImagen");
 
                 oportunidades.setIdOrganizacion(organizacion);
                 oportunidades.setTitulo(rs.getString("titulo"));

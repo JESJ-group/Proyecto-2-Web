@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>CRUD Organizaciones</title>
+   
+  </h:head>
+  <h:body>
+     <div class="barraMenu" 
+             style="display: flex; justify-content: space-between; align-items: center;
+             width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+             background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+            
+            
+            <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+
+                <p:menuitem value="Usuarios" outcome="/crudUsuario.xhtml" icon="pi pi-fw pi-user"/>
+                 <p:menuitem value="Organizaciones" disabled="true" icon="pi pi-building"/>
+                  <p:menuitem value="Oportunidades"  outcome="/crudOportunidades.xhtml" icon="pi pi-pi pi-briefcase"/>
+            
+            
+
+            </p:menubar>
+
+            <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+
+                
+                    
+                    <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
+                
+
+            </p:menubar>
+
+        </div><div style="margin-top: 76px;">
+        </div>
+
+      <h:form id="formOrg">
+        <p:growl id="messages" showDetail="true" />
+        <div class="card">
+          <p:toolbar>
+            <p:toolbarGroup>
+              <p:commandButton value="Nueva Organización" icon="pi pi-plus" 
+                               actionListener="#{crudController.openNewOrganizacion}"
+                               update=":dialogsOrg:manage-org-content" oncomplete="PF('manageOrgDialog').show()"
+                               styleClass="ui-button-success" style="margin-right: .5rem">
+                <p:resetInput target=":dialogsOrg:manage-org-content" />
+              </p:commandButton>
+              <p:commandButton id="delete-org-button" 
+                               value="#{crudController.getDeleteButtonMessageOrganizaciones()}"
+                               icon="pi pi-trash" 
+                               actionListener="#{crudController.borrarOrganizacionesSeleccionadas}"
+                               styleClass="ui-button-danger" 
+                               disabled="#{empty crudController.organizacionesSeleccionadas}"
+                               update=":formOrg:dt-org">
+              </p:commandButton>
+            </p:toolbarGroup>
+          </p:toolbar>
+        </div>
+
+        <p:dataTable id="dt-org" widgetVar="dtOrg" var="organizacion"
+                     value="#{crudController.listaOrganizaciones}"
+                     selection="#{crudController.organizacionesSeleccionadas}"
+                     rowKey="#{organizacion.correoElectronico}"
+                     paginator="true" rows="10" paginatorPosition="bottom"
+                     selectionMode="multiple">
+          <p:column headerText="Id">
+            <h:outputText value="#{organizacion.id}" />
+          </p:column>
+          <p:column headerText="Nombre">
+            <h:outputText value="#{organizacion.nombre}" />
+          </p:column>
+          <p:column headerText="Correo">
+            <h:outputText value="#{organizacion.correoElectronico}" />
+          </p:column>
+          <p:column headerText="Acciones" exportable="false">
+            <p:commandButton icon="pi pi-pencil" 
+                             update=":dialogsOrg:manage-org-content"
+                             oncomplete="PF('manageOrgDialog').show()"
+                             styleClass="ui-button-success" process="@this">
+              <f:setPropertyActionListener value="#{organizacion}" target="#{crudController.selectedOrganizacion}" />
+              <p:resetInput target=":dialogsOrg:manage-org-content" />
+            </p:commandButton>
+            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                             process="@this" oncomplete="PF('deleteOrgDialog').show()">
+              <f:setPropertyActionListener value="#{organizacion}" target="#{crudController.selectedOrganizacion}" />
+            </p:commandButton>
+          </p:column>
+          <p:ajax event="rowSelect" update="@form" />
+          <p:ajax event="rowUnselect" update="@form" />
+          <p:ajax event="rowSelectCheckbox" update="@form" />
+          <p:ajax event="rowUnselectCheckbox" update="@form" />
+          <p:ajax event="toggleSelect" update="@form" />
+        </p:dataTable>
+
+        <p:contextMenu for="dt-org">
+          <p:menuitem value="Editar" update=":dialogsOrg:manage-org-content"
+                      icon="pi pi-pencil" oncomplete="PF('manageOrgDialog').show()"
+                      actionListener="#{crudController.saveOrganizacion}">
+            <f:setPropertyActionListener value="#{organizacion}" target="#{crudController.selectedOrganizacion}" />
+          </p:menuitem>
+          <p:menuitem value="Eliminar" update=":formOrg:dt-org"
+                      icon="pi pi-trash"
+                      actionListener="#{crudController.eliminarOrganizacion}">
+            <f:setPropertyActionListener value="#{organizacion}" target="#{crudController.selectedOrganizacion}" />
+          </p:menuitem>
+        </p:contextMenu>
+      </h:form>
+
+      <h:form id="dialogsOrg">
+        <p:dialog header="Detalles de la Organización" showEffect="fade" modal="true" widgetVar="manageOrgDialog"
+                  responsive="true" style="max-height:500px; overflow-y:auto;">
+          <p:panelGrid id="manage-org-content" columns="2" styleClass="ui-panelgrid ui-fluid" style="width:100%;">
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgID" value="ID (solo lectura)" />
+                  <p:inputText id="orgID" value="#{crudController.selectedOrganizacion.id}" disabled="true" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgName" value="Nombre" />
+                  <p:inputText id="orgName" value="#{crudController.selectedOrganizacion.nombre}" required="true" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgRep" value="Nombre Representante" />
+                  <p:inputText id="orgRep" value="#{crudController.selectedOrganizacion.nombreRepresentante}" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgCed" value="Cédula Representante" />
+                  <p:inputText id="orgCed" value="#{crudController.selectedOrganizacion.cedulaRepresentante}" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgMail" value="Correo" />
+                  <p:inputText id="orgMail" value="#{crudController.selectedOrganizacion.correoElectronico}" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgPass" value="Clave" />
+                  <p:inputText id="orgPass" value="#{crudController.selectedOrganizacion.clave}" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgTel" value="Teléfono" />
+                  <p:inputText id="orgTel" value="#{crudController.selectedOrganizacion.numeroTelefonico}" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgDesc" value="Descripción" />
+                  <p:inputTextarea id="orgDesc" value="#{crudController.selectedOrganizacion.descripcion}" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgProv" value="Provincia" />
+                  <p:inputText id="orgProv" value="#{crudController.selectedOrganizacion.provincia}" />
+                </div>
+              </p:column>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgCanton" value="Cantón" />
+                  <p:inputText id="orgCanton" value="#{crudController.selectedOrganizacion.canton}" />
+                </div>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <div class="field">
+                  <p:outputLabel for="orgDist" value="Distrito" />
+                  <p:inputText id="orgDist" value="#{crudController.selectedOrganizacion.distrito}" />
+                </div>
+              </p:column>
+              <p:column>
+              </p:column>
+            </p:row>
+          </p:panelGrid>
+          <f:facet name="footer">
+            <p:commandButton value="Guardar" icon="pi pi-check" 
+                             actionListener="#{crudController.saveOrganizacion}"
+                             update="formOrg:dt-org" process="manage-org-content @this"/>
+            <p:commandButton value="Cancelar" icon="pi pi-times" 
+                             onclick="PF('manageOrgDialog').hide()"
+                             actionListener="#{crudController.prepareEditOrganizacion}" 
+                             class="ui-button-secondary" type="button" />
+          </f:facet>
+        </p:dialog>
+
+        <p:confirmDialog widgetVar="deleteOrgDialog" showEffect="fade" width="300"
+                         message="¿Desea borrar la Organización?" header="Confirmation" severity="warn">
+          <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                           actionListener="#{crudController.eliminarOrganizacion}" process="@this"
+                           update=":formOrg:dt-org" oncomplete="PF('deleteOrgDialog').hide()" />
+          <p:commandButton value="No" type="button" 
+                           styleClass="ui-button-secondary" icon="pi pi-times"
+                           onclick="PF('deleteOrgDialog').hide()" />
+        </p:confirmDialog>
+      </h:form>
+    
+   </h:body>
+</html>
+

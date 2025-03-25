@@ -26,10 +26,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
                 <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
                 <p:submenu style="font-size: 18px" label="Aplicaciones" icon="pi pi-fw pi-send">
-                    <p:menuitem style="font-size: 18px" value="Historial" icon="pi pi-fw pi-history"/>
+                    <p:menuitem style="font-size: 18px" value="Historial" icon="pi pi-fw pi-history" action="#{usuarioController.cargarHistorialOportunidades(loginController.usuario.id)}"/>
                     <p:menuitem style="font-size: 18px" value="Favoritos" icon="pi pi-fw pi-star"/>
                 </p:submenu>
-                <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.muestraCapacitaciones()}"/>
 
             </p:menubar>
 
@@ -84,7 +84,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </f:facet>
 
                 <div class="product-item" style="display: flex; justify-content: center; align-items: center;">
-                    <p:graphicImage name="LandingPage/Carrucel/#{image}" library="images" 
+                    <p:graphicImage value="#{image}"
                                     styleClass="carousel-image" style="width: 80%; max-height: 150px; object-fit: contain;"/>
                 </div>
             </p:carousel>

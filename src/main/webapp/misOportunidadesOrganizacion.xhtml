@@ -112,11 +112,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
                         <p:submenu style="font-size: 18px" label="Publicar" icon="pi pi-fw pi-upload">
                             <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-plus-circle"  action="#{oportunidadesController.irAPublicar()}"/>
-                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.irAPublicar()}"/>
                         </p:submenu>
                         <p:submenu style="font-size: 18px" label="Mis publicaciones" icon="pi pi-fw pi-inbox">
                             <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" action="#{aspirantesController.cargarOportunidadesOrganizacion(loginController.organizacion.id)}"/>
-                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.cargarCapacitaciones(loginController.organizacion.id)}"/>
                         </p:submenu>
 
                     </p:menubar>
@@ -140,7 +140,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
 
             <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto;gap: 15px; ">
+                
+                
+                
                 <ui:repeat value="#{aspirantesController.listaOportunidadesOrganizacion}"  var="oportunidadesOrganizacion" >
+
                     <div >
 
 
@@ -210,7 +214,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                             </div>
                             <div style="display: flex; flex-direction: column;justify-content: flex-end; margin-top: 20px">
-                                <p:commandButton value="Ver aspirantes" actionListener="#{oportunidadesController.verAspirantes(oportunidadesOrganizacion)}" action="#{aspirantesController.cargarAspirantes(oportunidadesOrganizacion.id)}"/>
+                                <p:commandButton value="Ver aspirantes" actionListener="#{oportunidadesController.verAspirantes(oportunidadesOrganizacion)}" 
+                                                 action="#{aspirantesController.cargarAspirantes(oportunidadesOrganizacion.id)}"
+                                                 ajax="false"
+                                                 />
                             </div>
 
 

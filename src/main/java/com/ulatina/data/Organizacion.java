@@ -14,7 +14,7 @@ public class Organizacion implements Serializable {
 
     private int id;
     
-    private String nombre, nombreRepresentante,correoElectronico, clave, numeroTelefonico, descripcion, provincia, canton, distrito, cedulaRepresentante;
+    private String nombre, nombreRepresentante,correoElectronico, clave, numeroTelefonico, descripcion, provincia, canton, distrito, cedulaRepresentante, rutaImagen;
 
     public Organizacion() {
         
@@ -34,6 +34,15 @@ public class Organizacion implements Serializable {
         this.cedulaRepresentante = cedulaRepresentante;
     }
 
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
+
+    
     public String getCedulaRepresentante() {
         return cedulaRepresentante;
     }
@@ -42,9 +51,6 @@ public class Organizacion implements Serializable {
         this.cedulaRepresentante = cedulaRepresentante;
     }
 
-    
-    
-    
 
     public String getNombreRepresentante() {
         return nombreRepresentante;

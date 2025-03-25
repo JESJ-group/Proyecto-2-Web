@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+
+
+    <style>
+
+
+        .custom-wizard .ui-wizard-nav {
+            position: relative;
+            margin-right: 20px;
+        }
+        .custom-wizard .ui-wizard-nav-next,
+        .custom-wizard .ui-wizard-nav-back {
+            border-radius: 15px;
+            font-size: 16px;
+
+        }
+
+
+        .custom-wizard .ui-wizard-nav-next {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .custom-wizard .ui-wizard-nav-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+
+
+    </style>
+
+
+
+
+    <h:head>
+        <title>Registro de Usuario - JoinUp</title>
+    </h:head>
+
+    <h:body style=" height: 80vh; padding-top: 12em;">
+
+
+        <h:form id="registroUsuarioForm">
+
+
+            <p:growl id="growl" sticky="true" showDetail="true"/>
+            <p:messages id="mensajes" showDetail="true" closable="true" />
+
+            <p:wizard id="registroWizard"
+                      flowListener="#{registroController.onFlowProcess}"
+                      showStepStatus="false"
+                      showNavBar="true"
+                      backLabel="Atrás"
+                      nextLabel="Siguiente"
+                      style="width:60%; margin: auto;"
+                      styleClass="custom-wizard">
+
+
+                <p:tab id="datosPersonales" title="Datos Personales" >
+
+
+                    <p:card style="width: 70rem; height: 40vh; margin: auto; text-align: center; border-radius: 20px; margin-bottom:10px; ">
+
+
+
+
+                        <div class="login-logo" style="padding-bottom: 20px">
+                            <img style="width: 200px; " src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+                            <p style="font-size: 20px ;color: black; margin-left: 20px"> Crea una Cuenta de Join Up</p>
+                        </div>
+
+
+
+                        <p:panelGrid columns="4"  columnClasses="labelColumn,valueColumn"  
+                                     style="width: 100%; ">
+
+                            <h:outputLabel value="Nombre" style=" font-size: 20px;color: black; "/>
+
+                            <p:inputText value="#{registroController.usuario.nombre}" required="true" 
+                                         requiredMessage="El nombre es obligatorio" 
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Correo Electronico" style="font-size: 20px; color: black; "/>
+                            <p:inputText value="#{registroController.usuario.correoElectronico}" required="true" 
+                                         requiredMessage="El correo electronico es obligatorio" 
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Apellido" style=" font-size: 20px;color: black; "/>
+
+                            <p:inputText value="#{registroController.usuario.apellidos}" required="true" 
+                                         requiredMessage="El apellido es obligatorio" 
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Contraseña" style="font-size: 20px; color: black;"/>
+                            <p:password value="#{registroController.usuario.clave}" required="true" 
+                                        requiredMessage="La contraseña es obligatoria" 
+                                        style="width: 100%; height: 45px"/>
+
+                        </p:panelGrid>
+
+
+
+
+                    </p:card>
+
+
+
+
+                </p:tab>
+
+
+                <p:tab id="nacimientoGenero" title="Nacimiento y Género">
+
+                    <p:card style="width: 70rem; height: 40vh; margin: auto; text-align: center; border-radius: 20px; margin-bottom:10px; ">
+
+
+
+
+                        <div class="login-logo" style="padding-bottom: 20px">
+                            <img style="width: 200px; " src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+                            <p style="font-size: 20px ;color: black;margin-left: 40px"> Completa tu fecha de nacimiento y género.</p>
+                        </div>
+
+
+
+                        <p:panelGrid columns="2" columnClasses="labelColumn,valueColumn" style="width:100%; text-align:left;">
+
+                            <p:outputLabel for="fechaN" value="Fecha de Nacimiento" style="font-size: 20px; color: black"/>
+
+                            <p:datePicker id="fechaN" value="#{registroController.usuario.fechaNacimiento}" 
+                                          monthNavigator="true" 
+                                          yearNavigator="true"                                 
+                                          required="true" 
+                                          yearRange="1900:2008"
+                                          maxdate="01/01/2009"
+                                          requiredMessage="La fecha de nacimiento es obligatoria"
+                                          />
+
+                            <h:outputLabel value="Género:" style="font-size: 20px; color: black" />
+                            <p:selectOneMenu value="#{registroController.usuario.genero}" required="true" requiredMessage="El género es obligatorio">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                                <f:selectItem itemLabel="Prefiero no decirlo" itemValue="Prefiero no decirlo"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+
+
+
+                    </p:card>
+
+
+
+                </p:tab>
+
+
+                <p:tab id="detallesAdicionales" title="Detalles Adicionales">
+
+
+
+
+                    <p:card style="width: 70rem; height: 60vh; margin: auto; text-align: center; border-radius: 20px; margin-bottom:10px; ">
+
+
+
+
+                        <div class="login-logo" style="padding-bottom: 20px">
+                            <img style="width: 200px; " src="https://docs.fitko.de/img/resources/joinup/190404-logo-JOINUP-blue.png"/>
+                            <p style="font-size: 20px ;color: black; margin-left: 20px"> Crea una Cuenta de Join Up</p>
+                        </div>
+
+
+
+                        <p:panelGrid columns="4"  columnClasses="labelColumn,valueColumn"  
+                                     style="width: 100%; ">
+
+
+                            <h:outputLabel value="Estatus:" style="font-size: 20px; color: black" />
+                            <p:selectOneMenu value="#{registroController.usuario.estatus}" required="true" requiredMessage="El estatus es obligatorio">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Estudiante" itemValue="Estudiante"/>
+                                <f:selectItem itemLabel="Empleado" itemValue="Empleado"/>
+                                <f:selectItem itemLabel="Desempleado" itemValue="Desempleado"/>
+                                <f:selectItem itemLabel="Empleado en formación" itemValue="Empleado en formación"/>
+                            </p:selectOneMenu>
+
+
+                            <h:outputLabel value="Provincia:" style="font-size: 20px; color: black; "/>
+                            <p:inputText value="#{registroController.usuario.provincia}" required="true" 
+                                         requiredMessage="Los apellidos son obligatorios" 
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Cantón:" style=" font-size: 20px;color: black; "/>
+
+                            <p:inputText value="#{registroController.usuario.canton}" required="true" 
+                                         requiredMessage="El nombre es obligatorio" 
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Distrito:" style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.usuario.distrito}" required="true" 
+                                         requiredMessage="Los apellidos son obligatorios" 
+                                         style="width: 100%; height: 45px"/>
+
+                            <h:outputLabel value="Número de Contacto:" style="font-size: 20px; color: black;"/>
+                            <p:inputText value="#{registroController.usuario.numeroContacto}" required="true" 
+                                         requiredMessage="Los apellidos son obligatorios" 
+                                         style="width: 100%; height: 45px"/>
+
+
+                        </p:panelGrid>
+                        <p:commandButton value="Registrarse"
+                                         action="#{registroController.registrarUsuario()}" 
+                                         style="margin-top:60px; margin-left: 40px;background-color: #007bff;
+                                         border: none; border-radius: 15px;
+                                         font-size: 16px;border-radius: 15px;
+                                         font-size: 18px; "/>
+
+
+
+
+
+                    </p:card>
+
+                </p:tab>
+
+            </p:wizard>
+
+        </h:form>
+
+    </h:body>
+
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Editar Perfil</title>
+    </h:head>
+
+
+    <h:body>
+
+        <h:form id="form">
+
+            <div style="display: flex; justify-content: center; margin-top: 6.5em">
+
+                <p:card style="height: 50em; border-radius: 10px; width: 70em;">
+
+
+                    <p:panelGrid columns="4" style="margin-top: 80px; ">
+
+
+                        <h:outputLabel value="Nombre" style=" font-size: 20px;color: black; "/>
+                        <p:inputText value="#{loginController.usuario.nombre}" required="true" 
+                                     requiredMessage="El nombre es obligatorio" 
+                                     style="width: 100%; height: 45px"/>
+
+                        <h:outputLabel value="Correo Electronico" style="font-size: 20px; color: black; "/>
+                        <p:inputText value="#{loginController.usuario.correoElectronico}" required="true" 
+                                     requiredMessage="El correo electronico es obligatorio" 
+                                     style="width: 100%; height: 45px"/>
+
+                        <h:outputLabel value="Apellido" style=" font-size: 20px;color: black; "/>
+
+                        <p:inputText value="#{loginController.usuario.apellidos}" required="true" 
+                                     requiredMessage="El apellido es obligatorio" 
+                                     style="width: 100%; height: 45px"/>
+
+                        <h:outputLabel value="Contraseña" style="font-size: 20px; color: black;"/>
+                        <p:inputText value="#{loginController.usuario.clave}" required="true" 
+                                     requiredMessage="La contraseña es obligatoria" 
+                                     style="width: 100%; height: 45px"/>
+
+                        <p:outputLabel for="fechaN" value="Fecha de Nacimiento" style="font-size: 20px; color: black"/>
+
+                        <p:datePicker id="fechaN" value="#{loginController.usuario.fechaNacimiento}" 
+                                      monthNavigator="true" 
+                                      yearNavigator="true"                                 
+                                      required="true" 
+                                      yearRange="1900:2008"
+                                      maxdate="01/01/2009"
+                                      requiredMessage="La fecha de nacimiento es obligatoria"
+                                      />
+
+                        <h:outputLabel value="Género:" style="font-size: 20px; color: black" />
+                        <p:selectOneMenu value="#{loginController.usuario.genero}" required="true" requiredMessage="El género es obligatorio">
+                            <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                            <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                            <f:selectItem itemLabel="Prefiero no decirlo" itemValue="Prefiero no decirlo"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Estatus:" style="font-size: 20px; color: black" />
+                        <p:selectOneMenu value="#{loginController.usuario.estatus}" required="true" requiredMessage="El estatus es obligatorio">
+                            <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Estudiante" itemValue="Estudiante"/>
+                            <f:selectItem itemLabel="Empleado" itemValue="Empleado"/>
+                            <f:selectItem itemLabel="Desempleado" itemValue="Desempleado"/>
+                            <f:selectItem itemLabel="Empleado en formación" itemValue="Empleado en formación"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Provincia:" style="font-size: 20px; color: black; "/>
+                        <p:inputText value="#{loginController.usuario.provincia}" required="true" 
+                                     requiredMessage="Los apellidos son obligatorios" 
+                                     style="width: 100%; height: 45px"/>
+
+                        <h:outputLabel value="Cantón:" style=" font-size: 20px;color: black; "/>
+
+                        <p:inputText value="#{loginController.usuario.canton}" required="true" 
+                                     requiredMessage="El nombre es obligatorio" 
+                                     style="width: 100%; height: 45px"/>
+
+                        <h:outputLabel value="Distrito:" style="font-size: 20px; color: black;"/>
+                        <p:inputText value="#{loginController.usuario.distrito}" required="true" 
+                                     requiredMessage="Los apellidos son obligatorios" 
+                                     style="width: 100%; height: 45px"/>
+
+                        <h:outputLabel value="Número de Contacto:" style="font-size: 20px; color: black;"/>
+                        <p:inputText value="#{loginController.usuario.numeroContacto}" required="true" 
+                                     requiredMessage="Los apellidos son obligatorios" 
+                                     style="width: 100%; height: 45px"/>
+                        <p:commandButton
+                            
+                            value="Guardar cambios" actionListener="#{usuarioController.actualizarUsuario(loginController.usuario, loginController.usuario.id)}" update="@form"
+                            style="margin-top: 12em; margin-left: 20em; width: 10em"
+                            >
+                        </p:commandButton>
+
+                    </p:panelGrid>
+                </p:card>
+            </div>
+
+        </h:form>
+
+    </h:body>
+</html>

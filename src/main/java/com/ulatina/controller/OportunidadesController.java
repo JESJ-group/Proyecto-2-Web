@@ -17,7 +17,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -111,7 +111,10 @@ public class OportunidadesController implements Serializable {
         return "verAspirantes?faces-redirect=true";
     }
 
-    public void aplicar(int idOportunidad, int idUsuario, int idOrganizacion) throws SQLException {
+    EmailController eC = new EmailController();
+    
+    
+    public void aplicar(int idOportunidad, int idUsuario, int idOrganizacion, String correoElectronico) throws SQLException {
         try {
             
             organizacion = servicioOrganizacion.validarOrganizacion(idOrganizacion);
@@ -132,10 +135,13 @@ public class OportunidadesController implements Serializable {
             
             servicioPostulaciones.insertarPostulacion(postulaciones, idOportunidad, idUsuario);
 
+            
+            
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Oportunidad creada", "Oportuinidad creada con exito"));
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Aplicación satisfactoria", "Se le ha enviado un correo electronico con los detalles"));
 
-            servicio.redireccionar("/oportunidades.xhtml");
+            
+            eC.enviarCorreoConfirmacionOportunidad(correoElectronico);
 
         } catch (ClassNotFoundException e) {
             FacesContext.getCurrentInstance().addMessage(null,

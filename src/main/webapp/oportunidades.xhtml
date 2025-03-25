@@ -127,11 +127,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
                         <p:submenu style="font-size: 18px" label="Publicar" icon="pi pi-fw pi-upload">
                             <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-plus-circle" action="#{oportunidadesController.irAPublicar()}"/>
-                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.irAPublicar()}"/>
                         </p:submenu>
                         <p:submenu style="font-size: 18px" label="Mis publicaciones" icon="pi pi-fw pi-inbox">
                             <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" action="#{aspirantesController.cargarOportunidadesOrganizacion(loginController.organizacion.id)}"/>
-                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                            <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.cargarCapacitaciones(loginController.organizacion.id)}"/>
                         </p:submenu>
                     </p:menubar>
 
@@ -161,10 +161,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
                         <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
                         <p:submenu style="font-size: 18px" label="Aplicaciones" icon="pi pi-fw pi-send">
-                            <p:menuitem style="font-size: 18px" value="Historial" icon="pi pi-fw pi-history"/>
+                            <p:menuitem style="font-size: 18px" value="Historial" icon="pi pi-fw pi-history" action="#{usuarioController.cargarHistorialOportunidades(loginController.usuario.id)}"/>
                             <p:menuitem style="font-size: 18px" value="Favoritos" icon="pi pi-fw pi-star"/>
                         </p:submenu>
-                        <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap"/>
+                        <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.muestraCapacitaciones()}"/>
 
                     </p:menubar>
 

@@ -97,6 +97,44 @@
 
     <h:body>
 
+        <div class="barraMenu" 
+             style="display: flex; justify-content: space-between; align-items: center;
+             width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+             background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+
+
+            <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+                <p:menuitem style="font-size: 18px" value="Inicio" icon="pi pi-fw pi-home" outcome="/landingPageOrganizacion.xhtml"/>
+                <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
+                <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
+                <p:submenu style="font-size: 18px" label="Publicar" icon="pi pi-fw pi-upload">
+                    <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-plus-circle" action="#{oportunidadesController.irAPublicar()}"/>
+                    <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.irAPublicar()}"/>
+                </p:submenu>
+                <p:submenu style="font-size: 18px" label="Mis publicaciones" icon="pi pi-fw pi-inbox">
+                    <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" action="#{aspirantesController.cargarOportunidadesOrganizacion(loginController.organizacion.id)}"/>
+                    <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.cargarCapacitaciones(loginController.organizacion.id)}"/>
+                </p:submenu>
+
+            </p:menubar>
+
+            <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+
+                <p:submenu style="font-size: 18px" label="Mi perfil" icon="pi pi-fw pi-user">
+
+                    <p:menuitem style="font-size: 18px" value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilOrganizacion.xhtml"/>
+                    <p:menuitem style="font-size: 18px" value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
+                </p:submenu>
+
+            </p:menubar>
+
+        </div>
+
+
+        <div style="margin-top: 60px;">
+        </div>
+
         <h:form>
             <div class="header-container">
                 <div class="header-title">
@@ -109,29 +147,87 @@
 
         </h:form>
 
-        <h:form id="detallesForm">
+        <h:form id="detallesForm" >
 
-            <div class="content-container">
-
+            <div class="content-container" style="margin-left: 120px; margin-right: 125px">
                 <div class="description-section">
-                    
+                    <div>
+                        <h3 style="font-size: 20px; margin-top: 0">#{aspirantesController.usuario.nombre} #{aspirantesController.usuario.apellidos}</h3>
+                        <hr style="border: 1px solid darkgrey; width: 100%; margin-bottom: 50px"/>
+                    </div>
 
+
+
+
+
+
+
+
+                    <span style="display: none;">
+                        <p:calendar />
+                    </span>
+
+
+                    <div style="display: flex; gap: 25px;margin-top: 60px;">
+                        <span class="ui-float-label">
+                            <p:inputText value="#{aspirantesController.usuario.nombre}"  style="width: 625px; color: #000000; opacity: 1;margin-top: 10px" disabled="true"/>
+                            <p:outputLabel for="@previous" value="Nombre" style="font-size: 17px; color: #000000; font-weight: 600; margin-left:0"/>
+                        </span>
+
+                        <span class="ui-float-label">
+                            <p:inputText value="#{aspirantesController.usuario.apellidos}" style="width: 625px; color: #000000; opacity: 1;margin-top: 10px" disabled="true" />
+                            <p:outputLabel value="Apellido" style="font-size: 17px; color: #000000; font-weight: 600; margin-left:0"/>
+                        </span>
+                    </div>
+
+                    <div style="display: flex; gap: 25px;margin-top: 65px;">
+                        <span class="ui-float-label">
+                            <p:inputText value="#{aspirantesController.usuario.correoElectronico}" style="width: 625px; color: #000000; opacity: 1;margin-top: 10px" disabled="true"/>
+                            <p:outputLabel value="Correo Electrónico" style="font-size: 17px; color: #000000; font-weight: 600; margin-left:0"/>
+                        </span>
+
+                        <span class="ui-float-label">
+                            <p:inputText value="#{aspirantesController.usuario.numeroContacto}" style="width: 625px; color: #000000; opacity: 1;margin-top: 10px" disabled="true"/>
+                            <p:outputLabel value="Número Contacto" style="font-size: 17px; color: #000000; font-weight: 600; margin-left:0"/>
+                        </span>
+
+
+                    </div>
+                    <div style="display: flex; gap: 25px;margin-top: 65px;">
+                        <span class="ui-float-label">
+                            <p:inputText value="#{aspirantesController.usuario.genero}" style="width: 625px; color: #000000; opacity: 1;margin-top: 10px" disabled="true"/>
+                            <p:outputLabel value="Género" style="font-size: 17px; color: #000000; font-weight: 600; margin-left:0"/>
+                        </span>
+
+                        <span class="ui-float-label">
+                            <p:inputText value="#{aspirantesController.usuario.fechaNacimiento}" style="width: 625px; color: #000000; opacity: 1;margin-top: 10px" disabled="true" />
+                            <p:outputLabel value="Fecha de Nacimiento" style="font-size: 17px; color: #000000; font-weight: 600; margin-left:0"/>
+                        </span>
+
+
+                    </div>
                 </div>
 
                 <div class="sidebar">
-                    <h3>ASPIRANTES</h3>
-                    <ui:repeat value="#{aspirantesController.listaAspirantesUsuarios}"  var="aspirante" >
+                    <h3 style="display:flex; justify-content: center; margin-bottom: 20px">ASPIRANTES</h3>
+                    <ui:repeat value="#{aspirantesController.listaAspirantesUsuarios}" var="aspirante">
                         <div class="sidebar-item">
                             <i class="pi pi-user sidebar-icon"></i>
-                            <div class="sidebar-label" style="font-size: 18px">
-                                #{aspirante.nombre} #{aspirante.apellidos}
+                            <div class="sidebar-label">
+                                <p:commandButton value="#{aspirante.nombre} #{aspirante.apellidos}"
+                                                 styleClass="ui-button-info ui-button-flat"
+                                                 style="font-size: 18px; border-radius: 10px; color: #000000; font-weight: 600"
+                                                 action="#{aspirantesController.verDetallesAspirante(aspirante)}"
+                                                 update="@form"
+
+
+                                                 immediate="true"
+                                                 process="@this"/>
                             </div>
                         </div>
                     </ui:repeat>
                 </div>
             </div>
-            
-
         </h:form>
 
     </h:body>

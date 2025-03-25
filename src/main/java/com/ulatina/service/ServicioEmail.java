@@ -31,7 +31,7 @@ import java.util.Properties;
 public class ServicioEmail extends Servicio {
 
     private static String correoElectronico = "jaimefungdel@gmail.com";
-    private static String contrasenna = "wvyl jbvm ktic vawm";
+    private static String contrasenna = "bhyg anxd pvog ibbj";
     private Properties propiedades;
     private Session session;
     private MimeMessage correo;
@@ -43,7 +43,7 @@ public class ServicioEmail extends Servicio {
 
         try {
             super.conectarBD();
-            String sql = "SELECT id, nombre, correo, clave FROM usuario WHERE correo = ?";
+            String sql = "SELECT * FROM usuario WHERE correoElectronico = ?";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, correo);
 
@@ -53,7 +53,7 @@ public class ServicioEmail extends Servicio {
                 usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
                 usuario.setNombre(rs.getString("nombre"));
-                usuario.setCorreo(rs.getString("correo"));
+                usuario.setCorreo(rs.getString("correoElectronico"));
                 usuario.setClave(rs.getString("clave"));
             }
         } catch (SQLException e) {

@@ -15,7 +15,6 @@ import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-
 /**
  *
  * @author jaime
@@ -25,7 +24,7 @@ import java.io.IOException;
 public class EmailController implements Serializable {
 
     private ServicioEmail servicioEmail = new ServicioEmail();
-    
+
     private String correo;
     private ServicioEmail servicioUsuario = new ServicioEmail();
     private Usuario usuario = new Usuario();
@@ -56,7 +55,6 @@ public class EmailController implements Serializable {
         this.codigoIngresado = codigoIngresado;
     }
 
-    
     public String getCorreo() {
         return correo;
     }
@@ -81,20 +79,18 @@ public class EmailController implements Serializable {
         this.servicioEmail = servicioEmail;
     }
 
-    
-
     public void redireccionar(String ruta) {
         HttpServletRequest request;
         try {
             request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath() + ruta);
         } catch (IOException e) {
-            
+
         }
     }
 
     public String generarCodigoVerificacion() {
-        int codigo = (int) (Math.random() * 900000) + 100000; 
+        int codigo = (int) (Math.random() * 900000) + 100000;
         return String.valueOf(codigo);
     }
 
@@ -104,16 +100,15 @@ public class EmailController implements Serializable {
 
         try {
             this.usuario = this.servicioEmail.validarCorreo(correo);
-            
-            if (usuario != null) {
-                
-               codigoGenerado = generarCodigoVerificacion();
 
-                
+            if (usuario != null) {
+
+                codigoGenerado = generarCodigoVerificacion();
+
                 this.servicioEmail.crearCorreo(correo, asunto, contenido + "\nCódigo: " + codigoGenerado);
                 this.servicioEmail.enviarCorreo();
 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Código enviado correctamente"));
+                
                 this.redireccionar("/codigoRecuperacion.xhtml");
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correo inválido"));
@@ -123,9 +118,22 @@ public class EmailController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error al enviar el correo, intente nuevamente"));
         }
 
-        
     }
-    
+
+    public void enviarCorreoConfirmacionOportunidad(String correoElectronico) {
+        String asunto = "Confirmación de aplicación";
+        String contenido = "A aplicado satisfacctoriamente a la oportunidad";
+
+        try {
+            
+            this.servicioEmail.crearCorreo(correoElectronico, asunto, contenido);
+            this.servicioEmail.enviarCorreo();
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ha ocurrido un error"));
+        }
+    }
+
     public void validarCodigo() {
         if (codigoIngresado != null && codigoIngresado.equals(codigoGenerado)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Código correcto, puede cambiar su contraseña"));

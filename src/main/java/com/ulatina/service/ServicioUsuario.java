@@ -1,5 +1,6 @@
 package com.ulatina.service;
 
+import com.ulatina.data.Oportunidades;
 import com.ulatina.data.Postulaciones;
 import com.ulatina.data.Usuario;
 import java.sql.PreparedStatement;
@@ -218,8 +219,7 @@ public class ServicioUsuario extends Servicio {
             super.cerrarConexion();
         }
     }
-    
-    
+
     public void actualizarUsuarioEditar(Usuario usuario, int id) {
         PreparedStatement pstmt = null;
         try {
@@ -246,7 +246,7 @@ public class ServicioUsuario extends Servicio {
             pstmt.setString(11, usuario.getNumeroContacto());
             pstmt.setInt(12, id);
             pstmt.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -303,6 +303,57 @@ public class ServicioUsuario extends Servicio {
 
         }
         return usuario;
+    }
+
+    public List<Oportunidades> cargarHistorialOportunidades(int idUsuario) {
+
+        List<Oportunidades> listaHistorialOportunidades = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            super.conectarBD();
+            String sql = "SELECT * "
+                    + "FROM postulaciones p, usuario u, oportunidades o "
+                    + "where o.id = p.idOportunidades "
+                    + "and p.idUsuario = u.id "
+                    + "and u.id = ?";
+
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setInt(1, idUsuario);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                Oportunidades oportunidades = new Oportunidades();
+
+                oportunidades.setId(rs.getInt("id"));
+                oportunidades.setTitulo(rs.getString("titulo"));
+                oportunidades.setDescripcion(rs.getString("descripcion"));
+                oportunidades.setDetalles(rs.getString("detalles"));
+                oportunidades.setTipo(rs.getString("tipo"));
+                oportunidades.setDuracion(rs.getString("duracion"));
+                oportunidades.setJornada(rs.getString("jornada"));
+                oportunidades.setModalidad(rs.getString("modalidad"));
+                oportunidades.setPago(rs.getString("pago"));
+                oportunidades.setUbicacion(rs.getString("ubicacion"));
+                oportunidades.setProvincia(rs.getString("provincia"));
+
+                listaHistorialOportunidades.add(oportunidades);
+            }
+
+        } catch (Exception e) {
+        } finally {
+
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+
+        }
+
+        return listaHistorialOportunidades;
+
     }
 
 }

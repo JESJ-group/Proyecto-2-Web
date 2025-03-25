@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
+
+    <h:head>
+        <title>Capacitaciones</title>
+        <style>
+            .contenedor-video {
+                width: 320px;
+                height: 180px;
+                border-radius: 10px;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .contenedor-video img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .capacitacion-card {
+                width: 65rem;
+                height: auto;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background: white;
+                gap: 20px;
+            }
+
+            .info-capacitacion {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .etiquetas {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin-top: 10px;
+            }
+
+            .titulo {
+                margin-bottom: 10px;
+                font-weight: bolder;
+                font-size: 30px;
+                color: #007bff;
+            }
+
+            .descripcion {
+                font-size: 15px;
+                max-height: 70px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        </style>
+    </h:head>
+
+    <h:body style="background-color: #f2f2f2; color: black; display: flex; flex-direction: column; align-items: center;">
+
+        <p:outputPanel rendered="#{loginController.tipoUsuario eq 'usuario'}">
+            <div class="barraUsuario" 
+                 style="display: flex; justify-content: space-between; align-items: center;
+                 width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+                 background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" rendered="#{loginController.tipoUsuario eq 'usuario'}">
+
+
+                <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
+
+                    <p:menuitem style="font-size: 18px" value="Inicio" icon="pi pi-fw pi-home" outcome="/landingPageUsuario.xhtml"/>
+                    <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
+                    <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
+                    <p:submenu style="font-size: 18px" label="Aplicaciones" icon="pi pi-fw pi-send">
+                        <p:menuitem style="font-size: 18px" value="Historial" icon="pi pi-fw pi-history"/>
+                        <p:menuitem style="font-size: 18px" value="Favoritos" icon="pi pi-fw pi-star"/>
+                    </p:submenu>
+                    <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.muestraCapacitaciones()}"/>
+
+                </p:menubar>
+
+                <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
+
+                    <p:submenu style="font-size: 18px" label="Mi perfil" icon="pi pi-fw pi-user">
+
+                        <p:menuitem style="font-size: 18px" value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilUsuario.xhtml"/>
+                        <p:menuitem style="font-size: 18px" value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
+                    </p:submenu>
+
+                </p:menubar>
+
+            </div>
+        </p:outputPanel>
+
+        <h:form id="formCapacitaciones">
+            <div style="margin-top: 60px;"></div>
+            <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto; gap: 15px;">
+                <ui:repeat value="#{capacitacionController.listaCompletaCapacitaciones}" var="capacitacion">
+                    <div class="capacitacion-card">
+                        <div class="contenedor-video">
+                            <p:graphicImage value="https://img.youtube.com/vi/#{capacitacion.urlVideo.split('v=')[1]}/hqdefault.jpg" alt="Portada del video"/>
+                        </div>
+                        <div class="info-capacitacion">
+                            <p:outputLabel styleClass="titulo" value="#{capacitacion.titulo}"/>
+                            <p:outputLabel styleClass="descripcion" value="#{capacitacion.descripcion}"/>
+                            <div class="etiquetas">
+                                <p:chip icon="pi pi-calendar" style="background-color: #28a745; color: white;" label="Fecha: #{capacitacion.fechaPublicacion}"/>
+                                <p:chip icon="pi pi-users" style="background-color: #007bff; color: white;" label="#{capacitacion.categoria}"/>
+                            </div>
+                            <p:commandButton value="Ver capacitación" icon="pi pi-play"
+                                             onclick="window.open('#{capacitacion.urlVideo}', '_blank')" style="margin-top: 10px;"/>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+        </h:form>
+    </h:body>
+</html>

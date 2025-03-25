@@ -103,7 +103,7 @@ public class ServicioOrganizacion extends Servicio {
 
         try {
             super.conectarBD();
-            String sql = "INSERT INTO organizacion (nombre, nombreRepresentante, cedulaRepresentante, correoElectronico, clave, numeroTelefonico, descripcion, provincia, canton, distrito) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO organizacion (nombre, nombreRepresentante, cedulaRepresentante, correoElectronico, clave, numeroTelefonico, descripcion, provincia, canton, distrito, rutaImagen) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setString(1, organizacion.getNombre());
             pstmt.setString(2, organizacion.getNombreRepresentante());
@@ -115,6 +115,7 @@ public class ServicioOrganizacion extends Servicio {
             pstmt.setString(8, organizacion.getProvincia());
             pstmt.setString(9, organizacion.getCanton());
             pstmt.setString(10, organizacion.getDistrito());
+            pstmt.setString(11, organizacion.getRutaImagen());
 
             int cantidad = pstmt.executeUpdate();
 

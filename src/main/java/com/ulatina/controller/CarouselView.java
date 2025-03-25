@@ -1,31 +1,31 @@
 package com.ulatina.controller;
 
+import com.ulatina.service.ServicioCarousel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Controlador para el carrusel de imágenes.
- */
 @Named
 @ViewScoped
 public class CarouselView implements Serializable {
 
-    private List<String> images; // Solo necesitamos una lista de imágenes
+    private List<String> images;
+
+    private ServicioCarousel servicioCarousel = new ServicioCarousel();
 
     @PostConstruct
-    public void init() {
-        images = new ArrayList<>();
-        images.add("amazon.jpg");
-        images.add("bostonscientific.jpg");
-        images.add("google.jpg");
-        images.add("microsoft.jpg");
-        images.add("pepsi.jpg");
-        images.add("starbucks.jpg");
-        images.add("tekexperts.jpg");
+    public void init() throws SQLException {
+        try {
+            // Obtener rutas de imágenes desde la base de datos
+            images = servicioCarousel.obtenerRutasImagenes();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            images = new ArrayList<>(); // Para evitar null en caso de error
+        }
     }
 
     public List<String> getImages() {

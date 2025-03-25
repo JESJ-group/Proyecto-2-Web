@@ -101,8 +101,8 @@
                 </div>
                 <p:commandButton value="Aplica ahora"
                                  styleClass="apply-button"
-                                 action="#{oportunidadesController.aplicar(oportunidadesController.oportunidades.id, loginController.usuario.id, loginController.organizacion.id)}" 
-                                 update="@form" />
+                                 action="#{oportunidadesController.aplicar(oportunidadesController.oportunidades.id, loginController.usuario.id, loginController.organizacion.id, loginController.usuario.correoElectronico)}" 
+                                 update="@form, messages" />
                 
             </div>
             <p:messages id="messages" showDetail="true" closable="true"/>
