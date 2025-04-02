@@ -110,7 +110,7 @@
                 <ui:repeat value="#{capacitacionController.listaCompletaCapacitaciones}" var="capacitacion">
                     <div class="capacitacion-card">
                         <div class="contenedor-video">
-                            <p:graphicImage value="https://img.youtube.com/vi/#{capacitacion.urlVideo.split('v=')[1]}/hqdefault.jpg" alt="Portada del video"/>
+                            <p:graphicImage value="https://img.youtube.com/vi/#{capacitacion.obtenerIdVideo()}/hqdefault.jpg" alt="Portada del video"/>
                         </div>
                         <div class="info-capacitacion">
                             <p:outputLabel styleClass="titulo" value="#{capacitacion.titulo}"/>
