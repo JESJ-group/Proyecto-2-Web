@@ -89,4 +89,26 @@ public class Capacitacion {
     private LocalDate fechaPublicacion;
     private Organizacion idOrganizacion;
     
+    public String obtenerIdVideo() {
+    if (this.urlVideo == null || this.urlVideo.isEmpty()) {
+        return "";
+    }
+
+    String videoId = "";
+    
+    try {
+        if (this.urlVideo.contains("youtube.com/watch?v=")) {
+            videoId = this.urlVideo.split("v=")[1].split("&")[0]; 
+        } else if (this.urlVideo.contains("youtu.be/")) {
+            videoId = this.urlVideo.split("youtu.be/")[1].split("\\?")[0];
+        } else if (this.urlVideo.contains("youtube.com/embed/")) {
+            videoId = this.urlVideo.split("embed/")[1].split("\\?")[0]; 
+        }
+    } catch (Exception e) {
+        videoId = ""; 
+    }
+
+    return videoId;
+}
+
 }
