@@ -10,6 +10,7 @@ import com.ulatina.data.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 
 /**
@@ -57,5 +58,27 @@ public class ServicioPostulaciones extends Servicio {
 
         }
     }
-    
+        public boolean existePostulacion(Postulaciones postulaciones, int idUsuario, int idOportunidades) throws SQLException, ClassNotFoundException {
+             ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
+        ServicioUsuario servicioUsuario = new ServicioUsuario(); 
+            Usuario usu = servicioUsuario.obtenerIdUsuario(idUsuario);
+        postulaciones.setIdUsuario(usu);
+       
+        
+        Oportunidades oportunidad = servicioOportunidad.obtenerIdOportunidad(idOportunidades);
+        postulaciones.setIdOportunidades(oportunidad);
+            boolean existe = false;
+        super.conectarBD();
+        String sql = "SELECT COUNT(*) FROM postulaciones WHERE idOportunidades = ? AND idUsuario = ?";
+        try (PreparedStatement pstmt = super.getConexion().prepareStatement(sql)) {
+            pstmt.setInt(1, postulaciones.getIdOportunidades().getId());
+            pstmt.setInt(2, postulaciones.getIdUsuario().getId());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    existe = true;
+                }
+            }
+        }
+        return existe;
+    }
 }

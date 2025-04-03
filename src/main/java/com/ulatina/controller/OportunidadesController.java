@@ -27,7 +27,6 @@ import java.util.List;
 @Named
 @SessionScoped
 
-
 public class OportunidadesController implements Serializable {
 
     private Oportunidades oportunidades = new Oportunidades();
@@ -105,6 +104,7 @@ public class OportunidadesController implements Serializable {
 
         return "verDetallesOportunidad?faces-redirect=true";
     }
+
     public String verAspirantes(Oportunidades op) {
         this.oportunidades = op;
 
@@ -112,35 +112,33 @@ public class OportunidadesController implements Serializable {
     }
 
     EmailController eC = new EmailController();
-    
-    
+
     public void aplicar(int idOportunidad, int idUsuario, int idOrganizacion, String correoElectronico) throws SQLException {
         try {
-            
             organizacion = servicioOrganizacion.validarOrganizacion(idOrganizacion);
-            
-            
-            if(organizacion != null){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ocurrio un error","Las organizaciones no pueden aplicar"));
+            if (organizacion != null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrió un error", "Las organizaciones no pueden aplicar"));
                 return;
             }
-            
+
             usuario = servicioUsuario.validarUsuario(idUsuario);
-            if(usuario == null){
-                
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ocurrio un error","Para poder aplicar debes iniciar sesion primero"));
+            if (usuario == null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrió un error", "Para poder aplicar debes iniciar sesión primero"));
                 return;
-                
             }
-            
+            if (servicioPostulaciones.existePostulacion(postulaciones, idUsuario, idOportunidad)) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocurrió un error", "Ya has aplicado para esta oportunidad"));
+                return;
+            }
+
             servicioPostulaciones.insertarPostulacion(postulaciones, idOportunidad, idUsuario);
 
-            
-            
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Aplicación satisfactoria", "Se le ha enviado un correo electronico con los detalles"));
 
-            
             eC.enviarCorreoConfirmacionOportunidad(correoElectronico);
 
         } catch (ClassNotFoundException e) {
@@ -178,16 +176,14 @@ public class OportunidadesController implements Serializable {
     public String onFlowProcess(org.primefaces.event.FlowEvent event) {
         return event.getNewStep();
     }
-    
+
     public void nuevaOportunidad() {
-         this.oportunidades = new Oportunidades();
-     }
- 
-     public void irAPublicar() { 
-         nuevaOportunidad();
-         servicio.redireccionar("/publicarOportunidades.xhtml");
-     }
-    
+        this.oportunidades = new Oportunidades();
+    }
+
+    public void irAPublicar() {
+        nuevaOportunidad();
+        servicio.redireccionar("/publicarOportunidades.xhtml");
+    }
+
 }
-
-
