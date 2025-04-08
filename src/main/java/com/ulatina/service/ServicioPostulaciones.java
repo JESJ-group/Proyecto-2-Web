@@ -27,7 +27,7 @@ public class ServicioPostulaciones extends Servicio {
         postulaciones.setIdUsuario(usu);
         LocalDate fechaPostulacion = LocalDate.now();
         postulaciones.setFechaPostulacion(fechaPostulacion);
-        postulaciones.setEstado("En Revision");
+        postulaciones.setEstado("Pendiente de revisión");
         
         Oportunidades oportunidad = servicioOportunidad.obtenerIdOportunidad(idOportunidades);
         postulaciones.setIdOportunidades(oportunidad);
