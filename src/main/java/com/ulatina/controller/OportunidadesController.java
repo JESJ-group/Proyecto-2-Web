@@ -41,7 +41,6 @@ public class OportunidadesController implements Serializable {
     private String filtroBusqueda;
     private String estado;  
     private String nombreEmpresa; 
-    private Postulaciones postulaciones = new Postulaciones();
     private Organizacion organizaciones = new Organizacion();
     private ServicioAspirantes servicioAspirantes = new ServicioAspirantes();
 

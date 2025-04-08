@@ -5,6 +5,7 @@
 package com.ulatina.service;
 
 import com.ulatina.data.Oportunidades;
+import com.ulatina.data.Postulaciones;
 import com.ulatina.data.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
