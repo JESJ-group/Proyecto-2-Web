@@ -81,4 +81,39 @@ public class ServicioPostulaciones extends Servicio {
         }
         return existe;
     }
+  public Postulaciones obtenerPostulacion(int idUsuario, int idOportunidad) throws SQLException, ClassNotFoundException {
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        Postulaciones postulacion = null;
+        postulacion = new Postulaciones();
+
+       
+
+        
+
+        
+        try {
+            super.conectarBD();
+            String sql = "SELECT * FROM postulaciones WHERE idUsuario = ? AND idOportunidades = ?";
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setInt(1, idUsuario);
+            pstmt.setInt(2, idOportunidad);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                postulacion.setEstado(rs.getString("estado"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+        }
+
+        return postulacion;
+    }
 }
