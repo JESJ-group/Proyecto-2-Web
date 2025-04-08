@@ -5,9 +5,11 @@
 package com.ulatina.controller;
 
 import com.ulatina.data.Oportunidades;
+import com.ulatina.data.Postulaciones;
 import com.ulatina.data.Usuario;
 import com.ulatina.service.Servicio;
 import com.ulatina.service.ServicioAspirantes;
+import com.ulatina.service.ServicioOportunidad;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -27,9 +29,33 @@ public class AspirantesController implements Serializable {
     private List<Oportunidades> listaOportunidadesOrganizacion = new ArrayList<>();
     private List<Usuario> listaAspirantesUsuarios = new ArrayList<>();
     private Usuario usuario = new Usuario();
+    private Oportunidades oportunidad = new Oportunidades();
+    private ServicioAspirantes servicioAspirante = new ServicioAspirantes();
+    private String estadoSeleccionado;
+    private OportunidadesController oportunidades = new OportunidadesController();
+    private ServicioOportunidad servicioOportunidad = new ServicioOportunidad();
     Servicio servicio = new Servicio() {
 
     };
+
+    public OportunidadesController getOportunidades() {
+        return oportunidades;
+    }
+
+    public void setOportunidades(OportunidadesController oportunidades) {
+        this.oportunidades = oportunidades;
+    }
+    
+
+    public String getEstadoSeleccionado() {
+        return estadoSeleccionado;
+    }
+
+    public void setEstadoSeleccionado(String estadoSeleccionado) {
+        this.estadoSeleccionado = estadoSeleccionado;
+    }
+
+    
 
     public Usuario getUsuario() {
         return usuario;
@@ -55,13 +81,25 @@ public class AspirantesController implements Serializable {
         this.listaAspirantesUsuarios = listaAspirantesUsuarios;
     }
 
-    public void verDetallesAspirante(Usuario usuario) {
+    public void verDetallesAspirante(Usuario usuario, int idUsuario, int idOportunidad) throws ClassNotFoundException {
         this.usuario = null;
         this.usuario = usuario;
 
+        Postulaciones post = servicioAspirante.obtenerEstado(idUsuario, idOportunidad);
+        oportunidad = servicioOportunidad.obtenerIdOportunidad(idOportunidad);
+        this.estadoSeleccionado = post.getEstado();
+        
+        
     }
-    
-    
+
+    public void actualizarEstado() {
+        
+            int idUsuario = usuario.getId();
+            int idOportunidad = oportunidad.getId();
+            servicioAspirante.actualizarEstado(idUsuario, idOportunidad, estadoSeleccionado);
+        
+        System.out.println(oportunidad.getId());
+    }
 
     public void cargarOportunidadesOrganizacion(int id) {
 
@@ -71,7 +109,7 @@ public class AspirantesController implements Serializable {
     }
 
     public void cargarAspirantes(int idOportunidad) {
-
+        this.usuario = null;
         this.listaAspirantesUsuarios = servicioAspirantes.visualizarAspirantesOportunidad(idOportunidad);
         servicio.redireccionar("/verAspirantes.xhtml");
 
