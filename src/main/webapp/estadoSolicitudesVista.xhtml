@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Estado de Solicitud</title>
+    <style>
+        .estado-container {
+            margin: 100px auto;
+            width: 70%;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .estado-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .estado-datos {
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .estado-chip {
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+    </style>
+</h:head>
+
+<h:body style="background-color: #f2f2f2; font-family: Arial, sans-serif;">
+    <h:form>
+
+        <div class="estado-container">
+            <div class="estado-header">
+                <h2>#{oportunidadesController.postulaciones.fechaPostulacion}</h2>
+                <p:chip label="#{oportunidadesController.estado}"
+        icon="#{oportunidadesController.estado eq '' ? 'pi pi-check-circle' 
+               : (oportunidadesController.estado eq 'Denegada' ? 'pi pi-times-circle' : 'pi pi-clock')}"
+        styleClass="estado-chip #{oportunidadesController.postulaciones.estado eq 'Confirmada' ? 'bg-green-500 text-white' 
+                            : (oportunidadesController.postulaciones.estado eq 'Denegada' ? 'bg-red-500 text-white' : 'bg-orange-400 text-white')}" />
+            </div>
+
+            <div class="estado-datos">
+                <p><strong>Empresa:</strong> #{oportunidadesController.nombreEmpresa}</p>
+                <p><strong>Tipo:</strong> #{oportunidadesController.oportunidades.tipo}</p>
+                <p><strong>Jornada:</strong> #{oportunidadesController.oportunidades.jornada}</p>
+                <p><strong>Modalidad:</strong> #{oportunidadesController.oportunidades.modalidad}</p>
+                <p><strong>Provincia:</strong> #{oportunidadesController.oportunidades.provincia}</p>
+                <p><strong>Descripción:</strong></p>
+                <p:outputLabel value="#{oportunidadesController.oportunidades.descripcion}" escape="false"/>
+                <p style="margin-top: 20px;"><strong>Detalles Adicionales:</strong></p>
+                <p:outputLabel value="#{oportunidadesController.oportunidades.detalles}" escape="false"/>
+            </div>
+
+            <div style="margin-top: 30px; text-align: right;">
+                <p:commandButton value="Volver al Historial"
+                                 action="verHistorialOportunidades?faces-redirect=true"
+                                 styleClass="ui-button-secondary" icon="pi pi-arrow-left"/>
+            </div>
+        </div>                  
+
+    </h:form>
+</h:body>
+</html>
