@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.ulatina.service.ServicioAspirantes;
 @Named
 @SessionScoped
 
@@ -185,7 +185,8 @@ public class OportunidadesController implements Serializable {
 
     public String verAspirantes(Oportunidades op) {
         this.oportunidades = op;
-
+        this.usuario = null;
+        
         return "verAspirantes?faces-redirect=true";
     }
 
