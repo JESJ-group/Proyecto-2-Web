@@ -151,17 +151,17 @@
 
             <div class="content-container" style="margin-left: 120px; margin-right: 125px">
                 <div class="description-section">
-                    <div>
+                    <div style="display: flex; justify-content: space-between">
                         <h3 style="font-size: 20px; margin-top: 0">#{aspirantesController.usuario.nombre} #{aspirantesController.usuario.apellidos}</h3>
-                        <hr style="border: 1px solid darkgrey; width: 100%; margin-bottom: 50px"/>
+                        <p:selectOneButton id="estado" value="#{aspirantesController.estadoSeleccionado}">
+                            <f:selectItem itemLabel="Pendiente de revisión" itemValue="Pendiente de revisión"/>
+                            <f:selectItem itemLabel="Revisado" itemValue="Revisado"/>
+                            <f:selectItem itemLabel="Aceptado" itemValue="Aceptado"/>
+                            <f:selectItem itemLabel="Rechazado" itemValue="Rechazado"/>
+                        </p:selectOneButton>
                     </div>
 
-
-
-
-
-
-
+                    <hr style="border: 1px solid darkgrey; width: 100%; margin-bottom: 50px"/>
 
                     <span style="display: none;">
                         <p:calendar />
@@ -206,6 +206,15 @@
 
 
                     </div>
+                    
+                    <div style="display: flex; justify-content: end;margin-top: 10px ">
+                        <p:commandButton value="Guardar estado"
+                                     action="#{aspirantesController.actualizarEstado}"
+                                     update="@form"
+                                     icon="pi pi-save"
+                                     styleClass="ui-button-success" />
+                    </div>
+                    
                 </div>
 
                 <div class="sidebar">
@@ -217,10 +226,8 @@
                                 <p:commandButton value="#{aspirante.nombre} #{aspirante.apellidos}"
                                                  styleClass="ui-button-info ui-button-flat"
                                                  style="font-size: 18px; border-radius: 10px; color: #000000; font-weight: 600"
-                                                 action="#{aspirantesController.verDetallesAspirante(aspirante)}"
+                                                 action="#{aspirantesController.verDetallesAspirante(aspirante, aspirante.id, oportunidadesController.oportunidades.id)}"
                                                  update="@form"
-
-
                                                  immediate="true"
                                                  process="@this"/>
                             </div>
