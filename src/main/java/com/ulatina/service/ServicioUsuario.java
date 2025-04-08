@@ -310,25 +310,25 @@ public class ServicioUsuario extends Servicio {
         List<Oportunidades> listaHistorialOportunidades = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Oportunidades oportunidades = new Oportunidades();
 
         try {
 
             super.conectarBD();
-            String sql = "SELECT * "
-                    + "FROM postulaciones p, usuario u, oportunidades o "
+            String sql = "SELECT o.id AS idOportunidad, o.titulo, o.descripcion, o.detalles, o.tipo,o.duracion, o.jornada, o.modalidad, o.pago, o.ubicacion, o.provincia  FROM postulaciones p, usuario u, oportunidades o "
                     + "where o.id = p.idOportunidades "
                     + "and p.idUsuario = u.id "
                     + "and u.id = ?";
-
+ 
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setInt(1, idUsuario);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                Oportunidades oportunidades = new Oportunidades();
+                oportunidades = new Oportunidades();
 
-                oportunidades.setId(rs.getInt("id"));
+                oportunidades.setId(rs.getInt("idOportunidad"));
                 oportunidades.setTitulo(rs.getString("titulo"));
                 oportunidades.setDescripcion(rs.getString("descripcion"));
                 oportunidades.setDetalles(rs.getString("detalles"));
@@ -339,7 +339,7 @@ public class ServicioUsuario extends Servicio {
                 oportunidades.setPago(rs.getString("pago"));
                 oportunidades.setUbicacion(rs.getString("ubicacion"));
                 oportunidades.setProvincia(rs.getString("provincia"));
-
+                
                 listaHistorialOportunidades.add(oportunidades);
             }
 
@@ -351,7 +351,7 @@ public class ServicioUsuario extends Servicio {
             super.cerrarConexion();
 
         }
-
+        
         return listaHistorialOportunidades;
 
     }
