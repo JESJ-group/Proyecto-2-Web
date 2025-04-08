@@ -39,6 +39,11 @@ public class OportunidadesController implements Serializable {
     private ServicioPostulaciones servicioPostulaciones = new ServicioPostulaciones();
     private Postulaciones postulaciones = new Postulaciones();
     private String filtroBusqueda;
+    private String estado;  
+    private String nombreEmpresa; 
+    private Postulaciones postulaciones = new Postulaciones();
+    private Organizacion organizaciones = new Organizacion();
+    private ServicioAspirantes servicioAspirantes = new ServicioAspirantes();
 
     @PostConstruct
     public void init() {
@@ -50,10 +55,83 @@ public class OportunidadesController implements Serializable {
     Servicio servicio = new Servicio() {
 
     };
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public String getFiltroBusqueda() {
         return filtroBusqueda;
     }
+    
+    public Organizacion getOrganizacion() {
+        return organizacion;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setOrganizacion(Organizacion organizacion) {
+        this.organizacion = organizacion;
+    }
+
+    public ServicioOrganizacion getServicioOrganizacion() {
+        return servicioOrganizacion;
+    }
+
+    public void setServicioOrganizacion(ServicioOrganizacion servicioOrganizacion) {
+        this.servicioOrganizacion = servicioOrganizacion;
+    }
+
+    public ServicioUsuario getServicioUsuario() {
+        return servicioUsuario;
+    }
+
+    public void setServicioUsuario(ServicioUsuario servicioUsuario) {
+        this.servicioUsuario = servicioUsuario;
+    }
+
+    public ServicioPostulaciones getServicioPostulaciones() {
+        return servicioPostulaciones;
+    }
+
+    public void setServicioPostulaciones(ServicioPostulaciones servicioPostulaciones) {
+        this.servicioPostulaciones = servicioPostulaciones;
+    }
+    
+
+    public ServicioAspirantes getServicioAspirantes() {
+        return servicioAspirantes;
+    }
+
+    public Organizacion getOrganizaciones() {
+        return organizaciones;
+    }
+
+    public void setOrganizaciones(Organizacion organizaciones) {
+        this.organizaciones = organizaciones;
+    }
+
+    public void setServicioAspirantes(ServicioAspirantes servicioAspirantes) {
+        this.servicioAspirantes = servicioAspirantes;
+    }
+
 
     public void setFiltroBusqueda(String filtroBusqueda) {
         this.filtroBusqueda = filtroBusqueda;
@@ -166,6 +244,16 @@ public class OportunidadesController implements Serializable {
 
         this.listaOportunidades = servicioOportunidad.cargarOportunidades();
 
+    }
+    public String verEstadoDesdeHistorial(int idOp, int idUsu, Oportunidades op) throws ClassNotFoundException, SQLException {
+        this.oportunidades = op;
+        Postulaciones postulacioness = servicioPostulaciones.obtenerPostulacion(idUsu, idOp);
+        this.estado = postulacioness.getEstado();
+        Organizacion organizacionn = servicioOrganizacion.obtenerIdOrganizacion2(idOp);
+        this.nombreEmpresa = organizacionn.getNombre();
+        System.out.println(idOp);
+        System.out.println(idUsu);
+        return "estadoSolicitudesVista?faces-redirect=true";
     }
 
     public void filtrarOportunidades() {
