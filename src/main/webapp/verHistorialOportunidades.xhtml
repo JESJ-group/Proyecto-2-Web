@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -12,189 +8,136 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
     <h:head>
         <title>Historial de oportunidades</title>
+        <style>
+            .ui-card-header {
+                height: 200px;
+            }
+
+            .card .ui-card-body {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .contenedor-imagen {
+                width: 150px;
+                height: 140px;
+                background-color: #333;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 20px;
+                margin-right: 10px;
+                margin-top: 30px;
+            }
+
+            .contenedor-imagen img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .sidebar-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+                font-size: 17px;
+            }
+
+            .sidebar-icon {
+                font-size: 16px;
+                color: #007bff;
+                margin-right: 10px;
+            }
+
+            .sidebar-label {
+                color: #555;
+            }
+
+            .etiquetas {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        </style>
     </h:head>
 
-    <style>
-        .ui-card-header{
-
-            height: 200px;
-        }
-
-
-        .card .ui-card-body {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-        }
-
-        .contenedor-imagen {
-            width: 150px;
-            height: 140px;
-            background-color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            margin-right: 10px;
-            margin-top: 30px;
-        }
-
-        .contenedor-imagen img {
-            width: 50px;
-            height: 50px;
-        }
-
-
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 17px
-
-
-        }
-        .sidebar-icon {
-            font-size: 16px;
-            color: #007bff;
-            margin-right: 10px;
-
-
-        }
-        .sidebar-label {
-            color: #555;
-
-
-        }
-
-
-
-        .etiquetas {
-            display: flex;
-            justify-content: center;
-
-        }
-    </style>
-
-    <body style="background-color: #f2f2f2; color: black;
-          display: flex; flex-direction: column;
-          align-items: center;">
+    <h:body style="background-color: #f2f2f2; color: black; display: flex; flex-direction: column; align-items: center;">
         <h:form id="form">
 
-
+            <!-- Barra de menú -->
             <div class="barraMenu" 
                  style="display: flex; justify-content: space-between; align-items: center;
                  width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
                  background-color: white; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
 
-
                 <p:menubar style="flex-grow: 1; display: flex; justify-content: flex-start; border-radius: 0px;">
-
-                    <p:menuitem style="font-size: 18px" value="Inicio" icon="pi pi-fw pi-home" outcome="/landingPageUsuario.xhtml"/>
-                    <p:menuitem style="font-size: 18px" value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
-                    <p:menuitem style="font-size: 18px" value="Contacto" icon="pi pi-fw pi-address-book"/>
-                    <p:submenu style="font-size: 18px" label="Aplicaciones" icon="pi pi-fw pi-send">
-                        <p:menuitem style="font-size: 18px" value="Historial" icon="pi pi-fw pi-history"/>
-                        <p:menuitem style="font-size: 18px" value="Favoritos" icon="pi pi-fw pi-star"/>
+                    <p:menuitem value="Inicio" icon="pi pi-fw pi-home" outcome="/landingPageUsuario.xhtml"/>
+                    <p:menuitem value="Oportunidades" icon="pi pi-fw pi-briefcase" outcome="/oportunidades.xhtml"/>
+                    <p:menuitem value="Contacto" icon="pi pi-fw pi-address-book"/>
+                    <p:submenu label="Aplicaciones" icon="pi pi-fw pi-send">
+                        <p:menuitem value="Historial" icon="pi pi-fw pi-history"/>
+                        <p:menuitem value="Favoritos" icon="pi pi-fw pi-star"/>
                     </p:submenu>
-                    <p:menuitem style="font-size: 18px" value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.muestraCapacitaciones()}"/>
-
+                    <p:menuitem value="Capacitaciones" icon="pi pi-fw pi-graduation-cap" action="#{capacitacionController.muestraCapacitaciones()}"/>
                 </p:menubar>
 
                 <p:menubar style="display: flex; justify-content: flex-end; border-radius: 0px">
-
-                    <p:submenu style="font-size: 18px" label="Mi perfil" icon="pi pi-fw pi-user">
-
-                        <p:menuitem style="font-size: 18px" value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilUsuario.xhtml"/>
-                        <p:menuitem style="font-size: 18px" value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
+                    <p:submenu label="Mi perfil" icon="pi pi-fw pi-user">
+                        <p:menuitem value="Editar perfil" icon="pi pi-fw pi-cog" outcome="/editarPerfilUsuario.xhtml"/>
+                        <p:menuitem value="Cerrar sesión" icon="pi pi-fw pi-sign-out" action="#{loginController.salirConexion()}"/>
                     </p:submenu>
-
                 </p:menubar>
-
             </div>
 
-            <!-- Ajuste para evitar que el contenido quede debajo del menú -->
-            <div style="margin-top: 60px;">
-            </div>
+            <!-- Separador debajo del menú -->
+            <div style="margin-top: 60px;"></div>
 
-
-            <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto;gap: 15px; ">
-                <ui:repeat value="#{usuarioController.listaHistorialOportunidades}"  var="listaHistorialOportunidades" >
-                    <div >
-
-
-                        <p:card  style="
-                                 padding-right: 20px;
-                                 padding-left: 30px;
-                                 padding-bottom: 10px;
-                                 border-radius: 20px;
-                                 box-shadow: none;
-                                 display: flex;
-                                 width: 55rem;
-                                 height: 25vh; "
-
-                                 >
-
-                            <f:facet name="header">
-
-                                <div class="contenedor-imagen">
-                                    <p:graphicImage name="placeholder.png" alt="Imagen"/>
-
-                                </div>
-
-
-
-
-                                <div class="sidebar-item" style="margin-top: 50px;">
-                                    <i class="pi pi-map-marker sidebar-icon"></i>
-                                    <div class="sidebar-label"  >
-                                        #{listaHistorialOportunidades.provincia} 
-                                    </div>
-                                </div>
-
-
-
-
-
-                            </f:facet>
-                            <div style="flex-grow: 1; display: flex; flex-direction: column;">
-                                <p:outputLabel style="margin-bottom: 5px; font-weight: bolder; font-size: 22px; color: #007bff;">
-                                    #{listaHistorialOportunidades.titulo}
-                                </p:outputLabel>
-
-                                <p:outputLabel style="
-                                               width: 600px;
-                                               max-height: 100px;
-                                               white-space: normal;
-                                               overflow: hidden;
-                                               text-overflow: ellipsis;
-                                               font-size: 17px;
-                                               display: -webkit-box;
-                                               -webkit-line-clamp: 3;
-                                               -webkit-box-orient: vertical;">
-                                    #{listaHistorialOportunidades.descripcion}
-                                </p:outputLabel>
+            <!-- Lista del historial -->
+            <div style="display: flex; flex-direction: column; align-items: center; overflow-y: auto; gap: 15px;">
+                <ui:repeat value="#{usuarioController.listaHistorialOportunidades}" var="listaHistorialOportunidades">
+                    <p:card style="padding: 20px 30px 10px 30px; border-radius: 20px; box-shadow: none; display: flex; width: 55rem; height: 25vh;">
+                        <f:facet name="header">
+                            <div class="contenedor-imagen">
+                                <p:graphicImage name="placeholder.png" alt="Imagen"/>
                             </div>
-
-
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                                <div class="etiquetas" style="gap: 10px; flex-wrap: wrap;">
-                                    <p:chip icon="pi pi-users" style="font-size: 16px; background-color: #007bff; color: white;" label="#{listaHistorialOportunidades.tipo}"/>
-                                    <p:chip icon="pi pi-clock" style="font-size: 16px; background-color: #28a745; color: white;" label="#{listaHistorialOportunidades.duracion}"/>
-                                    <p:chip icon="pi pi-calendar" style="font-size: 16px; background-color: #fd7e14; color: white;" label="#{listaHistorialOportunidades.jornada}"/>
-                                    <p:chip icon="pi pi-globe" style="font-size: 16px; background-color: #6f42c1; color: white;" label="#{listaHistorialOportunidades.modalidad}"/>
-                                    <p:chip icon="pi pi-dollar" style="font-size: 16px; background-color: #ffc107; color: black;" label="#{listaHistorialOportunidades.pago}"/>
+                            <div class="sidebar-item" style="margin-top: 50px;">
+                                <i class="pi pi-map-marker sidebar-icon"></i>
+                                <div class="sidebar-label">
+                                    #{listaHistorialOportunidades.provincia}
                                 </div>
-
-
                             </div>
+                        </f:facet>
 
-                        </p:card>
+                        <div style="flex-grow: 1; display: flex; flex-direction: column;">
+                            <p:outputLabel style="margin-bottom: 5px; font-weight: bolder; font-size: 22px; color: #007bff;">
+                                #{listaHistorialOportunidades.titulo}
+                            </p:outputLabel>
 
+                            <p:outputLabel style="width: 600px; max-height: 100px; white-space: normal; overflow: hidden; text-overflow: ellipsis;
+                                           font-size: 17px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                                #{listaHistorialOportunidades.descripcion}
+                            </p:outputLabel>
+                        </div>
 
-                    </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <div class="etiquetas">
+                                <p:chip icon="pi pi-users" style="font-size: 16px; background-color: #007bff; color: white;" label="#{listaHistorialOportunidades.tipo}"/>
+                                <p:chip icon="pi pi-clock" style="font-size: 16px; background-color: #28a745; color: white;" label="#{listaHistorialOportunidades.duracion}"/>
+                                <p:chip icon="pi pi-calendar" style="font-size: 16px; background-color: #fd7e14; color: white;" label="#{listaHistorialOportunidades.jornada}"/>
+                                <p:chip icon="pi pi-globe" style="font-size: 16px; background-color: #6f42c1; color: white;" label="#{listaHistorialOportunidades.modalidad}"/>
+                                <p:chip icon="pi pi-dollar" style="font-size: 16px; background-color: #ffc107; color: black;" label="#{listaHistorialOportunidades.pago}"/>
+                            </div>
+                            <div style="display: flex; flex-direction: column; justify-content: flex-end; margin-top: 20px;">
+                                <p:commandButton value="Ver Estado"
+                                                 action="#{oportunidadesController.verEstadoDesdeHistorial(listaHistorialOportunidades.id, loginController.usuario.id, listaHistorialOportunidades)}"
+                                                 ajax="false"/>
+                            </div>
+                        </div>
+                    </p:card>
                 </ui:repeat>
             </div>
         </h:form>
-    </body>
+    </h:body>
 </html>
