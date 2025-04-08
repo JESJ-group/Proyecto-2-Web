@@ -73,11 +73,11 @@ public class ServicioAspirantes extends Servicio {
         try {
 
             super.conectarBD();
-            String sql = "SELECT * "
+            String sql = "SELECT u.id AS idUsuario, o.id AS idOportunidad, u.nombre, u.apellido, u.correoElectronico, u.fechaNacimiento, u.genero, u.estatus, u.provincia, u.canton, u.distrito, u.numeroContacto, p.idOportunidades, p.idUsuario "
                     + "FROM postulaciones p, usuario u, oportunidades o "
-                    + "where o.id = p.idOportunidades "
-                    + "and p.idUsuario = u.id "
-                    + "and o.id = ?";
+                    + "WHERE o.id = p.idOportunidades "
+                    + "AND p.idUsuario = u.id "
+                    + "AND o.id = ?";
 
             pstmt = super.getConexion().prepareStatement(sql);
             pstmt.setInt(1, idOportunidad);
@@ -87,7 +87,7 @@ public class ServicioAspirantes extends Servicio {
 
                 Usuario usuario = new Usuario();
 
-                usuario.setId(rs.getInt("id"));
+                usuario.setId(rs.getInt("idUsuario"));
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setApellidos(rs.getString("apellido"));
                 usuario.setCorreoElectronico(rs.getString("correoElectronico"));
@@ -114,6 +114,68 @@ public class ServicioAspirantes extends Servicio {
 
         return listaAspirantesUsuarios;
 
+    }
+
+    public Postulaciones obtenerEstado(int usuario, int idOportunidad) {
+        Postulaciones postulaciones = new Postulaciones();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            super.conectarBD();
+            String sql = "SELECT p.estado "
+                    + "FROM postulaciones p, usuario u, oportunidades o "
+                    + "WHERE o.id = p.idOportunidades "
+                    + "AND p.idUsuario = ? "
+                    + "AND o.id = ?";
+
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setObject(1, usuario);
+            pstmt.setInt(2, idOportunidad);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                postulaciones = new Postulaciones();
+
+                postulaciones.setEstado(rs.getString("estado"));
+
+            }
+
+        } catch (Exception e) {
+        } finally {
+
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+
+        }
+        System.out.println(postulaciones.getEstado());
+        return postulaciones;
+
+    }
+
+    public void actualizarEstado(int idUsuario, int idOportunidad, String nuevoEstado) {
+        PreparedStatement pstmt = null;
+
+        try {
+            super.conectarBD();
+            String sql = "UPDATE postulaciones SET estado = ? WHERE idUsuario = ? AND idOportunidades = ?";
+
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setString(1, nuevoEstado);
+            pstmt.setInt(2, idUsuario);
+            pstmt.setInt(3, idOportunidad);
+
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarConexion();
+        }
     }
 
 }
