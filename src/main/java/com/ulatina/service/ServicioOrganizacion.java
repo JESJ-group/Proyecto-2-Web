@@ -304,4 +304,36 @@ public class ServicioOrganizacion extends Servicio {
         return organizacion;
     }
 
+    public Organizacion obtenerIdOrganizacion2(int id) throws ClassNotFoundException {
+
+        Organizacion organizacion = null;
+        Oportunidades oportunidades = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            super.conectarBD();
+            String sql = "SELECT org.id,org.nombre FROM oportunidades o, organizacion org WHERE o.id = ? AND o.idOrganizacion = org.id ";
+            pstmt = super.getConexion().prepareStatement(sql);
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                organizacion = new Organizacion();
+                oportunidades = new Oportunidades();
+                organizacion.setId(rs.getInt("id"));
+                organizacion.setNombre(rs.getString("nombre"));
+                oportunidades.setIdOrganizacion(organizacion);
+
+            }
+        } catch (SQLException e) {
+        } finally {
+            
+            super.cerrarPreparedStatement(pstmt);
+            super.cerrarResultSet(rs);
+            super.cerrarConexion();
+
+        }
+        return organizacion;
+    }
+
 }
